@@ -21,12 +21,16 @@
 	min-height: 200px;
 	border: 2px dashed #DCDCDC;
 }
+
+img {
+	border-style: none;
+}
 </style>
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="/figuras">Plataforma</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -36,7 +40,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="/categorias">Categorias
-				</a></li>				
+				</a></li>
 				<li class="nav-item"><a class="nav-link" href="/tags">Tags</a></li>
 				<li class="nav-item"><a class="nav-link" href="/materiais">Materiais</a></li>
 
@@ -77,7 +81,7 @@
 
 
 				<div class="progress" id="containerProgressBar"
-					style="height: 40px; margin: 30px 0; display: none;">
+					style="height: 40px; margin: 10px 0; display: none;">
 					<div class="progress-bar progress-bar-striped" id="progressBar"
 						role="progressbar" aria-valuenow="0" aria-valuemin="0"
 						aria-valuemax="100" style="background-color: #A8A454 !important;">
@@ -93,7 +97,7 @@
 		</div>
 
 		<div class="row" id="containerPreviewImagem"
-			style="margin-top: 30px; display: none;">
+			style="margin-top: 20px; display: none;">
 
 			<div class="col-md-5 text-center">
 
@@ -135,12 +139,12 @@
 
 
 
-		<div class="row" id="containerPreviewDocumento"
+		<div class="row" id="containerPreviewTexto"
 			style="margin-top: 20px; display: none;">
 
 			<div class="col-md-5 text-center">
 
-				<object id="documento" width="450" height="400"></object>
+				<object id="texto" width="450" height="400"></object>
 
 			</div>
 
@@ -152,18 +156,20 @@
 					th:action="@{/materiais/texto}">
 					<div class="form-group" style="margin-top: 20px;">
 						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeDocumento" th:field="*{nome}">
+							class="form-control" id="nomeTexto" th:field="*{nome}">
 					</div>
 					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Resumo</label> <input type="text"
-							class="form-control" id="resumo" aria-describedby="resumo"
-							th:field="*{resumo}">
+
+						<label for="Resumo">Resumo</label>
+						<textarea class="form-control" id="resumo" rows="3"
+							th:field="*{resumo}"></textarea>
+
 					</div>
 
-					<input type="hidden" class="form-control" id="urlDocumento"
+					<input type="hidden" class="form-control" id="urlTexto"
 						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalDocumento" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoDocumento"
+						id="nomeOriginalTexto" th:field="*{nomeOriginal}" /> <input
+						type="hidden" class="form-control" id="tamanhoTexto"
 						th:field="*{tamanho}" />
 
 					<button type="submit" class="btn btn-secondary"
@@ -181,8 +187,11 @@
 
 			<div class="col-md-5 text-center">
 
-				<audio autoplay="autoplay" controls="controls" id="audio">
-					Erro ao executar!
+				<img class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
+					style="width: 96px; height: 96px;" /> <br />
+
+				<audio style="margin: 20px 0; width: 400px;" controls="controls"
+					id="audio"> Erro ao executar!
 				</audio>
 
 			</div>
@@ -195,7 +204,7 @@
 					th:action="@{/materiais/audio}">
 					<div class="form-group" style="margin-top: 20px;">
 						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeDocumento" th:field="*{nome}">
+							class="form-control" id="nomeAudio" th:field="*{nome}">
 					</div>
 					<div class="form-group" style="margin-top: 20px;">
 						<label for="nome">Duração</label> <input type="text"
@@ -203,10 +212,10 @@
 							th:field="*{duracao}">
 					</div>
 
-					<input type="hidden" class="form-control" id="urlDocumento"
+					<input type="hidden" class="form-control" id="urlAudio"
 						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalDocumento" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoDocumento"
+						id="nomeOriginalAudio" th:field="*{nomeOriginal}" /> <input
+						type="hidden" class="form-control" id="tamanhoAudio"
 						th:field="*{tamanho}" />
 
 					<button type="submit" class="btn btn-secondary"
@@ -222,35 +231,77 @@
 		<div class="row" id="containerPreviewVideo"
 			style="margin-top: 20px; display: none;">
 
-			<div class="col-md-5 text-center">
+			<div class="col-md-5 text-center align-top">
 
-				<video width="320" height="240" controls="controls" id="video">
-					Erro ao executar!
+				<video style="width: 400px; height: 350px;" controls="controls"
+					id="video"> Erro ao executar!
 				</video>
 
 			</div>
 
-			<div class="col-md-7"></div>
+			<div class="col-md-7">
+
+				<h3>Descrição do vídeo</h3>
+
+				<form method="post" th:object="${video}"
+					th:action="@{/materiais/video}">
+					<div class="form-group" style="margin-top: 20px;">
+						<label for="nome">Nome</label> <input type="text"
+							class="form-control" id="nomeVideo" th:field="*{nome}">
+					</div>
+					<div class="form-group" style="margin-top: 20px;">
+						<label for="nome">Produção</label> <input type="text"
+							class="form-control" id="producao" aria-describedby="producao"
+							th:field="*{producao}">
+					</div>
+
+					<input type="hidden" class="form-control" id="urlVideo"
+						th:field="*{url}" /> <input type="hidden" class="form-control"
+						id="nomeOriginalVideo" th:field="*{nomeOriginal}" /> <input
+						type="hidden" class="form-control" id="tamanhoVideo"
+						th:field="*{tamanho}" />
+
+					<button type="submit" class="btn btn-secondary"
+						style="margin-top: 20px;">Salvar</button>
+
+				</form>
+
+
+			</div>
 
 		</div>
 
 
 		<div class="row" id="containerMateriais" style="margin-top: 50px;">
 
+			<div class="col-md-2" th:each="material : ${materiais}"
+				style="padding-bottom: 30px">
 
-
-			<div class="col-md-2" th:each="material : ${materiais}">
-
-				<div class="card p-1"
+				<div class="card p-3"
 					th:if="${#strings.contains(material, 'Figura')}">
 
-					<img class="card-img-top"
-						th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img">
+					<div class="card-header text-right"
+						style="padding: 4px 4px; margin-bottom: 8px">
+						<a th:href="@{${'http://localhost:3000/' + material.url }}"
+							class="badge badge-info" target="_blank">Exibir</a>
+					</div>
 
-					<div class="card-body">
-						<h6 class="card-title" th:text="${material.nome}"></h6>
+					<a href="#" data-toggle="modal"
+						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+						class="card-img-top text-center"
+						th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img"
+						border="0"/>
 
-						<p class="card-text">
+					</a>
+
+					<div class="card-body text-center"
+						style="margin: 0; padding: 2px 0">
+
+
+						<p class="card-title" th:text="${material.nome}"
+							style="margin: 0; padding: 2px 0"></p>
+
+						<p class="card-text text-muted">
 							<small
 								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 						</p>
@@ -259,17 +310,28 @@
 
 				</div>
 
-				<div class="card p-1"
+				<div class="card p-3"
 					th:if="${#strings.contains(material, 'Texto')}">
+					
+					<div class="card-header text-right"
+						style="padding: 4px 4px; margin-bottom: 8px">
+						<a th:href="@{${'http://localhost:3000/' + material.url }}"
+							class="badge badge-info" target="_blank">Exibir</a>
+					</div>
 
-					<span class="text-center"><img class="card-img-top"
-						src="/figuras/iconPdf.png" alt="Img"
-						style="width: 96px; height: 96px"></span>
 
-					<div class="card-body">
-						<h6 class="card-title" th:text="${material.nome}"></h6>
+					<span class="text-center"> <a href="#" data-toggle="modal"
+						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+							class="card-img-top" src="/figuras/iconPdf.png" alt="Img"
+							style="width: 96px; height: 96px;" border="0">
 
-						<p class="card-text">
+					</a>
+					</span>
+
+					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+						<p class="card-title" th:text="${material.nome}"></p>
+
+						<p class="card-text text-muted">
 							<small
 								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 						</p>
@@ -277,6 +339,69 @@
 					</div>
 
 				</div>
+
+				<div class="card p-3"
+					th:if="${#strings.contains(material, 'Audio')}">
+					
+					<div class="card-header text-right"
+						style="padding: 4px 4px; margin-bottom: 8px">
+						<a th:href="@{${'http://localhost:3000/' + material.url }}"
+							class="badge badge-info" target="_blank">Exibir</a>
+					</div>
+
+
+					<span class="text-center"> <a href="#" data-toggle="modal"
+						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+							class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
+							style="width: 96px; height: 96px;" border="0">
+
+					</a>
+					</span>
+					
+					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+						<p class="card-title" th:text="${material.nome}"
+							style="margin: 0; padding: 2px 0"></p>
+
+						<p class="card-text text-muted">
+							<small
+								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+						</p>
+
+					</div>
+
+				</div>
+
+				<div class="card p-3" th:if="${#strings.contains(material, 'Video')}">
+				
+					<div class="card-header text-right"
+						style="padding: 4px 4px; margin-bottom: 8px">
+						<a th:href="@{${'http://localhost:3000/' + material.url }}"
+							class="badge badge-info" target="_blank">Exibir</a>
+					</div>
+
+
+					<span class="text-center"> <a href="#" data-toggle="modal"
+						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+							class="card-img-top" src="/figuras/iconVideo.png" alt="Img"
+							style="width: 96px; height: 96px;" border="0">
+
+					</a>
+					</span>
+
+					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+						<p class="card-title" th:text="${material.nome}"
+							style="margin: 0; padding: 2px 0"></p>
+
+						<p class="card-text text-muted">
+							<small
+								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+						</p>
+
+					</div>
+
+				</div>
+
+
 
 			</div>
 
@@ -286,7 +411,9 @@
 
 
 
-	<!-- Modal -->
+
+
+	<!-- Modal Erro -->
 	<div class="modal fade" id="containerErro" tabindex="-1" role="dialog"
 		aria-labelledby="containerErro" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -306,7 +433,257 @@
 		</div>
 	</div>
 
+	<!-- Modal Detalhes -->
+	<div class="col-md-2" th:each="material : ${materiais}">
+
+		<div th:if="${#strings.contains(material, 'Figura')}">
+
+			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
+				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="row">
+
+								<div class="col-md-4 text-center">
+
+									<img th:src="@{${'http://localhost:3000/' + material.url }}"
+										alt="Img" class="img-fluid" style="border: 0;">
+
+									<p>
+										<small><span th:text="${material.tamanho}"></span></small>
+									</p>
+
+								</div> 
+
+								<div class="col-md-8">
+							
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome</b></small>
+									</div>
+
+									<p th:text="${material.nome}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome original</b></small>
+									</div>
+
+									<p th:text="${material.nomeOriginal}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Autor</b></small>
+									</div>
+
+									<p th:text="${material.autor}"></p>
+
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div th:if="${#strings.contains(material, 'Texto')}">
+
+			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
+				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="row">
+
+								<div class="col-md-4 text-center">
+
+									<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
+										style="width: 96px; height: 96px; border: 0" border="0">
+
+									<p>
+										<small><span th:text="${material.tamanho}"></span></small>
+									</p>
+
+								</div>
+
+								<div class="col-md-8">
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome</b></small>
+									</div>
+
+									<p th:text="${material.nome}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome original</b></small>
+									</div>
+
+									<p th:text="${material.nomeOriginal}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Resumo</b></small>
+									</div>
+
+									<p th:text="${material.resumo}"></p>
+
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div th:if="${#strings.contains(material, 'Audio')}">
+
+			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
+				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="row">
+
+								<div class="col-md-4 text-center">
+
+									<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
+										style="width: 96px; height: 96px; border: 0" border="0">
+
+									<p>
+										<small><span th:text="${material.tamanho}"></span></small>
+									</p>
+
+								</div>
+
+								<div class="col-md-8">
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome</b></small>
+									</div>
+
+									<p th:text="${material.nome}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome original</b></small>
+									</div>
+
+									<p th:text="${material.nomeOriginal}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Duração</b></small>
+									</div>
+
+									<p th:text="${material.duracao} + ' Min.'"></p>
+
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div th:if="${#strings.contains(material, 'Video')}">
+
+			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
+				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="row">
+
+								<div class="col-md-4 text-center">
+
+									<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
+										style="width: 96px; height: 96px; border: 0" border="0">
+
+									<p>
+										<small><span th:text="${material.tamanho}"></span></small>
+									</p>
+
+								</div>
+
+								<div class="col-md-8">
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome</b></small>
+									</div>
+
+									<p th:text="${material.nome}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Nome original</b></small>
+									</div>
+
+									<p th:text="${material.nomeOriginal}"></p>
+
+									<div style="margin: 0; padding: 0">
+										<small><b>Produção</b></small>
+									</div>
+
+									<p th:text="${material.producao}"></p>
+
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
 	</div>
+
 
 	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 
@@ -326,7 +703,7 @@
 	
 	
 	let imagem = document.querySelector("#imagem");	
-	let documento = document.querySelector("#documento");
+	let texto = document.querySelector("#texto");
 	let audio = document.querySelector("#audio");
 	let video = document.querySelector("#video");
 
@@ -440,36 +817,62 @@
 			
 		}else if(tipo.includes('application/pdf')){
 			
-			containerPreview += 'Documento';
+			containerPreview += 'Texto';
 			
-			let nomeDocumento = document.querySelector("#nomeDocumento");
-			let urlDocumento = document.querySelector("#urlDocumento");
-			let nomeOriginalDocumento = document.querySelector("#nomeOriginalDocumento");
-			let tamanhoDocumento = document.querySelector("#tamanhoDocumento");
+			let nomeTexto = document.querySelector("#nomeTexto");
+			let urlTexto = document.querySelector("#urlTexto");
+			let nomeOriginalTexto = document.querySelector("#nomeOriginalTexto");
+			let tamanhoTexto = document.querySelector("#tamanhoTexto");
 			
-			nomeDocumento.value = nomeOriginal.split(".")[0];	
+			nomeTexto.value = nomeOriginal.split(".")[0];	
 			
-			urlDocumento.value = url;
+			urlTexto.value = url;
 			
-			nomeOriginalDocumento.value = nomeOriginal;
+			nomeOriginalTexto.value = nomeOriginal;
 			
-			tamanhoDocumento.value = tamanhoArquivo;
+			tamanhoTexto.value = tamanhoArquivo;
 			
-			documento.setAttribute("data", "http://localhost:3000/" + url);
+			texto.setAttribute("data", "http://localhost:3000/" + url);
 			
 		
 		}else if(tipo.includes('audio/mpeg')){
 			
 			containerPreview += 'Audio';
 			
-			audio.innerHTML = '<source src="http://localhost:3000/' + nomeReal+ '" type="audio/mp3" />';
+			let nomeAudio = document.querySelector("#nomeAudio");
+			let urlAudio = document.querySelector("#urlAudio");
+			let nomeOriginalAudio = document.querySelector("#nomeOriginalAudio");
+			let tamanhoAudio = document.querySelector("#tamanhoAudio");
+			
+			nomeAudio.value = nomeOriginal.split(".")[0];	
+			
+			urlAudio.value = url;
+			
+			nomeOriginalAudio.value = nomeOriginal;
+			
+			tamanhoAudio.value = tamanhoArquivo;
+			
+			audio.innerHTML = '<source src="http://localhost:3000/' + url+ '" type="audio/mp3" />';
 			
 		
 		}else if(tipo.includes('video/mp4')){
 			
 			containerPreview += 'Video';
 			
-			video.innerHTML = '<source src="http://localhost:3000/' + nomeReal+ '" type="video/mp4">';
+			let nomeVideo = document.querySelector("#nomeVideo");
+			let urlVideo = document.querySelector("#urlVideo");
+			let nomeOriginalVideo = document.querySelector("#nomeOriginalVideo");
+			let tamanhoVideo = document.querySelector("#tamanhoVideo");
+			
+			nomeVideo.value = nomeOriginal.split(".")[0];	
+			
+			urlVideo.value = url;
+			
+			nomeOriginalVideo.value = nomeOriginal;
+			
+			tamanhoVideo.value = tamanhoArquivo;
+					
+			video.innerHTML = '<source src="http://localhost:3000/' + url+ '" type="video/mp4">';
 			
 		}
 		

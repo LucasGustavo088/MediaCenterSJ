@@ -2,12 +2,20 @@ package br.usjt.plataforma.model.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +26,8 @@ public abstract class Material implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id_material")
 	private Long id;
 
 	private String nome;
@@ -30,6 +39,18 @@ public abstract class Material implements Serializable {
 	private String tamanho;
 
 	private LocalDateTime dataRegistro;
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "material_x_categoria", joinColumns = @JoinColumn(name = "id_material"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
+	private List<Categoria> categorias = new ArrayList<>();
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
 
 	public Material() {
 
@@ -92,8 +113,7 @@ public abstract class Material implements Serializable {
 	public void setDataRegistro(LocalDateTime dataRegistro) {
 		this.dataRegistro = dataRegistro;
 	}
-	
-	
+
 	public abstract String toString();
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.usjt.plataforma.model.bean.Audio;
 import br.usjt.plataforma.model.bean.Figura;
 import br.usjt.plataforma.model.bean.Texto;
+import br.usjt.plataforma.model.bean.Video;
 import br.usjt.plataforma.service.MaterialService;
 
 @Controller
@@ -29,6 +30,8 @@ public class MaterialController {
 		mv.addObject("texto", new Texto());
 		
 		mv.addObject("audio", new Audio());
+		
+		mv.addObject("video", new Video());
 		
 		mv.addObject("materiais", this.materialService.listar());
 
@@ -56,75 +59,27 @@ public class MaterialController {
 		
 		return "redirect:/materiais";
 	}
+	
+	@PostMapping("audio")
+	public String adicionarAudio(Audio audio) {
 
-	/*@GetMapping(path = "adicionar/{fileName}")
-	public ModelAndView adicionar(@PathVariable("fileName") String fileName) {
+		if (audio.getNome() != null && !audio.getNome().isEmpty()) {
 
-		String mime = (fileName.split("\\."))[1].toLowerCase().trim();
-
-		System.out.println(mime);
-
-		ModelAndView mv = new ModelAndView();
-
-		if (mime.equals("jpg")) {
-
-			mv.setViewName("adicionar_figura");
-
-			Figura figura = new Figura();
-
-			figura.setUrl(fileName);
-
-			mv.addObject(figura);
-
-		} else if (mime.equals("pdf")) {
-
-			mv.setViewName("adicionar_texto");
-
-			Texto texto = new Texto();
-
-			texto.setUrl(fileName);
-
-			mv.addObject(texto);
-
-		} else if (mime.equals("mp4")) {
-
-			mv.setViewName("adicionar_video");
-
-			Video video = new Video();
-
-			video.setUrl(fileName);
-
-			mv.addObject(video);
-
-		} else if (mime.equals("mp3")) {
-
-			mv.setViewName("adicionar_audio");
-
-			Audio audio = new Audio();
-
-			audio.setUrl(fileName);
-
-			mv.addObject(audio);
-
-		} else {
-
-			mv.setViewName("aff");
-
+			this.materialService.salvar(audio);
 		}
+		
+		return "redirect:/materiais";
+	}
+	
+	@PostMapping("video")
+	public String adicionarVideo(Video video) {
 
-		return mv;
+		if (video.getNome() != null && !video.getNome().isEmpty()) {
 
-	}*/
-
-//	@PostMapping("adicionar/figura")
-//	public String adicionar(Figura figura) {
-//
-//		if (figura.getNome() != null && !figura.getNome().isEmpty()) {
-//
-//			this.materialService.salvar(figura);
-//		}
-//		
-//		return "redirect:/figuras";
-//	}
-
+			this.materialService.salvar(video);
+		}
+		
+		return "redirect:/materiais";
+	}
+	
 }

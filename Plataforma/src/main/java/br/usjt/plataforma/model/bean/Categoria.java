@@ -2,26 +2,31 @@ package br.usjt.plataforma.model.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_categoria")
-public class Categoria implements Serializable{
-	
+public class Categoria implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id_categoria")
 	private Long id;
 
 	@Column(nullable = true, length = 200)
 	private String nome;
-	
+
 	private LocalDateTime dataRegistro;
 
 	public Long getId() {
@@ -40,6 +45,16 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
+	@ManyToMany(mappedBy = "categorias")
+	private List<Material> materiais = new ArrayList<>();
+
+	public List<Material> getMateriais() {
+		return materiais;
+	}
+
+	public void setMateriais(List<Material> materiais) {
+		this.materiais = materiais;
+	}
 
 	@Override
 	public int hashCode() {
