@@ -9,9 +9,28 @@
 
 <script th:src="@{/js/jquery.min.js}"></script>
 
+
 <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
 
 <script th:src="@{/js/bootstrap.js}"></script>
+
+
+<link rel="stylesheet"
+	href="https://www.jqueryscript.net/css/jquerysctipttop.css">
+	
+	<link rel="stylesheet"
+	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">
+	
+	
+	
+	
+	
+	
+	
+	<script src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 
 
 
@@ -46,19 +65,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
 <style type="text/css">
-/* body {
-	text-align: center;
-	margin: 0;
-}
 
-div#editor {
-	width: 81%;
-	margin: auto;
-	text-align: left;
-} */
 .invisivel {
 	display: none;
 }
+
+
+
+
 </style>
 
 </head>
@@ -141,8 +155,8 @@ div#editor {
 			<div class="col-md-8">
 
 
-				<div id="editor" style="margin-left: 40px;">
-					<div id='edit'>
+				<div id="editor" style="margin-left: 40px; ">
+					<div id='edit' style="min-height: 800px !important;">
 
 						<h2>Título</h2>
 
@@ -159,7 +173,7 @@ div#editor {
 
 				<th:block th:each="categoria : ${categorias}">
 
-					<div style="margin: 10px 0;">
+					<div style="margin: 12px 0;">
 
 						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
 							th:for="${categoria.id}"> <input type="checkbox"
@@ -171,6 +185,18 @@ div#editor {
 					</div>
 
 				</th:block>
+				
+				<div class="clearfix" style="margin: 30px 0;"></div>
+				
+				<h5 style="margin-bottom: 15px">Tags</h5>
+				
+				<div class="input-group input-group-sm mb-3 d-flex justify-content-center">
+					<input id="tags" name="tags" type="text" value="" class="form-control" aria-label="Small"
+						aria-describedby="inputGroup-sizing-sm">
+				</div>
+				
+				
+				
 
 			</div>
 
@@ -183,11 +209,6 @@ div#editor {
 
 	</div>
 
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 
 	<script th:src="@{/js/froala_editor.min.js}"></script>
 	<script th:src="@{/js/plugins/align.min.js}"></script>
@@ -218,6 +239,9 @@ div#editor {
 
 
 	<script type="text/javascript">
+	
+	
+	
 		var campo = document.querySelector("#filtrar-tabela");
 
 		campo.addEventListener("input", function() {
@@ -262,6 +286,19 @@ div#editor {
 
 		$(document).ready(
 				function() {
+					
+					$('#tags').tagsInput({
+						
+						  interactive: true,
+						  placeholder: 'Adicionar tag',
+						  width: 'auto',
+						  height: 'auto',
+						  hide: true,
+						  delimiter: ',',
+						  removeWithBackspace: true
+					});
+					
+				
 
 					$('#edit').froalaEditor(
 							{
