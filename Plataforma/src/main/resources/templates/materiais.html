@@ -11,6 +11,14 @@
 
 <link rel="stylesheet" th:href="@{/css/dropzone.min.css}" />
 
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+
 <style type="text/css">
 .dropzone {
 	background-image: url("figuras/bgFile.gif");
@@ -24,6 +32,74 @@
 
 img {
 	border-style: none;
+}
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	float: left;
+	margin-top: 6px;
+	margin-right: 6px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	display: none;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input.default:checked+.slider {
+	background-color: #444;
+}
+
+input.success:checked+.slider {
+	background-color: #8bc34a;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
 }
 </style>
 
@@ -97,20 +173,23 @@ img {
 		</div>
 
 		<div class="row" id="containerPreviewImagem"
-			style="margin-top: 20px; display: none;">
+			style="margin-top: 20px; display:;">
 
-			<div class="col-md-5 text-center">
+			<div class="col-md-4 text-center">
 
 				<img class="img-fluid rounded" id="imagem" />
 
 			</div>
 
-			<div class="col-md-7">
+			<div class="col-md-5">
 
-				<h3>Descrição da figura</h3>
+				<h4>Descrição da figura</h4>				
+			
 
 				<form method="post" th:object="${figura}"
 					th:action="@{/materiais/figura}">
+ 					
+					
 					<div class="form-group" style="margin-top: 20px;">
 						<label for="nome">Nome</label> <input type="text"
 							class="form-control" id="nomeImagem" th:field="*{nome}">
@@ -129,6 +208,29 @@ img {
 
 					<button type="submit" class="btn btn-secondary"
 						style="margin-top: 20px;">Salvar</button>
+						
+					</div>
+					
+					<div class="col-md-3" style="border-left: 1px solid #ccc">
+
+					<h4>Categorias</h4>
+
+
+					<th:block th:each="categoria : ${categorias}">
+
+						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
+							th:for="${categoria.id}"> <input type="checkbox" th:field="*{categorias}"
+								th:value="${categoria.id}" th:id="${categoria.id}"
+							class="mdl-switch__input" style="margin-bottom: 22px"> <span
+							class="mdl-switch__label" th:text="${categoria.nome}"></span>
+						</label>
+
+
+					</th:block>
+
+
+
+
 
 				</form>
 
@@ -290,7 +392,7 @@ img {
 						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
 						class="card-img-top text-center"
 						th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img"
-						border="0"/>
+						border="0" />
 
 					</a>
 
@@ -312,7 +414,7 @@ img {
 
 				<div class="card p-3"
 					th:if="${#strings.contains(material, 'Texto')}">
-					
+
 					<div class="card-header text-right"
 						style="padding: 4px 4px; margin-bottom: 8px">
 						<a th:href="@{${'http://localhost:3000/' + material.url }}"
@@ -328,7 +430,8 @@ img {
 					</a>
 					</span>
 
-					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+					<div class="card-body text-center"
+						style="margin: 0; padding: 2px 0">
 						<p class="card-title" th:text="${material.nome}"></p>
 
 						<p class="card-text text-muted">
@@ -342,7 +445,7 @@ img {
 
 				<div class="card p-3"
 					th:if="${#strings.contains(material, 'Audio')}">
-					
+
 					<div class="card-header text-right"
 						style="padding: 4px 4px; margin-bottom: 8px">
 						<a th:href="@{${'http://localhost:3000/' + material.url }}"
@@ -357,8 +460,9 @@ img {
 
 					</a>
 					</span>
-					
-					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+
+					<div class="card-body text-center"
+						style="margin: 0; padding: 2px 0">
 						<p class="card-title" th:text="${material.nome}"
 							style="margin: 0; padding: 2px 0"></p>
 
@@ -371,8 +475,9 @@ img {
 
 				</div>
 
-				<div class="card p-3" th:if="${#strings.contains(material, 'Video')}">
-				
+				<div class="card p-3"
+					th:if="${#strings.contains(material, 'Video')}">
+
 					<div class="card-header text-right"
 						style="padding: 4px 4px; margin-bottom: 8px">
 						<a th:href="@{${'http://localhost:3000/' + material.url }}"
@@ -388,7 +493,8 @@ img {
 					</a>
 					</span>
 
-					<div class="card-body text-center" style="margin: 0; padding: 2px 0">
+					<div class="card-body text-center"
+						style="margin: 0; padding: 2px 0">
 						<p class="card-title" th:text="${material.nome}"
 							style="margin: 0; padding: 2px 0"></p>
 
@@ -432,6 +538,8 @@ img {
 			</div>
 		</div>
 	</div>
+	
+	
 
 	<!-- Modal Detalhes -->
 	<div class="col-md-2" th:each="material : ${materiais}">
@@ -463,10 +571,10 @@ img {
 										<small><span th:text="${material.tamanho}"></span></small>
 									</p>
 
-								</div> 
+								</div>
 
 								<div class="col-md-8">
-							
+
 
 									<div style="margin: 0; padding: 0">
 										<small><b>Nome</b></small>
@@ -558,7 +666,7 @@ img {
 			</div>
 
 		</div>
-		
+
 		<div th:if="${#strings.contains(material, 'Audio')}">
 
 			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
@@ -619,7 +727,7 @@ img {
 			</div>
 
 		</div>
-		
+
 		<div th:if="${#strings.contains(material, 'Video')}">
 
 			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"

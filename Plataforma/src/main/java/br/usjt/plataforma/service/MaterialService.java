@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.usjt.plataforma.model.bean.Categoria;
 import br.usjt.plataforma.model.bean.Material;
 import br.usjt.plataforma.repository.MaterialRepository;
 
@@ -23,7 +24,7 @@ public class MaterialService {
 
 	public void salvar(Material material) {
 
-		material.setDataRegistro(LocalDateTime.now());
+		material.setDataRegistro(LocalDateTime.now());		
 
 		repository.save(material);
 	}
@@ -33,5 +34,6 @@ public class MaterialService {
 		return (ArrayList<Material>) repository.findAll();
 
 	}
+	
 
 }

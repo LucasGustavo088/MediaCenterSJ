@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "tb_material")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -26,8 +26,7 @@ public abstract class Material implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "id_material")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nome;
@@ -40,17 +39,9 @@ public abstract class Material implements Serializable {
 
 	private LocalDateTime dataRegistro;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "material_x_categoria", joinColumns = @JoinColumn(name = "id_material"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "material_x_categoria", joinColumns = @JoinColumn(name = "id_material", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id"))
 	private List<Categoria> categorias = new ArrayList<>();
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
-	}
 
 	public Material() {
 
@@ -64,6 +55,14 @@ public abstract class Material implements Serializable {
 		this.url = url;
 		this.nomeOriginal = nomeoriginal;
 		this.tamanho = tamanho;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	public Long getId() {

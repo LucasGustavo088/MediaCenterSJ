@@ -20,14 +20,20 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "id_categoria")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(nullable = true, length = 200)
 	private String nome;
 
 	private LocalDateTime dataRegistro;
+	
+	public Categoria(String nome) {
+		
+		this.nome = nome;
+	}
+	
+	public Categoria() {}
 
 	public Long getId() {
 		return id;

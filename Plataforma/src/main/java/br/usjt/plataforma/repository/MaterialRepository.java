@@ -6,4 +6,5 @@ import br.usjt.plataforma.model.bean.Material;
 
 public interface MaterialRepository extends CrudRepository<Material, Long>{
 
+
 }
