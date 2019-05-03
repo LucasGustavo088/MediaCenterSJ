@@ -7,6 +7,12 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Materiais</title>
 
+<!-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">  -->
+
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+	type="text/css">
+
 <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
 
 <link rel="stylesheet" th:href="@{/css/dropzone.min.css}" />
@@ -17,9 +23,26 @@
 	href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+<script defer
+	src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+
+
+<script type='text/javascript'
+	src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
+
+
+<link rel="stylesheet"
+	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">
+
 
 
 <style type="text/css">
+body {
+	font-family: 'Roboto', sans-serif !important;
+}
+
 .dropzone {
 	background-image: url("figuras/bgFile.gif");
 	padding: 0px;
@@ -32,74 +55,6 @@
 
 img {
 	border-style: none;
-}
-
-/* The switch - the box around the slider */
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
-	float: left;
-	margin-top: 6px;
-	margin-right: 6px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-	display: none;
-}
-
-/* The slider */
-.slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-.slider:before {
-	position: absolute;
-	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-input.default:checked+.slider {
-	background-color: #444;
-}
-
-input.success:checked+.slider {
-	background-color: #8bc34a;
-}
-
-input:focus+.slider {
-	box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked+.slider:before {
-	-webkit-transform: translateX(26px);
-	-ms-transform: translateX(26px);
-	transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-	border-radius: 34px;
-}
-
-.slider.round:before {
-	border-radius: 50%;
 }
 </style>
 
@@ -134,45 +89,201 @@ input:checked+.slider:before {
 			<div class="col-md-12">
 
 				<h1 class="text-right" style="margin: 10px 0 20px 0">
-					<span class="badge" style="background-color: #B8401F; color: #fff">Materiais</span>
+					<span class="badge" style="background-color: #AB0F41; color: #fff">Materiais</span>
 				</h1>
 
 
-				<div id="containerUpload">
-
-					<form action="/upload" class="dropzone" id="up">
-
-						<span class="badge badge-secondary" style="margin: 6px 6px;">Clique
-							ou arraste para selecionar o arquivo | imagens, pdf, mp3, mp4 | <
-							100 mb</span>
-
-						<div class="fallback">
-							<input name="file" type="file" multiple />
-						</div>
-
-					</form>
 
 
-				</div>
 
 
-				<div class="progress" id="containerProgressBar"
-					style="height: 40px; margin: 10px 0; display: none;">
-					<div class="progress-bar progress-bar-striped" id="progressBar"
-						role="progressbar" aria-valuenow="0" aria-valuemin="0"
-						aria-valuemax="100" style="background-color: #A8A454 !important;">
-						<h5 style="text-align: center; margin: 12px 0;">
-							<span id="progresso"></span>
-						</h5>
-					</div>
-				</div>
 
 
 			</div>
 
 		</div>
 
-		<div class="row" id="containerPreviewImagem"
+		<!--  -->
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="bs-stepper">
+					<div class="bs-stepper-header" role="tablist">
+
+						<div class="step" data-target="#upload-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="upload-part" id="upload-part-trigger">
+								<span class="bs-stepper-circle">1</span> <span
+									class="bs-stepper-label">Selecionar material</span>
+							</button>
+						</div>
+						<div class="line"></div>
+						<div class="step" data-target="#descricao-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="descricao-part" id="descricao-part-trigger">
+								<span class="bs-stepper-circle">2</span> <span
+									class="bs-stepper-label">Adicionar descrição</span>
+							</button>
+						</div>
+						<div class="line"></div>
+						<div class="step" data-target="#confirmar-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="confirmar-part" id="confirmar-part-trigger">
+								<span class="bs-stepper-circle">3</span> <span
+									class="bs-stepper-label">Confirmar envio</span>
+							</button>
+						</div>
+
+
+					</div>
+					<div class="bs-stepper-content">
+
+						<div id="upload-part" class="content" role="tabpanel"
+							aria-labelledby="upload-part-trigger">
+
+							<!--  -->
+
+							<div id="containerUpload" style="margin-top: 10px;">
+
+								<form action="/upload" class="dropzone" id="up">
+
+									<span class="badge badge-secondary" style="margin: 6px 6px;">Clique
+										ou arraste para selecionar o arquivo | imagens, pdf, mp3, mp4
+										| < 100 mb</span>
+
+									<div class="fallback">
+										<input name="file" type="file" multiple />
+									</div>
+
+								</form>
+
+							</div>
+
+							<!--  -->
+
+							<!--  -->
+
+							<div class="progress" id="containerProgressBar"
+								style="height: 50px; margin: 10px 0; display: none;">
+								<div
+									class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+									id="progressBar" role="progressbar" aria-valuenow="0"
+									aria-valuemin="0" aria-valuemax="100">
+									<h5 style="text-align: center; margin: 18px 0;">
+										<span id="progresso"></span>
+									</h5>
+								</div>
+							</div>
+
+							<!--  -->
+
+						</div>
+						<div id="descricao-part" class="content" role="tabpanel"
+							aria-labelledby="descricao-part-trigger">
+
+							<!--  -->
+
+							<div class="row" id="containerPreviewImagem"
+								style="margin-top: 10px; display: none;">
+
+								<div class="col-md-5 text-center">
+
+									<img class="img-fluid rounded" id="imagem"
+										style="max-height: 400px;" />
+
+								</div>
+
+								<div class="col-md-7">
+
+									<h4 style="margin-top: 0; padding-top: 0">Descrição da
+										figura</h4>
+
+									<form method="post" th:object="${figura}"
+										th:action="@{/materiais/figura}">
+
+										<div class="form-group"
+											style="margin-top: 20px; font-size: 1.2em">
+											<label for="nome"><b>Nome</b></label> <input type="text"
+												class="form-control" id="nomeImagem" th:field="*{nome}">
+										</div>
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><b>Autor</b></label> <input type="text"
+												class="form-control" id="autor" aria-describedby="autor"
+												th:field="*{autor}">
+										</div>
+
+										<input type="hidden" class="form-control" id="urlImagem"
+											th:field="*{url}" /> <input type="hidden"
+											class="form-control" id="nomeOriginalImagem"
+											th:field="*{nomeOriginal}" /> <input type="hidden"
+											class="form-control" id="tamanhoImagem" th:field="*{tamanho}" />
+
+
+										<h6 style="margin: 24px 0 4px 0">
+											<b>Tags</b>
+										</h6>
+
+										<input id="tags" name="tags" type="text" class="form-control">
+
+
+										<h6 style="margin: 24px 0 7px 0">
+											<b>Categorias</b>
+										</h6>
+
+										<div class="clearfix"></div>
+
+										<div style="border: 1px solid #ddd; margin: 0; float: left;"
+											class="rounded">
+
+
+											<div
+												style="float: left; margin: 5px 12px 4px 0; padding: 7px"
+												th:each="categoria : ${categorias}">
+												<label
+													class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+													th:for="${categoria.id}"> <input type="checkbox"
+													th:id="${categoria.id}" class="mdl-checkbox__input">
+													<span class="mdl-checkbox__label"
+													th:text="${categoria.nome}"></span>
+												</label>
+											</div>
+
+										</div>
+
+										<div class="clearfix"></div>
+
+										<button type="button" class="btn btn btn-primary float-right"
+											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
+									</form>
+
+
+								</div>
+
+							</div>
+
+						</div>
+						<div class="bs-stepper-content">
+
+						<div id="confirmar-part" class="content" role="tabpanel"
+							aria-labelledby="confirmar-part-trigger">
+
+							<!--  -->
+
+
+							<!--  -->
+
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--  -->
+
+			<!-- <div class="row" id="containerPreviewImagem"
 			style="margin-top: 20px; display:;">
 
 			<div class="col-md-4 text-center">
@@ -183,13 +294,14 @@ input:checked+.slider:before {
 
 			<div class="col-md-5">
 
-				<h4>Descrição da figura</h4>				
-			
+
+				<h4>Descrição da figura</h4>
+
 
 				<form method="post" th:object="${figura}"
 					th:action="@{/materiais/figura}">
- 					
-					
+
+
 					<div class="form-group" style="margin-top: 20px;">
 						<label for="nome">Nome</label> <input type="text"
 							class="form-control" id="nomeImagem" th:field="*{nome}">
@@ -208,28 +320,25 @@ input:checked+.slider:before {
 
 					<button type="submit" class="btn btn-secondary"
 						style="margin-top: 20px;">Salvar</button>
-						
-					</div>
-					
-					<div class="col-md-3" style="border-left: 1px solid #ccc">
+			</div>
 
-					<h4>Categorias</h4>
+			<div class="col-md-3" style="border-left: 1px solid #ccc">
 
-
-					<th:block th:each="categoria : ${categorias}">
-
-						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-							th:for="${categoria.id}"> <input type="checkbox" th:field="*{categorias}"
-								th:value="${categoria.id}" th:id="${categoria.id}"
-							class="mdl-switch__input" style="margin-bottom: 22px"> <span
-							class="mdl-switch__label" th:text="${categoria.nome}"></span>
-						</label>
+				<h4>Categorias</h4>
 
 
-					</th:block>
+				<th:block th:each="categoria : ${categorias}">
+
+					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
+						th:for="${categoria.id}"> <input type="checkbox"
+						th:field="*{categorias}" th:value="${categoria.id}"
+						th:id="${categoria.id}" class="mdl-switch__input"
+						style="display: inline;"> <span class="mdl-switch__label"
+						th:text="${categoria.nome}"></span>
+					</label>
 
 
-
+				</th:block>
 
 
 				</form>
@@ -237,571 +346,596 @@ input:checked+.slider:before {
 
 			</div>
 
+		</div> -->
+
+
+
+			<div class="row" id="containerPreviewTexto"
+				style="margin-top: 20px; display: none;">
+
+				<div class="col-md-5 text-center">
+
+					<object id="texto" width="450" height="400"></object>
+
+				</div>
+
+				<div class="col-md-7">
+
+					<h3>Descrição do texto</h3>
+
+					<form method="post" th:object="${texto}"
+						th:action="@{/materiais/texto}">
+						<div class="form-group" style="margin-top: 20px;">
+							<label for="nome">Nome</label> <input type="text"
+								class="form-control" id="nomeTexto" th:field="*{nome}">
+						</div>
+						<div class="form-group" style="margin-top: 20px;">
+
+							<label for="Resumo">Resumo</label>
+							<textarea class="form-control" id="resumo" rows="3"
+								th:field="*{resumo}"></textarea>
+
+						</div>
+
+						<input type="hidden" class="form-control" id="urlTexto"
+							th:field="*{url}" /> <input type="hidden" class="form-control"
+							id="nomeOriginalTexto" th:field="*{nomeOriginal}" /> <input
+							type="hidden" class="form-control" id="tamanhoTexto"
+							th:field="*{tamanho}" />
+
+						<button type="submit" class="btn btn-secondary"
+							style="margin-top: 20px;">Salvar</button>
+
+					</form>
+
+				</div>
+
+			</div>
+
+
+			<div class="row" id="containerPreviewAudio"
+				style="margin-top: 20px; display: none;">
+
+				<div class="col-md-5 text-center">
+
+					<img class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
+						style="width: 96px; height: 96px;" /> <br />
+
+					<audio style="margin: 20px 0; width: 400px;" controls="controls"
+						id="audio"> Erro ao executar!
+					</audio>
+
+				</div>
+
+				<div class="col-md-7">
+
+					<h3>Descrição do áudio</h3>
+
+					<form method="post" th:object="${audio}"
+						th:action="@{/materiais/audio}">
+						<div class="form-group" style="margin-top: 20px;">
+							<label for="nome">Nome</label> <input type="text"
+								class="form-control" id="nomeAudio" th:field="*{nome}">
+						</div>
+						<div class="form-group" style="margin-top: 20px;">
+							<label for="nome">Duração</label> <input type="text"
+								class="form-control" id="duracao" aria-describedby="duracao"
+								th:field="*{duracao}">
+						</div>
+
+						<input type="hidden" class="form-control" id="urlAudio"
+							th:field="*{url}" /> <input type="hidden" class="form-control"
+							id="nomeOriginalAudio" th:field="*{nomeOriginal}" /> <input
+							type="hidden" class="form-control" id="tamanhoAudio"
+							th:field="*{tamanho}" />
+
+						<button type="submit" class="btn btn-secondary"
+							style="margin-top: 20px;">Salvar</button>
+
+					</form>
+
+				</div>
+
+			</div>
+
+
+			<div class="row" id="containerPreviewVideo"
+				style="margin-top: 20px; display: none;">
+
+				<div class="col-md-5 text-center align-top">
+
+					<video style="width: 400px; height: 350px;" controls="controls"
+						id="video"> Erro ao executar!
+					</video>
+
+				</div>
+
+				<div class="col-md-7">
+
+					<h3>Descrição do vídeo</h3>
+
+					<form method="post" th:object="${video}"
+						th:action="@{/materiais/video}">
+						<div class="form-group" style="margin-top: 20px;">
+							<label for="nome">Nome</label> <input type="text"
+								class="form-control" id="nomeVideo" th:field="*{nome}">
+						</div>
+						<div class="form-group" style="margin-top: 20px;">
+							<label for="nome">Produção</label> <input type="text"
+								class="form-control" id="producao" aria-describedby="producao"
+								th:field="*{producao}">
+						</div>
+
+						<input type="hidden" class="form-control" id="urlVideo"
+							th:field="*{url}" /> <input type="hidden" class="form-control"
+							id="nomeOriginalVideo" th:field="*{nomeOriginal}" /> <input
+							type="hidden" class="form-control" id="tamanhoVideo"
+							th:field="*{tamanho}" />
+
+						<button type="submit" class="btn btn-secondary"
+							style="margin-top: 20px;">Salvar</button>
+
+					</form>
+
+
+				</div>
+
+			</div>
+
+
+			<div class="row" id="containerMateriais" style="margin-top: 50px;">
+
+				<div class="col-md-2" th:each="material : ${materiais}"
+					style="padding-bottom: 30px">
+
+					<div class="card p-3"
+						th:if="${#strings.contains(material, 'Figura')}">
+
+						<div class="card-header text-right"
+							style="padding: 4px 4px; margin-bottom: 8px">
+							<a th:href="@{${'http://localhost:3000/' + material.url }}"
+								class="badge badge-info" target="_blank">Exibir</a>
+						</div>
+
+						<a href="#" data-toggle="modal"
+							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+							class="card-img-top text-center"
+							th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img"
+							border="0" />
+
+						</a>
+
+						<div class="card-body text-center"
+							style="margin: 0; padding: 2px 0">
+
+
+							<p class="card-title" th:text="${material.nome}"
+								style="margin: 0; padding: 2px 0"></p>
+
+							<p class="card-text text-muted">
+								<small
+									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+							</p>
+
+						</div>
+
+					</div>
+
+					<div class="card p-3"
+						th:if="${#strings.contains(material, 'Texto')}">
+
+						<div class="card-header text-right"
+							style="padding: 4px 4px; margin-bottom: 8px">
+							<a th:href="@{${'http://localhost:3000/' + material.url }}"
+								class="badge badge-info" target="_blank">Exibir</a>
+						</div>
+
+
+						<span class="text-center"> <a href="#" data-toggle="modal"
+							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+								class="card-img-top" src="/figuras/iconPdf.png" alt="Img"
+								style="width: 96px; height: 96px;" border="0">
+
+						</a>
+						</span>
+
+						<div class="card-body text-center"
+							style="margin: 0; padding: 2px 0">
+							<p class="card-title" th:text="${material.nome}"></p>
+
+							<p class="card-text text-muted">
+								<small
+									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+							</p>
+
+						</div>
+
+					</div>
+
+					<div class="card p-3"
+						th:if="${#strings.contains(material, 'Audio')}">
+
+						<div class="card-header text-right"
+							style="padding: 4px 4px; margin-bottom: 8px">
+							<a th:href="@{${'http://localhost:3000/' + material.url }}"
+								class="badge badge-info" target="_blank">Exibir</a>
+						</div>
+
+
+						<span class="text-center"> <a href="#" data-toggle="modal"
+							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+								class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
+								style="width: 96px; height: 96px;" border="0">
+
+						</a>
+						</span>
+
+						<div class="card-body text-center"
+							style="margin: 0; padding: 2px 0">
+							<p class="card-title" th:text="${material.nome}"
+								style="margin: 0; padding: 2px 0"></p>
+
+							<p class="card-text text-muted">
+								<small
+									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+							</p>
+
+						</div>
+
+					</div>
+
+					<div class="card p-3"
+						th:if="${#strings.contains(material, 'Video')}">
+
+						<div class="card-header text-right"
+							style="padding: 4px 4px; margin-bottom: 8px">
+							<a th:href="@{${'http://localhost:3000/' + material.url }}"
+								class="badge badge-info" target="_blank">Exibir</a>
+						</div>
+
+
+						<span class="text-center"> <a href="#" data-toggle="modal"
+							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
+								class="card-img-top" src="/figuras/iconVideo.png" alt="Img"
+								style="width: 96px; height: 96px;" border="0">
+
+						</a>
+						</span>
+
+						<div class="card-body text-center"
+							style="margin: 0; padding: 2px 0">
+							<p class="card-title" th:text="${material.nome}"
+								style="margin: 0; padding: 2px 0"></p>
+
+							<p class="card-text text-muted">
+								<small
+									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+							</p>
+
+						</div>
+
+					</div>
+
+
+
+				</div>
+
+			</div>
+
 		</div>
 
 
 
-		<div class="row" id="containerPreviewTexto"
-			style="margin-top: 20px; display: none;">
+		<!-- Modal Erro -->
+		<div class="modal fade" id="containerErro" tabindex="-1" role="dialog"
+			aria-labelledby="containerErro" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header"
+						style="background-color: #A81533; color: #fff">
+						<h5 class="modal-title" id="exampleModalLongTitle">Erro</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close" style="color: #fff">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<span id="msg"></span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			<div class="col-md-5 text-center">
 
-				<object id="texto" width="450" height="400"></object>
+
+		<!-- Modal Detalhes -->
+		<div class="col-md-2" th:each="material : ${materiais}">
+
+			<div th:if="${#strings.contains(material, 'Figura')}">
+
+				<div class="modal fade" th:id="'cam_' + ${material.id}"
+					tabindex="-1" role="dialog"
+					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<div class="row">
+
+									<div class="col-md-4 text-center">
+
+										<img th:src="@{${'http://localhost:3000/' + material.url }}"
+											alt="Img" class="img-fluid" style="border: 0;">
+
+										<p>
+											<small><span th:text="${material.tamanho}"></span></small>
+										</p>
+
+									</div>
+
+									<div class="col-md-8">
+
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome</b></small>
+										</div>
+
+										<p th:text="${material.nome}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome original</b></small>
+										</div>
+
+										<p th:text="${material.nomeOriginal}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Autor</b></small>
+										</div>
+
+										<p th:text="${material.autor}"></p>
+
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</div>
 
-			<div class="col-md-7">
+			<div th:if="${#strings.contains(material, 'Texto')}">
 
-				<h3>Descrição do texto</h3>
+				<div class="modal fade" th:id="'cam_' + ${material.id}"
+					tabindex="-1" role="dialog"
+					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
 
-				<form method="post" th:object="${texto}"
-					th:action="@{/materiais/texto}">
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeTexto" th:field="*{nome}">
+								<div class="row">
+
+									<div class="col-md-4 text-center">
+
+										<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
+											style="width: 96px; height: 96px; border: 0" border="0">
+
+										<p>
+											<small><span th:text="${material.tamanho}"></span></small>
+										</p>
+
+									</div>
+
+									<div class="col-md-8">
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome</b></small>
+										</div>
+
+										<p th:text="${material.nome}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome original</b></small>
+										</div>
+
+										<p th:text="${material.nomeOriginal}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Resumo</b></small>
+										</div>
+
+										<p th:text="${material.resumo}"></p>
+
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
 					</div>
-					<div class="form-group" style="margin-top: 20px;">
-
-						<label for="Resumo">Resumo</label>
-						<textarea class="form-control" id="resumo" rows="3"
-							th:field="*{resumo}"></textarea>
-
-					</div>
-
-					<input type="hidden" class="form-control" id="urlTexto"
-						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalTexto" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoTexto"
-						th:field="*{tamanho}" />
-
-					<button type="submit" class="btn btn-secondary"
-						style="margin-top: 20px;">Salvar</button>
-
-				</form>
+				</div>
 
 			</div>
+
+			<div th:if="${#strings.contains(material, 'Audio')}">
+
+				<div class="modal fade" th:id="'cam_' + ${material.id}"
+					tabindex="-1" role="dialog"
+					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<div class="row">
+
+									<div class="col-md-4 text-center">
+
+										<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
+											style="width: 96px; height: 96px; border: 0" border="0">
+
+										<p>
+											<small><span th:text="${material.tamanho}"></span></small>
+										</p>
+
+									</div>
+
+									<div class="col-md-8">
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome</b></small>
+										</div>
+
+										<p th:text="${material.nome}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome original</b></small>
+										</div>
+
+										<p th:text="${material.nomeOriginal}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Duração</b></small>
+										</div>
+
+										<p th:text="${material.duracao} + ' Min.'"></p>
+
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div th:if="${#strings.contains(material, 'Video')}">
+
+				<div class="modal fade" th:id="'cam_' + ${material.id}"
+					tabindex="-1" role="dialog"
+					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<div class="row">
+
+									<div class="col-md-4 text-center">
+
+										<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
+											style="width: 96px; height: 96px; border: 0" border="0">
+
+										<p>
+											<small><span th:text="${material.tamanho}"></span></small>
+										</p>
+
+									</div>
+
+									<div class="col-md-8">
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome</b></small>
+										</div>
+
+										<p th:text="${material.nome}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Nome original</b></small>
+										</div>
+
+										<p th:text="${material.nomeOriginal}"></p>
+
+										<div style="margin: 0; padding: 0">
+											<small><b>Produção</b></small>
+										</div>
+
+										<p th:text="${material.producao}"></p>
+
+
+									</div>
+
+								</div>
+								new
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
 
 		</div>
 
 
-		<div class="row" id="containerPreviewAudio"
-			style="margin-top: 20px; display: none;">
-
-			<div class="col-md-5 text-center">
-
-				<img class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
-					style="width: 96px; height: 96px;" /> <br />
-
-				<audio style="margin: 20px 0; width: 400px;" controls="controls"
-					id="audio"> Erro ao executar!
-				</audio>
-
-			</div>
-
-			<div class="col-md-7">
-
-				<h3>Descrição do áudio</h3>
-
-				<form method="post" th:object="${audio}"
-					th:action="@{/materiais/audio}">
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeAudio" th:field="*{nome}">
-					</div>
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Duração</label> <input type="text"
-							class="form-control" id="duracao" aria-describedby="duracao"
-							th:field="*{duracao}">
-					</div>
-
-					<input type="hidden" class="form-control" id="urlAudio"
-						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalAudio" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoAudio"
-						th:field="*{tamanho}" />
-
-					<button type="submit" class="btn btn-secondary"
-						style="margin-top: 20px;">Salvar</button>
-
-				</form>
-
-			</div>
-
-		</div>
-
-
-		<div class="row" id="containerPreviewVideo"
-			style="margin-top: 20px; display: none;">
-
-			<div class="col-md-5 text-center align-top">
-
-				<video style="width: 400px; height: 350px;" controls="controls"
-					id="video"> Erro ao executar!
-				</video>
-
-			</div>
-
-			<div class="col-md-7">
-
-				<h3>Descrição do vídeo</h3>
-
-				<form method="post" th:object="${video}"
-					th:action="@{/materiais/video}">
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeVideo" th:field="*{nome}">
-					</div>
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Produção</label> <input type="text"
-							class="form-control" id="producao" aria-describedby="producao"
-							th:field="*{producao}">
-					</div>
-
-					<input type="hidden" class="form-control" id="urlVideo"
-						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalVideo" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoVideo"
-						th:field="*{tamanho}" />
-
-					<button type="submit" class="btn btn-secondary"
-						style="margin-top: 20px;">Salvar</button>
-
-				</form>
-
-
-			</div>
-
-		</div>
-
-
-		<div class="row" id="containerMateriais" style="margin-top: 50px;">
-
-			<div class="col-md-2" th:each="material : ${materiais}"
-				style="padding-bottom: 30px">
-
-				<div class="card p-3"
-					th:if="${#strings.contains(material, 'Figura')}">
-
-					<div class="card-header text-right"
-						style="padding: 4px 4px; margin-bottom: 8px">
-						<a th:href="@{${'http://localhost:3000/' + material.url }}"
-							class="badge badge-info" target="_blank">Exibir</a>
-					</div>
-
-					<a href="#" data-toggle="modal"
-						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-						class="card-img-top text-center"
-						th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img"
-						border="0" />
-
-					</a>
-
-					<div class="card-body text-center"
-						style="margin: 0; padding: 2px 0">
-
-
-						<p class="card-title" th:text="${material.nome}"
-							style="margin: 0; padding: 2px 0"></p>
-
-						<p class="card-text text-muted">
-							<small
-								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-						</p>
-
-					</div>
-
-				</div>
-
-				<div class="card p-3"
-					th:if="${#strings.contains(material, 'Texto')}">
-
-					<div class="card-header text-right"
-						style="padding: 4px 4px; margin-bottom: 8px">
-						<a th:href="@{${'http://localhost:3000/' + material.url }}"
-							class="badge badge-info" target="_blank">Exibir</a>
-					</div>
-
-
-					<span class="text-center"> <a href="#" data-toggle="modal"
-						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-							class="card-img-top" src="/figuras/iconPdf.png" alt="Img"
-							style="width: 96px; height: 96px;" border="0">
-
-					</a>
-					</span>
-
-					<div class="card-body text-center"
-						style="margin: 0; padding: 2px 0">
-						<p class="card-title" th:text="${material.nome}"></p>
-
-						<p class="card-text text-muted">
-							<small
-								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-						</p>
-
-					</div>
-
-				</div>
-
-				<div class="card p-3"
-					th:if="${#strings.contains(material, 'Audio')}">
-
-					<div class="card-header text-right"
-						style="padding: 4px 4px; margin-bottom: 8px">
-						<a th:href="@{${'http://localhost:3000/' + material.url }}"
-							class="badge badge-info" target="_blank">Exibir</a>
-					</div>
-
-
-					<span class="text-center"> <a href="#" data-toggle="modal"
-						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-							class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
-							style="width: 96px; height: 96px;" border="0">
-
-					</a>
-					</span>
-
-					<div class="card-body text-center"
-						style="margin: 0; padding: 2px 0">
-						<p class="card-title" th:text="${material.nome}"
-							style="margin: 0; padding: 2px 0"></p>
-
-						<p class="card-text text-muted">
-							<small
-								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-						</p>
-
-					</div>
-
-				</div>
-
-				<div class="card p-3"
-					th:if="${#strings.contains(material, 'Video')}">
-
-					<div class="card-header text-right"
-						style="padding: 4px 4px; margin-bottom: 8px">
-						<a th:href="@{${'http://localhost:3000/' + material.url }}"
-							class="badge badge-info" target="_blank">Exibir</a>
-					</div>
-
-
-					<span class="text-center"> <a href="#" data-toggle="modal"
-						th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-							class="card-img-top" src="/figuras/iconVideo.png" alt="Img"
-							style="width: 96px; height: 96px;" border="0">
-
-					</a>
-					</span>
-
-					<div class="card-body text-center"
-						style="margin: 0; padding: 2px 0">
-						<p class="card-title" th:text="${material.nome}"
-							style="margin: 0; padding: 2px 0"></p>
-
-						<p class="card-text text-muted">
-							<small
-								th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-						</p>
-
-					</div>
-
-				</div>
-
-
-
-			</div>
-
-		</div>
-
-	</div>
-
-
-
-
-
-	<!-- Modal Erro -->
-	<div class="modal fade" id="containerErro" tabindex="-1" role="dialog"
-		aria-labelledby="containerErro" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header"
-					style="background-color: #A81533; color: #fff">
-					<h5 class="modal-title" id="exampleModalLongTitle">Erro</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close" style="color: #fff">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<span id="msg"></span>
-				</div>
-			</div>
-		</div>
-	</div>
+		<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+
+		<script type="text/javascript" th:src="@{/js/dropzone.min.js}"></script>
+
+
+		<script
+			src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+		<script type="text/javascript">
+	
+	let stepper;
+	
+	document.addEventListener('DOMContentLoaded', function () {
+		
+		 stepper = new Stepper(document.querySelector('.bs-stepper'),{linear: true, animation: true});
+	});
+	
+	function nextStep(){
+		
+		stepper.next();
+		
+		return;
+		
+	}
 	
 	
-
-	<!-- Modal Detalhes -->
-	<div class="col-md-2" th:each="material : ${materiais}">
-
-		<div th:if="${#strings.contains(material, 'Figura')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img th:src="@{${'http://localhost:3000/' + material.url }}"
-										alt="Img" class="img-fluid" style="border: 0;">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Autor</b></small>
-									</div>
-
-									<p th:text="${material.autor}"></p>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Texto')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Resumo</b></small>
-									</div>
-
-									<p th:text="${material.resumo}"></p>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Audio')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Duração</b></small>
-									</div>
-
-									<p th:text="${material.duracao} + ' Min.'"></p>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Video')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Produção</b></small>
-									</div>
-
-									<p th:text="${material.producao}"></p>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-
-	</div>
-
-
-	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-
-	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
-
-	<script type="text/javascript" th:src="@{/js/dropzone.min.js}"></script>
-
-
-
-	<script type="text/javascript">
+	/* document.querySelector("#oi").addEventListener("click", function() {
+		var stepper = new Stepper(document.querySelector('.bs-stepper'));
+		stepper.next();
+		}); */
 	
 	let uploadInciado = false;
 	
@@ -814,7 +948,7 @@ input:checked+.slider:before {
 	let texto = document.querySelector("#texto");
 	let audio = document.querySelector("#audio");
 	let video = document.querySelector("#video");
-
+	
 	
 	function erro(file, response){
 		
@@ -892,6 +1026,13 @@ input:checked+.slider:before {
 	
 	
 	function preview(file, response){
+		
+		setTimeout(function(){
+			
+			nextStep();
+			
+		}, 1000);		
+		
 		
 		let nomeOriginal = file.name;
 		
@@ -985,8 +1126,10 @@ input:checked+.slider:before {
 		}
 		
 		$(containerPreview).toggle('slow');		
-		
 	}
+	
+	
+	
 	
 	
 		Dropzone.options.up = {
@@ -1009,9 +1152,53 @@ input:checked+.slider:before {
 			}
 
 		};
+		
+		//
+		
+	
+		
+		//
 	
 	</script>
 
+
+		<script type="text/javascript" th:inline="javascript">
+	    /*<![CDATA[*/
+	    
+	    	
+	    	let nomeCategorias = [[${categorias}]].map((e) => e.nome);
+	    
+	    	$(document).ready(function() {
+						
+						$('#tags').tagsInput({
+							
+							  interactive: true,
+							  placeholder: 'Adicionar tag',
+							  width: 'auto',
+							  height: 'auto',
+							  hide: true,
+							  delimiter: ',',
+							  removeWithBackspace: true
+						});
+						
+						$('#categorias').tagsInput({						
+							  interactive: true,
+							  placeholder: 'Adicionar categoria',
+							  width: 'auto',
+							  height: 'auto',
+							  hide: true,
+							  delimiter: ',',
+							  removeWithBackspace: true,
+							  'autocomplete': {
+									source: nomeCategorias
+								}
+						});									
+						
+					});	
+			
+	
+	    /*]]>*/
+</script>
 </body>
 </html>
 

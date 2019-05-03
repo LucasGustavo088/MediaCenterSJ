@@ -3,6 +3,8 @@ package br.usjt.plataforma.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,14 +73,16 @@ public class MaterialController {
 	}
 
 	@PostMapping("figura")
-	public String adicionarFigura(Figura figura) {
+	public void adicionarFigura(HttpServletRequest request) {
+		
+		System.out.println(request.getParameter("tipo"));
 
-		if (figura.getNome() != null && !figura.getNome().isEmpty()) {
+		/*if (figura.getNome() != null && !figura.getNome().isEmpty()) {
 
 			this.materialService.salvar(figura);
 		}
 
-		return "redirect:/materiais";
+		return "redirect:/materiais";*/
 
 	}
 

@@ -23,7 +23,7 @@ public class CategoriaService {
 	
 	public List<Categoria> listar(){
 		
-		return (ArrayList<Categoria>) repository.findAll();
+		return repository.findAllByOrderByNomeAsc();
 				
 	}
 	
