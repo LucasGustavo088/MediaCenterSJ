@@ -128,11 +128,11 @@ img {
 							</button>
 						</div>
 						<div class="line"></div>
-						<div class="step" data-target="#confirmar-part">
+						<div class="step" data-target="#classificacao-part">
 							<button type="button" class="step-trigger" role="tab"
-								aria-controls="confirmar-part" id="confirmar-part-trigger">
+								aria-controls="classificacao-part" id="classificacao-part-trigger">
 								<span class="bs-stepper-circle">3</span> <span
-									class="bs-stepper-label">Confirmar envio</span>
+									class="bs-stepper-label">Realizar classificação</span>
 							</button>
 						</div>
 
@@ -182,7 +182,6 @@ img {
 						</div>
 						<div id="descricao-part" class="content" role="tabpanel"
 							aria-labelledby="descricao-part-trigger">
-
 							<!--  -->
 
 							<div class="row" id="containerPreviewImagem"
@@ -190,15 +189,14 @@ img {
 
 								<div class="col-md-5 text-center">
 
-									<img class="img-fluid rounded" id="imagem"
+									<img class="img-fluid rounded imagem"
 										style="max-height: 400px;" />
 
 								</div>
 
 								<div class="col-md-7">
 
-									<h4 style="margin-top: 0; padding-top: 0">Descrição da
-										figura</h4>
+									<h4 style="margin-top: 0; padding-top: 0">Descrição</h4>
 
 									<form method="post" th:object="${figura}"
 										th:action="@{/materiais/figura}">
@@ -206,21 +204,102 @@ img {
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
-												class="form-control" id="nomeImagem" th:field="*{nome}">
+												class="form-control" id="nomeImagem" name="nomeImagem" >
 										</div>
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="nome"><b>Autor</b></label> <input type="text"
-												class="form-control" id="autor" aria-describedby="autor"
-												th:field="*{autor}">
+												class="form-control" id="autorImagem" name="autorImagem" aria-describedby="autor"
+												>
+										</div>
+										
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><small>Nome original do arquivo</samll></label> <input type="text"
+												class="form-control" id="nomeOriginalImagem" name="nomeOriginalImagem" aria-describedby="nomeOriginalImagem"
+												disabled="disabled">
+										</div>
+										
+										<div class="form-group"
+											style="margin-top: 15px; font-size: 1.2em">
+											<label for="nome"><samll>Tamanho</small></label> <input type="text"
+												class="form-control" id="tamanhoImagem" name="tamanhoImagem" aria-describedby="tamanhoImagem"
+												disabled="disabled">
 										</div>
 
 										<input type="hidden" class="form-control" id="urlImagem"
-											th:field="*{url}" /> <input type="hidden"
+											th:field="*{url}" /> <!-- <input type="text"
 											class="form-control" id="nomeOriginalImagem"
 											th:field="*{nomeOriginal}" /> <input type="hidden"
-											class="form-control" id="tamanhoImagem" th:field="*{tamanho}" />
+											class="form-control" id="tamanhoImagem" th:field="*{tamanho}" /> -->
 
+
+										<!-- <h6 style="margin: 24px 0 4px 0">
+											<b>Tags</b>
+										</h6>
+
+										<input id="tags" name="tags" type="text" class="form-control">
+
+
+										<h6 style="margin: 24px 0 7px 0">
+											<b>Categorias</b>
+										</h6>
+
+										<div class="clearfix"></div>
+
+										<div style="border: 1px solid #ddd; margin: 0; float: left;"
+											class="rounded">
+
+
+											<div
+												style="float: left; margin: 5px 12px 4px 0; padding: 7px"
+												th:each="categoria : ${categorias}">
+												<label
+													class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+													th:for="${categoria.id}"> <input type="checkbox"
+													th:id="${categoria.id}" class="mdl-checkbox__input">
+													<span class="mdl-checkbox__label"
+													th:text="${categoria.nome}"></span>
+												</label>
+											</div>
+
+										</div>
+ -->
+										<div class="clearfix"></div>
+
+										<button type="button" class="btn btn btn-primary float-right"
+											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
+									</form>
+
+
+								</div>
+
+							</div>
+
+						</div>
+						<div class="bs-stepper-content">
+
+						<div id="classificacao-part" class="content" role="tabpanel"
+							aria-labelledby="classificacao-part-trigger">
+							
+							<!--  -->
+
+							<div class="row" id="resumoImagem"
+								style="margin-top: 10px; display: ;">
+
+								<div class="col-md-5 text-center">
+
+									<img class="img-fluid rounded imagem"
+										style="max-height: 400px;" />
+
+								</div>
+
+								<div class="col-md-7">
+
+									<h4 style="margin-top: 0; padding-top: 0">Classificação</h4>
+
+									<form>
 
 										<h6 style="margin: 24px 0 4px 0">
 											<b>Tags</b>
@@ -229,7 +308,7 @@ img {
 										<input id="tags" name="tags" type="text" class="form-control">
 
 
-										<h6 style="margin: 24px 0 7px 0">
+										<h6 style="margin: 35px 0 7px 0">
 											<b>Categorias</b>
 										</h6>
 
@@ -264,14 +343,6 @@ img {
 								</div>
 
 							</div>
-
-						</div>
-						<div class="bs-stepper-content">
-
-						<div id="confirmar-part" class="content" role="tabpanel"
-							aria-labelledby="confirmar-part-trigger">
-
-							<!--  -->
 
 
 							<!--  -->
@@ -920,31 +991,28 @@ img {
 	
 	document.addEventListener('DOMContentLoaded', function () {
 		
-		 stepper = new Stepper(document.querySelector('.bs-stepper'),{linear: true, animation: true});
+		 stepper = new Stepper(document.querySelector('.bs-stepper'),{linear: false, animation: true});
 	});
 	
 	function nextStep(){
 		
 		stepper.next();
 		
+		console.log('vai!');
+		
 		return;
 		
 	}
 	
-	
-	/* document.querySelector("#oi").addEventListener("click", function() {
-		var stepper = new Stepper(document.querySelector('.bs-stepper'));
-		stepper.next();
-		}); */
+
 	
 	let uploadInciado = false;
 	
 	
 	let progressBar = document.querySelector("#progressBar");	
 	let progressBarProgresso = document.querySelector("#progresso");
+
 	
-	
-	let imagem = document.querySelector("#imagem");	
 	let texto = document.querySelector("#texto");
 	let audio = document.querySelector("#audio");
 	let video = document.querySelector("#video");
@@ -1046,6 +1114,12 @@ img {
 			
 		if(tipo.includes('image/')){
 			
+			console.log(document.querySelectorAll(".imagem"));
+			
+			document.querySelectorAll(".imagem").forEach((img) => img.src = "http://localhost:3000/" + url);
+			
+			console.log(document.querySelectorAll(".imagem"));
+			
 			containerPreview += 'Imagem';
 			
 			let nomeImagem = document.querySelector("#nomeImagem");
@@ -1055,7 +1129,7 @@ img {
 			
 			nomeImagem.value = nomeOriginal.split(".")[0];
 			
-			imagem.src = "http://localhost:3000/" + url;		
+			//imagem.src = "http://localhost:3000/" + url;		
 			
 			urlImagem.value = url;
 			
@@ -1179,20 +1253,7 @@ img {
 							  hide: true,
 							  delimiter: ',',
 							  removeWithBackspace: true
-						});
-						
-						$('#categorias').tagsInput({						
-							  interactive: true,
-							  placeholder: 'Adicionar categoria',
-							  width: 'auto',
-							  height: 'auto',
-							  hide: true,
-							  delimiter: ',',
-							  removeWithBackspace: true,
-							  'autocomplete': {
-									source: nomeCategorias
-								}
-						});									
+						});														
 						
 					});	
 			
