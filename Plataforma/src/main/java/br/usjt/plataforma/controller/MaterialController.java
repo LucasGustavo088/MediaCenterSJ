@@ -56,8 +56,26 @@ public class MaterialController {
 
 		return mv;
 	}
+	
+	
+	@PostMapping()
+	public void adicionarFigura(HttpServletRequest request) {
+		
+		System.out.println(request.getParameter("tipo"));
+		System.out.println(request.getParameter("categorias"));
+		System.out.println(request.getParameter("tags"));
 
-	@RequestMapping(value = "/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		/*if (figura.getNome() != null && !figura.getNome().isEmpty()) {
+
+			this.materialService.salvar(figura);
+		}
+
+		return "redirect:/materiais";*/
+
+	}
+	
+
+/*	@RequestMapping(value = "/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> listarM() {
 
 		List<JSONObject> entities = new ArrayList<JSONObject>();
@@ -70,7 +88,12 @@ public class MaterialController {
 		}
 		
 		return new ResponseEntity<Object>(entities.toString(), HttpStatus.OK);
-	}
+	}*/
+	
+	
+	
+	
+	/*
 
 	@PostMapping("figura")
 	public void adicionarFigura(HttpServletRequest request) {
@@ -82,7 +105,7 @@ public class MaterialController {
 			this.materialService.salvar(figura);
 		}
 
-		return "redirect:/materiais";*/
+		return "redirect:/materiais";
 
 	}
 
@@ -117,6 +140,6 @@ public class MaterialController {
 		}
 
 		return "redirect:/materiais";
-	}
+	}*/
 
 }

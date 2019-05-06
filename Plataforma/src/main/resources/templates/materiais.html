@@ -7,7 +7,6 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Materiais</title>
 
-<!-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">  -->
 
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
@@ -29,16 +28,13 @@
 	src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
 
-<script type='text/javascript'
-	src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
-
-
 <link rel="stylesheet"
 	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">
 
 
 
 <style type="text/css">
+
 body {
 	font-family: 'Roboto', sans-serif !important;
 }
@@ -53,9 +49,22 @@ body {
 	border: 2px dashed #DCDCDC;
 }
 
-img {
-	border-style: none;
+.cam_imagem {
+	display: none;
 }
+
+.cam_texto {
+	display: none;
+}
+
+.cam_audio {
+	display: none;
+}
+
+.cam_video {
+	display: none;
+}
+
 </style>
 
 </head>
@@ -93,12 +102,6 @@ img {
 				</h1>
 
 
-
-
-
-
-
-
 			</div>
 
 		</div>
@@ -130,7 +133,8 @@ img {
 						<div class="line"></div>
 						<div class="step" data-target="#classificacao-part">
 							<button type="button" class="step-trigger" role="tab"
-								aria-controls="classificacao-part" id="classificacao-part-trigger">
+								aria-controls="classificacao-part"
+								id="classificacao-part-trigger">
 								<span class="bs-stepper-circle">3</span> <span
 									class="bs-stepper-label">Realizar classificação</span>
 							</button>
@@ -196,76 +200,237 @@ img {
 
 								<div class="col-md-7">
 
-									<h4 style="margin-top: 0; padding-top: 0">Descrição</h4>
+									<h4 style="margin-top: 0; padding-top: 0">Descrição Imagem</h4>
 
-									<form method="post" th:object="${figura}"
-										th:action="@{/materiais/figura}">
+									<form method="post" th:action="@{/materiais}" name="formImagem"
+										id="formImagem">
 
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
-												class="form-control" id="nomeImagem" name="nomeImagem" >
+												class="form-control" id="nome" name="nome"
+												aria-describedby="nome">
 										</div>
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="nome"><b>Autor</b></label> <input type="text"
-												class="form-control" id="autorImagem" name="autorImagem" aria-describedby="autor"
-												>
+												class="form-control" id="autor" name="autor"
+												aria-describedby="autor">
 										</div>
-										
+
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
-											<label for="nome"><small>Nome original do arquivo</samll></label> <input type="text"
-												class="form-control" id="nomeOriginalImagem" name="nomeOriginalImagem" aria-describedby="nomeOriginalImagem"
-												disabled="disabled">
+											<label for="nome"><small>Nome original do
+													arquivo</samll></label> <input type="text" class="form-control"
+												id="nomeOriginal" name="nomeOriginal"
+												aria-describedby="nomeOriginal" disabled="disabled">
 										</div>
-										
+
 										<div class="form-group"
 											style="margin-top: 15px; font-size: 1.2em">
-											<label for="nome"><samll>Tamanho</small></label> <input type="text"
-												class="form-control" id="tamanhoImagem" name="tamanhoImagem" aria-describedby="tamanhoImagem"
-												disabled="disabled">
+											<label for="nome"><samll>Tamanho</small></label> <input
+												type="text" class="form-control" id="tamanho" name="tamanho"
+												aria-describedby="tamanho" disabled="disabled">
 										</div>
 
-										<input type="hidden" class="form-control" id="urlImagem"
-											th:field="*{url}" /> <!-- <input type="text"
-											class="form-control" id="nomeOriginalImagem"
-											th:field="*{nomeOriginal}" /> <input type="hidden"
-											class="form-control" id="tamanhoImagem" th:field="*{tamanho}" /> -->
+										<input type="hidden" class="form-control" id="tipo"
+											name="tipo" value="Figura" /> <input type="hidden"
+											class="form-control" id="url" name="url" />
+
+										<button type="button" class="btn btn btn-primary float-right"
+											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
+									</form>
 
 
-										<!-- <h6 style="margin: 24px 0 4px 0">
-											<b>Tags</b>
-										</h6>
+								</div>
 
-										<input id="tags" name="tags" type="text" class="form-control">
+							</div>
 
+							<!--  -->
 
-										<h6 style="margin: 24px 0 7px 0">
-											<b>Categorias</b>
-										</h6>
+							<div class="row" id="containerPreviewTexto"
+								style="margin-top: 10px; display: none;">
 
-										<div class="clearfix"></div>
+								<div class="col-md-5 text-center">
 
-										<div style="border: 1px solid #ddd; margin: 0; float: left;"
-											class="rounded">
+									<object class="texto" width="450" height="400"></object>
 
+								</div>
 
-											<div
-												style="float: left; margin: 5px 12px 4px 0; padding: 7px"
-												th:each="categoria : ${categorias}">
-												<label
-													class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-													th:for="${categoria.id}"> <input type="checkbox"
-													th:id="${categoria.id}" class="mdl-checkbox__input">
-													<span class="mdl-checkbox__label"
-													th:text="${categoria.nome}"></span>
-												</label>
-											</div>
+								<div class="col-md-7">
 
+									<h4 style="margin-top: 0; padding-top: 0">Descrição Texto</h4>
+
+									<form method="post" th:action="@{/materiais}" name="formTexto"
+										id="formTexto">
+
+										<div class="form-group"
+											style="margin-top: 20px; font-size: 1.2em">
+											<label for="nome"><b>Nome</b></label> <input type="text"
+												class="form-control" id="nome" name="nome"
+												aria-describedby="nome">
 										</div>
- -->
-										<div class="clearfix"></div>
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><b>Resumo</b></label>
+											<textarea class="form-control" id="resumo" rows="3"
+												name="resumo"></textarea>
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><small>Nome original do
+													arquivo</samll></label> <input type="text" class="form-control"
+												id="nomeOriginal" name="nomeOriginal"
+												aria-describedby="nomeOriginal" disabled="disabled">
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 15px; font-size: 1.2em">
+											<label for="nome"><samll>Tamanho</small></label> <input
+												type="text" class="form-control" id="tamanho" name="tamanho"
+												aria-describedby="tamanho" disabled="disabled">
+										</div>
+
+										<input type="hidden" class="form-control" id="tipo"
+											name="tipo" value="Texto" /> <input type="hidden"
+											class="form-control" id="url" name="url" />
+
+										<button type="button" class="btn btn btn-primary float-right"
+											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
+									</form>
+
+
+								</div>
+
+							</div>
+
+							<!--  -->
+
+							<div class="row" id="containerPreviewAudio"
+								style="margin-top: 10px; display: none;">
+
+								<div class="col-md-5 text-center">
+
+									<div class="cam_audio">
+
+										<img class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
+											style="width: 96px; height: 96px;" /> <br />
+
+										<audio style="margin: 20px 0; width: 400px;" class="audio"
+											controls="controls"> Erro ao executar!
+										</audio>
+
+									</div>
+
+								</div>
+
+								<div class="col-md-7">
+
+									<h4 style="margin-top: 0; padding-top: 0">Descrição Áudio</h4>
+
+									<form method="post" th:action="@{/materiais}" name="formAudio"
+										id="formAudio">
+
+										<div class="form-group"
+											style="margin-top: 20px; font-size: 1.2em">
+											<label for="nome"><b>Nome</b></label> <input type="text"
+												class="form-control" id="nome" name="nome"
+												aria-describedby="nome">
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="duracao"><b>Duração</b> (Minutos)</label> <input
+												type="text" class="form-control" id="duracao" name="duracao"
+												aria-describedby="duracao">
+										</div>
+
+
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><small>Nome original do
+													arquivo</samll></label> <input type="text" class="form-control"
+												id="nomeOriginal" name="nomeOriginal"
+												aria-describedby="nomeOriginal" disabled="disabled">
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 15px; font-size: 1.2em">
+											<label for="nome"><samll>Tamanho</small></label> <input
+												type="text" class="form-control" id="tamanho" name="tamanho"
+												aria-describedby="tamanho" disabled="disabled">
+										</div>
+
+										<input type="hidden" class="form-control" id="tipo"
+											name="tipo" value="Audio" /> <input type="hidden"
+											class="form-control" id="url" name="url" />
+
+										<button type="button" class="btn btn btn-primary float-right"
+											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
+									</form>
+
+
+								</div>
+
+							</div>
+
+							<!--  -->
+
+							<div class="row" id="containerPreviewVideo"
+								style="margin-top: 10px; display: none;">
+
+								<div class="col-md-5 text-center">
+
+									<video style="width: 400px; height: 350px;" class="video"
+										controls="controls"> Erro ao executar!
+									</video>
+
+								</div>
+
+								<div class="col-md-7">
+
+									<h4 style="margin-top: 0; padding-top: 0">Descrição Vídeo</h4>
+
+									<form method="post" th:action="@{/materiais}" name="formVideo"
+										id="formVideo">
+
+										<div class="form-group"
+											style="margin-top: 20px; font-size: 1.2em">
+											<label for="nome"><b>Nome</b></label> <input type="text"
+												class="form-control" id="nome" name="nome"
+												aria-describedby="nome">
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="duracao"><b>Produção</b></label> <input
+												type="text" class="form-control" id="producao"
+												name="producao" aria-describedby="producao">
+										</div>
+
+
+										<div class="form-group"
+											style="margin-top: 24px; font-size: 1.2em">
+											<label for="nome"><small>Nome original do
+													arquivo</samll></label> <input type="text" class="form-control"
+												id="nomeOriginal" name="nomeOriginal"
+												aria-describedby="nomeOriginal" disabled="disabled">
+										</div>
+
+										<div class="form-group"
+											style="margin-top: 15px; font-size: 1.2em">
+											<label for="nome"><samll>Tamanho</small></label> <input
+												type="text" class="form-control" id="tamanho" name="tamanho"
+												aria-describedby="tamanho" disabled="disabled">
+										</div>
+
+										<input type="hidden" class="form-control" id="tipo"
+											name="tipo" value="Video" /> <input type="hidden"
+											class="form-control" id="url" name="url" />
 
 										<button type="button" class="btn btn btn-primary float-right"
 											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
@@ -280,986 +445,802 @@ img {
 						</div>
 						<div class="bs-stepper-content">
 
-						<div id="classificacao-part" class="content" role="tabpanel"
-							aria-labelledby="classificacao-part-trigger">
-							
-							<!--  -->
+							<div id="classificacao-part" class="content" role="tabpanel"
+								aria-labelledby="classificacao-part-trigger">
 
-							<div class="row" id="resumoImagem"
-								style="margin-top: 10px; display: ;">
+								<!--  -->
 
-								<div class="col-md-5 text-center">
+								<div class="row" style="margin-top: 10px;">
 
-									<img class="img-fluid rounded imagem"
-										style="max-height: 400px;" />
+									<div class="col-md-5 text-center">
+
+										<div class="cam_imagem">
+
+											<img class="img-fluid rounded imagem"
+												style="max-height: 400px;" />
+
+										</div>
+
+										<div class="cam_texto">
+
+											<object class="texto" width="450" height="400"></object>
+
+										</div>
+
+										<div class="cam_audio">
+
+											<img class="card-img-top" src="/figuras/iconMp3.png"
+												alt="Img" style="width: 96px; height: 96px;" /> <br />
+
+											<audio style="margin: 20px 0; width: 400px;" class="audio"
+												controls="controls"> Erro ao executar!
+											</audio>
+
+										</div>
+
+										<div class="cam_video">
+
+											<video style="width: 400px; height: 350px;" class="video"
+												controls="controls"> Erro ao executar!
+											</video>
+
+										</div>
+
+									</div>
+
+
+									<div class="col-md-7" id="cam_classificacao"
+										style="display: none">
+
+										<h4 style="margin-top: 0; padding-top: 0">Classificação</h4>
+
+										<form>
+
+											<h6 style="margin: 24px 0 4px 0">
+												<b>Tags</b>
+											</h6>
+
+											<input id="tags" name="tags" type="text" class="form-control">
+
+
+											<h6 style="margin: 35px 0 7px 0">
+												<b>Categorias</b>
+											</h6>
+
+											<div class="clearfix"></div>
+
+											<div style="border: 1px solid #ddd; margin: 0; float: left;"
+												class="rounded">
+
+
+												<div
+													style="float: left; margin: 5px 12px 4px 0; padding: 7px"
+													th:each="categoria : ${categorias}">
+													<label
+														class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+														th:for="'cat_' + ${categoria.id}"> <input
+														type="checkbox" th:value="${categoria.id}"
+														th:id="'cat_' +${categoria.id}" name="categorias[]"
+														class="mdl-checkbox__input"> <span
+														class="mdl-checkbox__label" th:text="${categoria.nome}"></span>
+													</label>
+												</div>
+
+											</div>
+
+											<div class="clearfix"></div>
+
+											<button type="button" class="btn btn btn-primary float-right"
+												style="margin: 30px 0" onclick="enviar()">Salvar</button>
+
+										</form>
+
+
+									</div>
+
+
+									<!--  -->
 
 								</div>
 
-								<div class="col-md-7">
-
-									<h4 style="margin-top: 0; padding-top: 0">Classificação</h4>
-
-									<form>
-
-										<h6 style="margin: 24px 0 4px 0">
-											<b>Tags</b>
-										</h6>
-
-										<input id="tags" name="tags" type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+					<!--  -->
 
 
-										<h6 style="margin: 35px 0 7px 0">
-											<b>Categorias</b>
-										</h6>
 
-										<div class="clearfix"></div>
+					<div class="row" id="containerMateriais" style="margin-top: 50px;">
 
-										<div style="border: 1px solid #ddd; margin: 0; float: left;"
-											class="rounded">
+						<div class="col-md-2" th:each="material : ${materiais}"
+							style="padding-bottom: 30px">
+
+							<div class="card p-3"
+								th:if="${#strings.contains(material, 'Figura')}">
+
+								<div class="card-header text-right"
+									style="padding: 4px 4px; margin-bottom: 8px">
+									<a th:href="@{${'http://localhost:3000/' + material.url }}"
+										class="badge badge-info" target="_blank">Exibir</a>
+								</div>
+
+								<a href="#" data-toggle="modal"
+									th:data-target="'#cam_' + ${material.id}" title="Detalhes">
+									<img class="card-img-top text-center"
+									th:src="@{${'http://localhost:3000/' + material.url }}"
+									alt="Img" border="0" />
+
+								</a>
+
+								<div class="card-body text-center"
+									style="margin: 0; padding: 2px 0">
 
 
-											<div
-												style="float: left; margin: 5px 12px 4px 0; padding: 7px"
-												th:each="categoria : ${categorias}">
-												<label
-													class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-													th:for="${categoria.id}"> <input type="checkbox"
-													th:id="${categoria.id}" class="mdl-checkbox__input">
-													<span class="mdl-checkbox__label"
-													th:text="${categoria.nome}"></span>
-												</label>
+									<p class="card-title" th:text="${material.nome}"
+										style="margin: 0; padding: 2px 0"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+
+								</div>
+
+							</div>
+
+							<div class="card p-3"
+								th:if="${#strings.contains(material, 'Texto')}">
+
+								<div class="card-header text-right"
+									style="padding: 4px 4px; margin-bottom: 8px">
+									<a th:href="@{${'http://localhost:3000/' + material.url }}"
+										class="badge badge-info" target="_blank">Exibir</a>
+								</div>
+
+
+								<span class="text-center"> <a href="#"
+									data-toggle="modal" th:data-target="'#cam_' + ${material.id}"
+									title="Detalhes"> <img class="card-img-top"
+										src="/figuras/iconPdf.png" alt="Img"
+										style="width: 96px; height: 96px;" border="0">
+
+								</a>
+								</span>
+
+								<div class="card-body text-center"
+									style="margin: 0; padding: 2px 0">
+									<p class="card-title" th:text="${material.nome}"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+
+								</div>
+
+							</div>
+
+							<div class="card p-3"
+								th:if="${#strings.contains(material, 'Audio')}">
+
+								<div class="card-header text-right"
+									style="padding: 4px 4px; margin-bottom: 8px">
+									<a th:href="@{${'http://localhost:3000/' + material.url }}"
+										class="badge badge-info" target="_blank">Exibir</a>
+								</div>
+
+
+								<span class="text-center"> <a href="#"
+									data-toggle="modal" th:data-target="'#cam_' + ${material.id}"
+									title="Detalhes"> <img class="card-img-top"
+										src="/figuras/iconMp3.png" alt="Img"
+										style="width: 96px; height: 96px;" border="0">
+
+								</a>
+								</span>
+
+								<div class="card-body text-center"
+									style="margin: 0; padding: 2px 0">
+									<p class="card-title" th:text="${material.nome}"
+										style="margin: 0; padding: 2px 0"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+
+								</div>
+
+							</div>
+
+							<div class="card p-3"
+								th:if="${#strings.contains(material, 'Video')}">
+
+								<div class="card-header text-right"
+									style="padding: 4px 4px; margin-bottom: 8px">
+									<a th:href="@{${'http://localhost:3000/' + material.url }}"
+										class="badge badge-info" target="_blank">Exibir</a>
+								</div>
+
+
+								<span class="text-center"> <a href="#"
+									data-toggle="modal" th:data-target="'#cam_' + ${material.id}"
+									title="Detalhes"> <img class="card-img-top"
+										src="/figuras/iconVideo.png" alt="Img"
+										style="width: 96px; height: 96px;" border="0">
+
+								</a>
+								</span>
+
+								<div class="card-body text-center"
+									style="margin: 0; padding: 2px 0">
+									<p class="card-title" th:text="${material.nome}"
+										style="margin: 0; padding: 2px 0"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+
+								</div>
+
+							</div>
+
+
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+
+				<!-- Modal Erro -->
+				<div class="modal fade" id="containerErro" tabindex="-1"
+					role="dialog" aria-labelledby="containerErro" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header"
+								style="background-color: #A81533; color: #fff">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close" style="color: #fff">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<span id="msg"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- Modal Detalhes -->
+				<div class="col-md-2" th:each="material : ${materiais}">
+
+					<div th:if="${#strings.contains(material, 'Figura')}">
+
+						<div class="modal fade" th:id="'cam_' + ${material.id}"
+							tabindex="-1" role="dialog"
+							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+
+										<div class="row">
+
+											<div class="col-md-4 text-center">
+
+												<img th:src="@{${'http://localhost:3000/' + material.url }}"
+													alt="Img" class="img-fluid" style="border: 0;">
+
+												<p>
+													<small><span th:text="${material.tamanho}"></span></small>
+												</p>
+
+											</div>
+
+											<div class="col-md-8">
+
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome</b></small>
+												</div>
+
+												<p th:text="${material.nome}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome original</b></small>
+												</div>
+
+												<p th:text="${material.nomeOriginal}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Autor</b></small>
+												</div>
+
+												<p th:text="${material.autor}"></p>
+
+
 											</div>
 
 										</div>
 
-										<div class="clearfix"></div>
-
-										<button type="button" class="btn btn btn-primary float-right"
-											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
-
-									</form>
-
-
+									</div>
 								</div>
-
 							</div>
-
-
-							<!--  -->
-
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			<!--  -->
-
-			<!-- <div class="row" id="containerPreviewImagem"
-			style="margin-top: 20px; display:;">
-
-			<div class="col-md-4 text-center">
-
-				<img class="img-fluid rounded" id="imagem" />
-
-			</div>
-
-			<div class="col-md-5">
-
-
-				<h4>Descrição da figura</h4>
-
-
-				<form method="post" th:object="${figura}"
-					th:action="@{/materiais/figura}">
-
-
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Nome</label> <input type="text"
-							class="form-control" id="nomeImagem" th:field="*{nome}">
-					</div>
-					<div class="form-group" style="margin-top: 20px;">
-						<label for="nome">Autor</label> <input type="text"
-							class="form-control" id="autor" aria-describedby="autor"
-							th:field="*{autor}">
-					</div>
-
-					<input type="hidden" class="form-control" id="urlImagem"
-						th:field="*{url}" /> <input type="hidden" class="form-control"
-						id="nomeOriginalImagem" th:field="*{nomeOriginal}" /> <input
-						type="hidden" class="form-control" id="tamanhoImagem"
-						th:field="*{tamanho}" />
-
-					<button type="submit" class="btn btn-secondary"
-						style="margin-top: 20px;">Salvar</button>
-			</div>
-
-			<div class="col-md-3" style="border-left: 1px solid #ccc">
-
-				<h4>Categorias</h4>
-
-
-				<th:block th:each="categoria : ${categorias}">
-
-					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
-						th:for="${categoria.id}"> <input type="checkbox"
-						th:field="*{categorias}" th:value="${categoria.id}"
-						th:id="${categoria.id}" class="mdl-switch__input"
-						style="display: inline;"> <span class="mdl-switch__label"
-						th:text="${categoria.nome}"></span>
-					</label>
-
-
-				</th:block>
-
-
-				</form>
-
-
-			</div>
-
-		</div> -->
-
-
-
-			<div class="row" id="containerPreviewTexto"
-				style="margin-top: 20px; display: none;">
-
-				<div class="col-md-5 text-center">
-
-					<object id="texto" width="450" height="400"></object>
-
-				</div>
-
-				<div class="col-md-7">
-
-					<h3>Descrição do texto</h3>
-
-					<form method="post" th:object="${texto}"
-						th:action="@{/materiais/texto}">
-						<div class="form-group" style="margin-top: 20px;">
-							<label for="nome">Nome</label> <input type="text"
-								class="form-control" id="nomeTexto" th:field="*{nome}">
-						</div>
-						<div class="form-group" style="margin-top: 20px;">
-
-							<label for="Resumo">Resumo</label>
-							<textarea class="form-control" id="resumo" rows="3"
-								th:field="*{resumo}"></textarea>
-
-						</div>
-
-						<input type="hidden" class="form-control" id="urlTexto"
-							th:field="*{url}" /> <input type="hidden" class="form-control"
-							id="nomeOriginalTexto" th:field="*{nomeOriginal}" /> <input
-							type="hidden" class="form-control" id="tamanhoTexto"
-							th:field="*{tamanho}" />
-
-						<button type="submit" class="btn btn-secondary"
-							style="margin-top: 20px;">Salvar</button>
-
-					</form>
-
-				</div>
-
-			</div>
-
-
-			<div class="row" id="containerPreviewAudio"
-				style="margin-top: 20px; display: none;">
-
-				<div class="col-md-5 text-center">
-
-					<img class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
-						style="width: 96px; height: 96px;" /> <br />
-
-					<audio style="margin: 20px 0; width: 400px;" controls="controls"
-						id="audio"> Erro ao executar!
-					</audio>
-
-				</div>
-
-				<div class="col-md-7">
-
-					<h3>Descrição do áudio</h3>
-
-					<form method="post" th:object="${audio}"
-						th:action="@{/materiais/audio}">
-						<div class="form-group" style="margin-top: 20px;">
-							<label for="nome">Nome</label> <input type="text"
-								class="form-control" id="nomeAudio" th:field="*{nome}">
-						</div>
-						<div class="form-group" style="margin-top: 20px;">
-							<label for="nome">Duração</label> <input type="text"
-								class="form-control" id="duracao" aria-describedby="duracao"
-								th:field="*{duracao}">
-						</div>
-
-						<input type="hidden" class="form-control" id="urlAudio"
-							th:field="*{url}" /> <input type="hidden" class="form-control"
-							id="nomeOriginalAudio" th:field="*{nomeOriginal}" /> <input
-							type="hidden" class="form-control" id="tamanhoAudio"
-							th:field="*{tamanho}" />
-
-						<button type="submit" class="btn btn-secondary"
-							style="margin-top: 20px;">Salvar</button>
-
-					</form>
-
-				</div>
-
-			</div>
-
-
-			<div class="row" id="containerPreviewVideo"
-				style="margin-top: 20px; display: none;">
-
-				<div class="col-md-5 text-center align-top">
-
-					<video style="width: 400px; height: 350px;" controls="controls"
-						id="video"> Erro ao executar!
-					</video>
-
-				</div>
-
-				<div class="col-md-7">
-
-					<h3>Descrição do vídeo</h3>
-
-					<form method="post" th:object="${video}"
-						th:action="@{/materiais/video}">
-						<div class="form-group" style="margin-top: 20px;">
-							<label for="nome">Nome</label> <input type="text"
-								class="form-control" id="nomeVideo" th:field="*{nome}">
-						</div>
-						<div class="form-group" style="margin-top: 20px;">
-							<label for="nome">Produção</label> <input type="text"
-								class="form-control" id="producao" aria-describedby="producao"
-								th:field="*{producao}">
-						</div>
-
-						<input type="hidden" class="form-control" id="urlVideo"
-							th:field="*{url}" /> <input type="hidden" class="form-control"
-							id="nomeOriginalVideo" th:field="*{nomeOriginal}" /> <input
-							type="hidden" class="form-control" id="tamanhoVideo"
-							th:field="*{tamanho}" />
-
-						<button type="submit" class="btn btn-secondary"
-							style="margin-top: 20px;">Salvar</button>
-
-					</form>
-
-
-				</div>
-
-			</div>
-
-
-			<div class="row" id="containerMateriais" style="margin-top: 50px;">
-
-				<div class="col-md-2" th:each="material : ${materiais}"
-					style="padding-bottom: 30px">
-
-					<div class="card p-3"
-						th:if="${#strings.contains(material, 'Figura')}">
-
-						<div class="card-header text-right"
-							style="padding: 4px 4px; margin-bottom: 8px">
-							<a th:href="@{${'http://localhost:3000/' + material.url }}"
-								class="badge badge-info" target="_blank">Exibir</a>
-						</div>
-
-						<a href="#" data-toggle="modal"
-							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-							class="card-img-top text-center"
-							th:src="@{${'http://localhost:3000/' + material.url }}" alt="Img"
-							border="0" />
-
-						</a>
-
-						<div class="card-body text-center"
-							style="margin: 0; padding: 2px 0">
-
-
-							<p class="card-title" th:text="${material.nome}"
-								style="margin: 0; padding: 2px 0"></p>
-
-							<p class="card-text text-muted">
-								<small
-									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-							</p>
-
 						</div>
 
 					</div>
 
-					<div class="card p-3"
-						th:if="${#strings.contains(material, 'Texto')}">
+					<div th:if="${#strings.contains(material, 'Texto')}">
 
-						<div class="card-header text-right"
-							style="padding: 4px 4px; margin-bottom: 8px">
-							<a th:href="@{${'http://localhost:3000/' + material.url }}"
-								class="badge badge-info" target="_blank">Exibir</a>
-						</div>
+						<div class="modal fade" th:id="'cam_' + ${material.id}"
+							tabindex="-1" role="dialog"
+							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
 
+										<div class="row">
 
-						<span class="text-center"> <a href="#" data-toggle="modal"
-							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-								class="card-img-top" src="/figuras/iconPdf.png" alt="Img"
-								style="width: 96px; height: 96px;" border="0">
+											<div class="col-md-4 text-center">
 
-						</a>
-						</span>
+												<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
+													style="width: 96px; height: 96px; border: 0" border="0">
 
-						<div class="card-body text-center"
-							style="margin: 0; padding: 2px 0">
-							<p class="card-title" th:text="${material.nome}"></p>
+												<p>
+													<small><span th:text="${material.tamanho}"></span></small>
+												</p>
 
-							<p class="card-text text-muted">
-								<small
-									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-							</p>
+											</div>
 
-						</div>
+											<div class="col-md-8">
 
-					</div>
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome</b></small>
+												</div>
 
-					<div class="card p-3"
-						th:if="${#strings.contains(material, 'Audio')}">
+												<p th:text="${material.nome}"></p>
 
-						<div class="card-header text-right"
-							style="padding: 4px 4px; margin-bottom: 8px">
-							<a th:href="@{${'http://localhost:3000/' + material.url }}"
-								class="badge badge-info" target="_blank">Exibir</a>
-						</div>
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome original</b></small>
+												</div>
 
+												<p th:text="${material.nomeOriginal}"></p>
 
-						<span class="text-center"> <a href="#" data-toggle="modal"
-							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-								class="card-img-top" src="/figuras/iconMp3.png" alt="Img"
-								style="width: 96px; height: 96px;" border="0">
+												<div style="margin: 0; padding: 0">
+													<small><b>Resumo</b></small>
+												</div>
 
-						</a>
-						</span>
-
-						<div class="card-body text-center"
-							style="margin: 0; padding: 2px 0">
-							<p class="card-title" th:text="${material.nome}"
-								style="margin: 0; padding: 2px 0"></p>
-
-							<p class="card-text text-muted">
-								<small
-									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-							</p>
-
-						</div>
-
-					</div>
-
-					<div class="card p-3"
-						th:if="${#strings.contains(material, 'Video')}">
-
-						<div class="card-header text-right"
-							style="padding: 4px 4px; margin-bottom: 8px">
-							<a th:href="@{${'http://localhost:3000/' + material.url }}"
-								class="badge badge-info" target="_blank">Exibir</a>
-						</div>
+												<p th:text="${material.resumo}"></p>
 
 
-						<span class="text-center"> <a href="#" data-toggle="modal"
-							th:data-target="'#cam_' + ${material.id}" title="Detalhes"> <img
-								class="card-img-top" src="/figuras/iconVideo.png" alt="Img"
-								style="width: 96px; height: 96px;" border="0">
+											</div>
 
-						</a>
-						</span>
-
-						<div class="card-body text-center"
-							style="margin: 0; padding: 2px 0">
-							<p class="card-title" th:text="${material.nome}"
-								style="margin: 0; padding: 2px 0"></p>
-
-							<p class="card-text text-muted">
-								<small
-									th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-							</p>
-
-						</div>
-
-					</div>
-
-
-
-				</div>
-
-			</div>
-
-		</div>
-
-
-
-		<!-- Modal Erro -->
-		<div class="modal fade" id="containerErro" tabindex="-1" role="dialog"
-			aria-labelledby="containerErro" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header"
-						style="background-color: #A81533; color: #fff">
-						<h5 class="modal-title" id="exampleModalLongTitle">Erro</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close" style="color: #fff">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<span id="msg"></span>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-
-		<!-- Modal Detalhes -->
-		<div class="col-md-2" th:each="material : ${materiais}">
-
-			<div th:if="${#strings.contains(material, 'Figura')}">
-
-				<div class="modal fade" th:id="'cam_' + ${material.id}"
-					tabindex="-1" role="dialog"
-					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-
-								<div class="row">
-
-									<div class="col-md-4 text-center">
-
-										<img th:src="@{${'http://localhost:3000/' + material.url }}"
-											alt="Img" class="img-fluid" style="border: 0;">
-
-										<p>
-											<small><span th:text="${material.tamanho}"></span></small>
-										</p>
+										</div>
 
 									</div>
-
-									<div class="col-md-8">
-
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome</b></small>
-										</div>
-
-										<p th:text="${material.nome}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome original</b></small>
-										</div>
-
-										<p th:text="${material.nomeOriginal}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Autor</b></small>
-										</div>
-
-										<p th:text="${material.autor}"></p>
-
-
-									</div>
-
 								</div>
-
 							</div>
 						</div>
+
 					</div>
-				</div>
 
-			</div>
+					<div th:if="${#strings.contains(material, 'Audio')}">
 
-			<div th:if="${#strings.contains(material, 'Texto')}">
+						<div class="modal fade" th:id="'cam_' + ${material.id}"
+							tabindex="-1" role="dialog"
+							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
 
-				<div class="modal fade" th:id="'cam_' + ${material.id}"
-					tabindex="-1" role="dialog"
-					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
+										<div class="row">
 
-								<div class="row">
+											<div class="col-md-4 text-center">
 
-									<div class="col-md-4 text-center">
+												<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
+													style="width: 96px; height: 96px; border: 0" border="0">
 
-										<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
-											style="width: 96px; height: 96px; border: 0" border="0">
+												<p>
+													<small><span th:text="${material.tamanho}"></span></small>
+												</p>
 
-										<p>
-											<small><span th:text="${material.tamanho}"></span></small>
-										</p>
+											</div>
+
+											<div class="col-md-8">
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome</b></small>
+												</div>
+
+												<p th:text="${material.nome}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome original</b></small>
+												</div>
+
+												<p th:text="${material.nomeOriginal}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Duração</b></small>
+												</div>
+
+												<p th:text="${material.duracao} + ' Min.'"></p>
+
+
+											</div>
+
+										</div>
 
 									</div>
-
-									<div class="col-md-8">
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome</b></small>
-										</div>
-
-										<p th:text="${material.nome}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome original</b></small>
-										</div>
-
-										<p th:text="${material.nomeOriginal}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Resumo</b></small>
-										</div>
-
-										<p th:text="${material.resumo}"></p>
-
-
-									</div>
-
 								</div>
-
 							</div>
 						</div>
+
 					</div>
-				</div>
 
-			</div>
+					<div th:if="${#strings.contains(material, 'Video')}">
 
-			<div th:if="${#strings.contains(material, 'Audio')}">
+						<div class="modal fade" th:id="'cam_' + ${material.id}"
+							tabindex="-1" role="dialog"
+							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
 
-				<div class="modal fade" th:id="'cam_' + ${material.id}"
-					tabindex="-1" role="dialog"
-					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
+										<div class="row">
 
-								<div class="row">
+											<div class="col-md-4 text-center">
 
-									<div class="col-md-4 text-center">
+												<img class="img-fluid" src="/figuras/iconVideo.png"
+													alt="Img" style="width: 96px; height: 96px; border: 0"
+													border="0">
 
-										<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
-											style="width: 96px; height: 96px; border: 0" border="0">
+												<p>
+													<small><span th:text="${material.tamanho}"></span></small>
+												</p>
 
-										<p>
-											<small><span th:text="${material.tamanho}"></span></small>
-										</p>
+											</div>
+
+											<div class="col-md-8">
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome</b></small>
+												</div>
+
+												<p th:text="${material.nome}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Nome original</b></small>
+												</div>
+
+												<p th:text="${material.nomeOriginal}"></p>
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Produção</b></small>
+												</div>
+
+												<p th:text="${material.producao}"></p>
+
+
+											</div>
+
+										</div>
+
 
 									</div>
-
-									<div class="col-md-8">
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome</b></small>
-										</div>
-
-										<p th:text="${material.nome}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome original</b></small>
-										</div>
-
-										<p th:text="${material.nomeOriginal}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Duração</b></small>
-										</div>
-
-										<p th:text="${material.duracao} + ' Min.'"></p>
-
-
-									</div>
-
 								</div>
-
 							</div>
 						</div>
+
 					</div>
+
+
 				</div>
 
-			</div>
 
-			<div th:if="${#strings.contains(material, 'Video')}">
+				<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 
-				<div class="modal fade" th:id="'cam_' + ${material.id}"
-					tabindex="-1" role="dialog"
-					th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
+				<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 
-								<div class="row">
-
-									<div class="col-md-4 text-center">
-
-										<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
-											style="width: 96px; height: 96px; border: 0" border="0">
-
-										<p>
-											<small><span th:text="${material.tamanho}"></span></small>
-										</p>
-
-									</div>
-
-									<div class="col-md-8">
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome</b></small>
-										</div>
-
-										<p th:text="${material.nome}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Nome original</b></small>
-										</div>
-
-										<p th:text="${material.nomeOriginal}"></p>
-
-										<div style="margin: 0; padding: 0">
-											<small><b>Produção</b></small>
-										</div>
-
-										<p th:text="${material.producao}"></p>
+				<script type="text/javascript" th:src="@{/js/dropzone.min.js}"></script>
 
 
-									</div>
-
-								</div>
-								new
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-
-		</div>
-
-
-		<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-
-		<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
-
-		<script type="text/javascript" th:src="@{/js/dropzone.min.js}"></script>
-
-
-		<script
-			src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+				<script
+					src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
+				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 
 
-		<script type="text/javascript">
-	
-	let stepper;
-	
-	document.addEventListener('DOMContentLoaded', function () {
-		
-		 stepper = new Stepper(document.querySelector('.bs-stepper'),{linear: false, animation: true});
-	});
-	
-	function nextStep(){
-		
-		stepper.next();
-		
-		console.log('vai!');
-		
-		return;
-		
-	}
-	
-
-	
-	let uploadInciado = false;
-	
-	
-	let progressBar = document.querySelector("#progressBar");	
-	let progressBarProgresso = document.querySelector("#progresso");
-
-	
-	let texto = document.querySelector("#texto");
-	let audio = document.querySelector("#audio");
-	let video = document.querySelector("#video");
-	
-	
-	function erro(file, response){
-		
-		resetUpload();
-			
-		let nomeArquivo = file.name;
-		
-		let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3);
-		
-		let textoErro = '';
-		
-		if(!file.accepted){					
-			
-			textoErro = 'Formato ou Tamanho inválido!'
-			
-		}else{
-			
-			textoErro = JSON.parse(JSON.stringify(response)).erro;			
-		}
-		
-		$("#containerErro").modal();
-	
-		document.querySelector("#msg").innerHTML = '<p><b>Arquivo:</b> ' + nomeArquivo + '</p><p><b>Tamanho:</b> ' + tamanhoArquivo + ' Mb</p><p><b>' + textoErro + '</b></p>';
-		
-		setTimeout(function(){
-			
-			$("#containerErro").modal("hide");
-			
-			document.querySelector("#msg").innerHTML = '';
-			
-		}, 4000);
-		
-		
-	}	
-	
-	function progressBarCorreBergson(progress, file){
-		
-		let nomeOriginal = file.name;
-		
-		let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3);
-	
-		if(!uploadInciado){
-			
-			uploadInciado = true;			
-			
-			$("#containerProgressBar").show(); 
-			
-			$("#containerUpload").hide();
-		}
-			
-		progressBar.setAttribute("aria-valuenow", parseInt(progress));
-		
-		progressBar.style.width = parseInt(progress) + "%";
-				
-		progressBarProgresso.innerHTML = nomeOriginal + " - " + tamanhoArquivo + " Mb";
-	
-	}
-	
-	
-	function resetUpload(){
-		
-		$("#containerProgressBar").hide();
-		
-		progressBar.setAttribute("aria-valuenow", 0);
-		
-		progressBar.style.width = "0%";
-		
-		progressBarProgresso.innerHTML = "";
-		
-		uploadInciado = false;	 
-		
-		$("#containerUpload").show();		
-		
-	}	
-	
-	
-	function preview(file, response){
-		
-		setTimeout(function(){
-			
-			nextStep();
-			
-		}, 1000);		
-		
-		
-		let nomeOriginal = file.name;
-		
-		let url = JSON.parse(JSON.stringify(response)).arquivo;
-		
-		let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3) + " Mb";
-		
-		let tipo = file.type;
-		
-		let containerPreview = '#containerPreview';
-			
-		if(tipo.includes('image/')){
-			
-			console.log(document.querySelectorAll(".imagem"));
-			
-			document.querySelectorAll(".imagem").forEach((img) => img.src = "http://localhost:3000/" + url);
-			
-			console.log(document.querySelectorAll(".imagem"));
-			
-			containerPreview += 'Imagem';
-			
-			let nomeImagem = document.querySelector("#nomeImagem");
-			let urlImagem = document.querySelector("#urlImagem");
-			let nomeOriginalImagem = document.querySelector("#nomeOriginalImagem");
-			let tamanhoImagem = document.querySelector("#tamanhoImagem");
-			
-			nomeImagem.value = nomeOriginal.split(".")[0];
-			
-			//imagem.src = "http://localhost:3000/" + url;		
-			
-			urlImagem.value = url;
-			
-			nomeOriginalImagem.value = nomeOriginal;
-			
-			tamanhoImagem.value = tamanhoArquivo;
-		    
-			
-		}else if(tipo.includes('application/pdf')){
-			
-			containerPreview += 'Texto';
-			
-			let nomeTexto = document.querySelector("#nomeTexto");
-			let urlTexto = document.querySelector("#urlTexto");
-			let nomeOriginalTexto = document.querySelector("#nomeOriginalTexto");
-			let tamanhoTexto = document.querySelector("#tamanhoTexto");
-			
-			nomeTexto.value = nomeOriginal.split(".")[0];	
-			
-			urlTexto.value = url;
-			
-			nomeOriginalTexto.value = nomeOriginal;
-			
-			tamanhoTexto.value = tamanhoArquivo;
-			
-			texto.setAttribute("data", "http://localhost:3000/" + url);
-			
-		
-		}else if(tipo.includes('audio/mpeg')){
-			
-			containerPreview += 'Audio';
-			
-			let nomeAudio = document.querySelector("#nomeAudio");
-			let urlAudio = document.querySelector("#urlAudio");
-			let nomeOriginalAudio = document.querySelector("#nomeOriginalAudio");
-			let tamanhoAudio = document.querySelector("#tamanhoAudio");
-			
-			nomeAudio.value = nomeOriginal.split(".")[0];	
-			
-			urlAudio.value = url;
-			
-			nomeOriginalAudio.value = nomeOriginal;
-			
-			tamanhoAudio.value = tamanhoArquivo;
-			
-			audio.innerHTML = '<source src="http://localhost:3000/' + url+ '" type="audio/mp3" />';
-			
-		
-		}else if(tipo.includes('video/mp4')){
-			
-			containerPreview += 'Video';
-			
-			let nomeVideo = document.querySelector("#nomeVideo");
-			let urlVideo = document.querySelector("#urlVideo");
-			let nomeOriginalVideo = document.querySelector("#nomeOriginalVideo");
-			let tamanhoVideo = document.querySelector("#tamanhoVideo");
-			
-			nomeVideo.value = nomeOriginal.split(".")[0];	
-			
-			urlVideo.value = url;
-			
-			nomeOriginalVideo.value = nomeOriginal;
-			
-			tamanhoVideo.value = tamanhoArquivo;
-					
-			video.innerHTML = '<source src="http://localhost:3000/' + url+ '" type="video/mp4">';
-			
-		}
-		
-		$(containerPreview).toggle('slow');		
-	}
-	
-	
-	
-	
-	
-		Dropzone.options.up = {
-			paramName : "file",
-			dictDefaultMessage : "",
-			maxFilesize : 100,
-			maxFiles: 1,
-			parallelUploads : 1,
-			acceptedFiles : "application/pdf, image/*, audio/mpeg, video/mp4",
-			previewTemplate : '<div style="display:none"></div>',		
-			success : function(file, response) {preview(file, response);},			
-			error : function(file, response) {erro(file, response);},			
-			init : function() {
-				
-				this.on("uploadprogress", function(file, progress, bytesSent) {
-					
-					progressBarCorreBergson(progress, file);									
-					
-				})
-			}
-
-		};
-		
-		//
-		
-	
-		
-		//
-	
-	</script>
-
-
-		<script type="text/javascript" th:inline="javascript">
-	    /*<![CDATA[*/
-	    
+				<script type="text/javascript" th:inline="javascript">
+	    		/*<![CDATA[*/
 	    	
-	    	let nomeCategorias = [[${categorias}]].map((e) => e.nome);
+	    	
+	    		let nomeCategorias = [[${categorias}]].map((e) => e.nome);
+	    		
+	    		let form;
+	    		
+	    		let stepper;
+	    		
+	    		let uploadInciado = false;	    		
+	    		
+	    		let progressBar = document.querySelector("#progressBar");
+	    		
+	    		let progressBarProgresso = document.querySelector("#progresso");
 	    
-	    	$(document).ready(function() {
+    			
+	    		$(document).ready(function() {
+					
+	    			/* Ativa a captura de tags */
+					$('#tags').tagsInput({
 						
-						$('#tags').tagsInput({
+						  interactive: true,
+						  placeholder: 'Adicionar tag',
+						  width: 'auto',
+						  height: 'auto',
+						  hide: true,
+						  delimiter: ',',
+						  removeWithBackspace: true
+					});														
+					
+				});	
+	    		
+	    		/* Ativa o step by step */
+	    		document.addEventListener('DOMContentLoaded', function () {
+	    			
+	    			 stepper = new Stepper(document.querySelector('.bs-stepper'),{linear: false, animation: true});
+	    			 
+	    		});
+	    		
+	    		/* Próximo passo do step by step */
+	    		function nextStep(){
+	    			
+	    			stepper.next();
+	    			
+	    			return;
+	    			
+	    		}
+	    		
+ 				/* Injeta categorias e tags no form atual e realiza o envio */
+				function enviar(){			
+					
+		 			let campoCategorias = document.createElement("input");
+		 	
+				 	campoCategorias.type = 'text';
+				 	campoCategorias.name = 'categorias';
+				 	campoCategorias.value = Array.prototype.map.call(document.querySelectorAll("input[name^='categorias[']:checked"), e => e.value);
+				 	form.appendChild(campoCategorias);			
+											
+					let campoTags = document.createElement('input');
+				 	
+					campoTags.type = 'text';
+					campoTags.name = 'tags';
+					campoTags.value = document.querySelector('#tags').value;
+					form.appendChild(campoTags);					
 							
-							  interactive: true,
-							  placeholder: 'Adicionar tag',
-							  width: 'auto',
-							  height: 'auto',
-							  hide: true,
-							  delimiter: ',',
-							  removeWithBackspace: true
-						});														
+					form.submit();			
+				}
+
+				/* Exibe erro no processo de upload - Extensão, tamanho e Exception do back */
+				function erro(file, response){
+					
+					resetUpload();
 						
-					});	
-			
+					let nomeArquivo = file.name;
+					
+					let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3);
+					
+					let textoErro = '';
+					
+					if(!file.accepted){					
+						
+						textoErro = 'Formato ou Tamanho inválido!'
+						
+					}else{
+						
+						textoErro = JSON.parse(JSON.stringify(response)).erro;			
+					}
+					
+					$("#containerErro").modal();
+				
+					document.querySelector("#msg").innerHTML = '<p><b>Arquivo:</b> ' + nomeArquivo + '</p><p><b>Tamanho:</b> ' + tamanhoArquivo + ' Mb</p><p><b>' + textoErro + '</b></p>';
+					
+					setTimeout(function(){
+						
+						$("#containerErro").modal("hide");
+						
+						document.querySelector("#msg").innerHTML = '';
+						
+					}, 4000);
+					
+					
+				}
+				
+				/* Realiza a atualização da barra de progresso durante o upload */
+				function progressBarCorreBergson(progress, file){
+					
+					let nomeOriginal = file.name;
+					
+					let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3);
+				
+					if(!uploadInciado){
+						
+						uploadInciado = true;			
+						
+						$("#containerProgressBar").show(); 
+						
+						$("#containerUpload").hide();
+					}
+						
+					progressBar.setAttribute("aria-valuenow", parseInt(progress));
+					
+					progressBar.style.width = parseInt(progress) + "%";
+							
+					progressBarProgresso.innerHTML = nomeOriginal + " - " + tamanhoArquivo + " Mb";
+				
+				}
 	
-	    /*]]>*/
-</script>
+				/* Reinicia o processo de upload em caso de erros */
+				function resetUpload(){
+					
+					$("#containerProgressBar").hide();
+					
+					progressBar.setAttribute("aria-valuenow", 0);
+					
+					progressBar.style.width = "0%";
+					
+					progressBarProgresso.innerHTML = "";
+					
+					uploadInciado = false;	 
+					
+					$("#containerUpload").show();		
+					
+				}	
+	
+				/* Habilita a descrição apropriada do material conforme seu tipo */
+				function preview(file, response){
+					
+					document.querySelector('#cam_classificacao').style.display = "block";		
+					
+					let nomeOriginalArquivo = file.name;
+					
+					let urlArquivo = JSON.parse(JSON.stringify(response)).arquivo;		
+					
+					let tamanhoArquivo = parseFloat((file.size /1024) / 1024).toFixed(3) + " Mb";
+					
+					let tipo = file.type;
+					
+					let containerPreview = '#containerPreview';
+					
+						
+					if(tipo.includes('image/')){
+						
+						containerPreview += 'Imagem';
+						
+						document.querySelectorAll(".cam_imagem").forEach((cam) => cam.style.display = "block");
+									
+						document.querySelectorAll(".imagem").forEach((img) => img.src = "http://localhost:3000/" + urlArquivo);
+						
+						form = document.querySelector('#formImagem');
+									
+						form.querySelector('#nome').value = nomeOriginalArquivo.split(".")[0];
+						form.querySelector('#url').value = urlArquivo;
+						form.querySelector('#nomeOriginal').value = nomeOriginalArquivo;
+						form.querySelector('#tamanho').value = tamanhoArquivo;		    
+						
+					
+					}else if(tipo.includes('application/pdf')){
+						
+						containerPreview += 'Texto';
+						
+						document.querySelectorAll(".cam_texto").forEach((cam) => cam.style.display = "block");
+						
+						document.querySelectorAll(".texto").forEach((txt) => txt.data = "http://localhost:3000/" + urlArquivo);
+						
+						form = document.querySelector('#formTexto');
+									
+						form.querySelector('#nome').value = nomeOriginalArquivo.split(".")[0];
+						form.querySelector('#url').value = urlArquivo;
+						form.querySelector('#nomeOriginal').value = nomeOriginalArquivo;
+						form.querySelector('#tamanho').value = tamanhoArquivo;		    
+					
+					
+					}else if(tipo.includes('audio/mpeg')){
+						
+						containerPreview += 'Audio';
+						
+						document.querySelectorAll(".cam_audio").forEach((cam) => cam.style.display = "block");
+						
+						document.querySelectorAll(".audio").forEach((audio) => audio.innerHTML = '<source src="http://localhost:3000/' + urlArquivo + '" type="audio/mp3"/>');
+						
+						form = document.querySelector('#formAudio');
+									
+						form.querySelector('#nome').value = nomeOriginalArquivo.split(".")[0];
+						form.querySelector('#url').value = urlArquivo;
+						form.querySelector('#nomeOriginal').value = nomeOriginalArquivo;
+						form.querySelector('#tamanho').value = tamanhoArquivo;			
+						
+					
+					}else if(tipo.includes('video/mp4')){
+						
+						containerPreview += 'Video';
+						
+						document.querySelectorAll(".cam_video").forEach((cam) => cam.style.display = "block");
+						
+						document.querySelectorAll(".video").forEach((video) => video.innerHTML = '<source src="http://localhost:3000/' + urlArquivo + '" type="video/mp4"/>');
+						
+						form = document.querySelector('#formVideo');
+									
+						form.querySelector('#nome').value = nomeOriginalArquivo.split(".")[0];
+						form.querySelector('#url').value = urlArquivo;
+						form.querySelector('#nomeOriginal').value = nomeOriginalArquivo;
+						form.querySelector('#tamanho').value = tamanhoArquivo;
+									
+					}
+						
+					document.querySelector(containerPreview).style.display = "";
+					
+					nextStep();		
+						
+				}
+		
+				/* Ativa o dropzone e drag and drop*/
+				Dropzone.options.up = {
+					paramName : "file",
+					dictDefaultMessage : "",
+					maxFilesize : 100,
+					maxFiles: 1,
+					parallelUploads : 1,
+					acceptedFiles : "application/pdf, image/*, audio/mpeg, video/mp4",
+					previewTemplate : '<div style="display:none"></div>',		
+					success : function(file, response) {preview(file, response);},			
+					error : function(file, response) {erro(file, response);},			
+					init : function() {
+						
+						this.on("uploadprogress", function(file, progress, bytesSent) {
+							
+							progressBarCorreBergson(progress, file);									
+							
+						})
+					}
+
+				};
+		
+				/*]]>*/
+				</script>
+		
 </body>
 </html>
 
