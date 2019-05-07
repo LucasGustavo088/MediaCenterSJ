@@ -31,10 +31,10 @@
 <link rel="stylesheet"
 	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">
 
-
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <style type="text/css">
-
 body {
 	font-family: 'Roboto', sans-serif !important;
 }
@@ -65,6 +65,9 @@ body {
 	display: none;
 }
 
+img {
+	border: 0
+}
 </style>
 
 </head>
@@ -202,20 +205,21 @@ body {
 
 									<h4 style="margin-top: 0; padding-top: 0">Descrição Imagem</h4>
 
-									<form method="post" th:action="@{/materiais}" name="formImagem"
-										id="formImagem">
+
+									<form method="post" th:action="@{/materiais/figura}"
+										th:object="${figura}" name="formImagem" id="formImagem">
 
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
 												class="form-control" id="nome" name="nome"
-												aria-describedby="nome">
+												aria-describedby="nome" th:field="*{nome}">
 										</div>
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="nome"><b>Autor</b></label> <input type="text"
 												class="form-control" id="autor" name="autor"
-												aria-describedby="autor">
+												aria-describedby="autor" th:field="*{autor}">
 										</div>
 
 										<div class="form-group"
@@ -223,22 +227,23 @@ body {
 											<label for="nome"><small>Nome original do
 													arquivo</samll></label> <input type="text" class="form-control"
 												id="nomeOriginal" name="nomeOriginal"
-												aria-describedby="nomeOriginal" disabled="disabled">
+												aria-describedby="nomeOriginal" readonly
+												th:field="*{nomeOriginal}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 15px; font-size: 1.2em">
 											<label for="nome"><samll>Tamanho</small></label> <input
 												type="text" class="form-control" id="tamanho" name="tamanho"
-												aria-describedby="tamanho" disabled="disabled">
+												aria-describedby="tamanho" readonly th:field="*{tamanho}">
 										</div>
 
-										<input type="hidden" class="form-control" id="tipo"
-											name="tipo" value="Figura" /> <input type="hidden"
-											class="form-control" id="url" name="url" />
+										<input type="hidden" class="form-control" id="url" name="url"
+											th:field="*{url}" />
 
 										<button type="button" class="btn btn btn-primary float-right"
 											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+
 
 									</form>
 
@@ -262,20 +267,20 @@ body {
 
 									<h4 style="margin-top: 0; padding-top: 0">Descrição Texto</h4>
 
-									<form method="post" th:action="@{/materiais}" name="formTexto"
-										id="formTexto">
+									<form method="post" th:action="@{/materiais/texto}"
+										th:object="${texto}" name="formTexto" id="formTexto">
 
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
 												class="form-control" id="nome" name="nome"
-												aria-describedby="nome">
+												aria-describedby="nome" th:field="*{nome}">
 										</div>
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="nome"><b>Resumo</b></label>
 											<textarea class="form-control" id="resumo" rows="3"
-												name="resumo"></textarea>
+												name="resumo" th:field="*{resumo}"></textarea>
 										</div>
 
 										<div class="form-group"
@@ -283,19 +288,19 @@ body {
 											<label for="nome"><small>Nome original do
 													arquivo</samll></label> <input type="text" class="form-control"
 												id="nomeOriginal" name="nomeOriginal"
-												aria-describedby="nomeOriginal" disabled="disabled">
+												aria-describedby="nomeOriginal" readonly
+												th:field="*{nomeOriginal}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 15px; font-size: 1.2em">
 											<label for="nome"><samll>Tamanho</small></label> <input
 												type="text" class="form-control" id="tamanho" name="tamanho"
-												aria-describedby="tamanho" disabled="disabled">
+												aria-describedby="tamanho" readonly th:field="*{tamanho}">
 										</div>
 
-										<input type="hidden" class="form-control" id="tipo"
-											name="tipo" value="Texto" /> <input type="hidden"
-											class="form-control" id="url" name="url" />
+										<input type="hidden" class="form-control" id="url" name="url"
+											th:field="*{url}" />
 
 										<button type="button" class="btn btn btn-primary float-right"
 											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
@@ -331,21 +336,21 @@ body {
 
 									<h4 style="margin-top: 0; padding-top: 0">Descrição Áudio</h4>
 
-									<form method="post" th:action="@{/materiais}" name="formAudio"
-										id="formAudio">
+									<form method="post" th:action="@{/materiais/audio}"
+										th:object="${audio}" name="formAudio" id="formAudio">
 
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
 												class="form-control" id="nome" name="nome"
-												aria-describedby="nome">
+												aria-describedby="nome" th:field="*{nome}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="duracao"><b>Duração</b> (Minutos)</label> <input
 												type="text" class="form-control" id="duracao" name="duracao"
-												aria-describedby="duracao">
+												aria-describedby="duracao" th:field="*{duracao}">
 										</div>
 
 
@@ -354,19 +359,19 @@ body {
 											<label for="nome"><small>Nome original do
 													arquivo</samll></label> <input type="text" class="form-control"
 												id="nomeOriginal" name="nomeOriginal"
-												aria-describedby="nomeOriginal" disabled="disabled">
+												aria-describedby="nomeOriginal" readonly
+												th:field="*{nomeOriginal}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 15px; font-size: 1.2em">
 											<label for="nome"><samll>Tamanho</small></label> <input
 												type="text" class="form-control" id="tamanho" name="tamanho"
-												aria-describedby="tamanho" disabled="disabled">
+												aria-describedby="tamanho" readonly th:field="*{tamanho}">
 										</div>
 
-										<input type="hidden" class="form-control" id="tipo"
-											name="tipo" value="Audio" /> <input type="hidden"
-											class="form-control" id="url" name="url" />
+										<input type="hidden" class="form-control" id="url" name="url"
+											th:field="*{url}" />
 
 										<button type="button" class="btn btn btn-primary float-right"
 											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
@@ -395,21 +400,22 @@ body {
 
 									<h4 style="margin-top: 0; padding-top: 0">Descrição Vídeo</h4>
 
-									<form method="post" th:action="@{/materiais}" name="formVideo"
-										id="formVideo">
+									<form method="post" th:action="@{/materiais/video}"
+										th:object="${video}" name="formVideo" id="formVideo">
 
 										<div class="form-group"
 											style="margin-top: 20px; font-size: 1.2em">
 											<label for="nome"><b>Nome</b></label> <input type="text"
 												class="form-control" id="nome" name="nome"
-												aria-describedby="nome">
+												aria-describedby="nome" th:field="*{nome}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 24px; font-size: 1.2em">
 											<label for="duracao"><b>Produção</b></label> <input
 												type="text" class="form-control" id="producao"
-												name="producao" aria-describedby="producao">
+												name="producao" aria-describedby="producao"
+												th:field="*{producao}">
 										</div>
 
 
@@ -418,19 +424,19 @@ body {
 											<label for="nome"><small>Nome original do
 													arquivo</samll></label> <input type="text" class="form-control"
 												id="nomeOriginal" name="nomeOriginal"
-												aria-describedby="nomeOriginal" disabled="disabled">
+												aria-describedby="nomeOriginal" readonly
+												th:field="*{nomeOriginal}">
 										</div>
 
 										<div class="form-group"
 											style="margin-top: 15px; font-size: 1.2em">
 											<label for="nome"><samll>Tamanho</small></label> <input
 												type="text" class="form-control" id="tamanho" name="tamanho"
-												aria-describedby="tamanho" disabled="disabled">
+												aria-describedby="tamanho" readonly th:field="*{tamanho}">
 										</div>
 
-										<input type="hidden" class="form-control" id="tipo"
-											name="tipo" value="Video" /> <input type="hidden"
-											class="form-control" id="url" name="url" />
+										<input type="hidden" class="form-control" id="url" name="url"
+											th:field="*{url}" />
 
 										<button type="button" class="btn btn btn-primary float-right"
 											style="margin: 30px 0" onclick="nextStep()">Próximo</button>
@@ -512,7 +518,6 @@ body {
 											<div style="border: 1px solid #ddd; margin: 0; float: left;"
 												class="rounded">
 
-
 												<div
 													style="float: left; margin: 5px 12px 4px 0; padding: 7px"
 													th:each="categoria : ${categorias}">
@@ -555,7 +560,7 @@ body {
 						<div class="col-md-2" th:each="material : ${materiais}"
 							style="padding-bottom: 30px">
 
-							<div class="card p-3"
+							<div class="card p-2"
 								th:if="${#strings.contains(material, 'Figura')}">
 
 								<div class="card-header text-right"
@@ -588,7 +593,7 @@ body {
 
 							</div>
 
-							<div class="card p-3"
+							<div class="card p-2"
 								th:if="${#strings.contains(material, 'Texto')}">
 
 								<div class="card-header text-right"
@@ -620,7 +625,7 @@ body {
 
 							</div>
 
-							<div class="card p-3"
+							<div class="card p-2"
 								th:if="${#strings.contains(material, 'Audio')}">
 
 								<div class="card-header text-right"
@@ -653,7 +658,7 @@ body {
 
 							</div>
 
-							<div class="card p-3"
+							<div class="card p-2"
 								th:if="${#strings.contains(material, 'Video')}">
 
 								<div class="card-header text-right"
@@ -718,22 +723,21 @@ body {
 
 
 				<!-- Modal Detalhes -->
-				<div class="col-md-2" th:each="material : ${materiais}">
+				<div th:each="material : ${materiais}">
 
 					<div th:if="${#strings.contains(material, 'Figura')}">
 
 						<div class="modal fade" th:id="'cam_' + ${material.id}"
 							tabindex="-1" role="dialog"
 							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-dialog modal-dialog-centered mw-100 w-50" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
+									<!-- <div class="modal-header">										
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
-									</div>
+									</div> -->
 									<div class="modal-body">
 
 										<div class="row">
@@ -741,11 +745,8 @@ body {
 											<div class="col-md-4 text-center">
 
 												<img th:src="@{${'http://localhost:3000/' + material.url }}"
-													alt="Img" class="img-fluid" style="border: 0;">
-
-												<p>
-													<small><span th:text="${material.tamanho}"></span></small>
-												</p>
+													alt="Img" class="img-fluid" style="border: 0;" /> <small><span
+													th:text="${material.tamanho}"></span></small>
 
 											</div>
 
@@ -770,9 +771,28 @@ body {
 
 												<p th:text="${material.autor}"></p>
 
+												<div style="margin: 0; padding: 0">
+													<small><b>Tags</b></small>
+												</div>
+
+												<p th:text="${material.tags}"></p>
+
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Categorias</b></small>
+												</div>
+
+												<th:block th:each="categoria : ${material.categorias}">
+												
+												<small><span
+													th:text="${categoria.nome}" style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color:#fff"></span></small>
+
+												</th:block>
+
 
 											</div>
 
+										
 										</div>
 
 									</div>
@@ -787,15 +807,9 @@ body {
 						<div class="modal fade" th:id="'cam_' + ${material.id}"
 							tabindex="-1" role="dialog"
 							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-dialog modal-dialog-centered mw-100 w-50" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
+									
 									<div class="modal-body">
 
 										<div class="row">
@@ -830,6 +844,24 @@ body {
 												</div>
 
 												<p th:text="${material.resumo}"></p>
+												
+												<div style="margin: 0; padding: 0">
+													<small><b>Tags</b></small>
+												</div>
+
+												<p th:text="${material.tags}"></p>
+
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Categorias</b></small>
+												</div>
+
+												<th:block th:each="categoria : ${material.categorias}">
+												
+												<small><span
+													th:text="${categoria.nome}" style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color:#fff"></span></small>
+
+												</th:block>
 
 
 											</div>
@@ -848,15 +880,9 @@ body {
 						<div class="modal fade" th:id="'cam_' + ${material.id}"
 							tabindex="-1" role="dialog"
 							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-dialog modal-dialog-centered mw-100 w-50" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
+									
 									<div class="modal-body">
 
 										<div class="row">
@@ -891,6 +917,24 @@ body {
 												</div>
 
 												<p th:text="${material.duracao} + ' Min.'"></p>
+												
+												<div style="margin: 0; padding: 0">
+													<small><b>Tags</b></small>
+												</div>
+
+												<p th:text="${material.tags}"></p>
+
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Categorias</b></small>
+												</div>
+
+												<th:block th:each="categoria : ${material.categorias}">
+												
+												<small><span
+													th:text="${categoria.nome}" style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color:#fff"></span></small>
+
+												</th:block>
 
 
 											</div>
@@ -909,15 +953,9 @@ body {
 						<div class="modal fade" th:id="'cam_' + ${material.id}"
 							tabindex="-1" role="dialog"
 							th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-dialog modal-dialog-centered mw-100 w-50" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle">Detalhes</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
+									
 									<div class="modal-body">
 
 										<div class="row">
@@ -953,6 +991,24 @@ body {
 												</div>
 
 												<p th:text="${material.producao}"></p>
+												
+												<div style="margin: 0; padding: 0">
+													<small><b>Tags</b></small>
+												</div>
+
+												<p th:text="${material.tags}"></p>
+
+
+												<div style="margin: 0; padding: 0">
+													<small><b>Categorias</b></small>
+												</div>
+
+												<th:block th:each="categoria : ${material.categorias}">
+												
+												<small><span
+													th:text="${categoria.nome}" style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color:#fff"></span></small>
+
+												</th:block>
 
 
 											</div>
@@ -986,10 +1042,7 @@ body {
 
 				<script type="text/javascript" th:inline="javascript">
 	    		/*<![CDATA[*/
-	    	
-	    	
-	    		let nomeCategorias = [[${categorias}]].map((e) => e.nome);
-	    		
+	    		    		    			    		
 	    		let form;
 	    		
 	    		let stepper;
@@ -1000,7 +1053,9 @@ body {
 	    		
 	    		let progressBarProgresso = document.querySelector("#progresso");
 	    
-    			
+	    		let tags = [[${tags}]];
+	    		
+	    	    			
 	    		$(document).ready(function() {
 					
 	    			/* Ativa a captura de tags */
@@ -1011,8 +1066,11 @@ body {
 						  width: 'auto',
 						  height: 'auto',
 						  hide: true,
-						  delimiter: ',',
-						  removeWithBackspace: true
+						  delimiter: ', ',
+						  removeWithBackspace: true,
+						  'autocomplete': {
+							    source: tags.map((e) => e.nome)							    
+						  }
 					});														
 					
 				});	
@@ -1034,23 +1092,29 @@ body {
 	    		}
 	    		
  				/* Injeta categorias e tags no form atual e realiza o envio */
-				function enviar(){			
-					
-		 			let campoCategorias = document.createElement("input");
-		 	
-				 	campoCategorias.type = 'text';
-				 	campoCategorias.name = 'categorias';
-				 	campoCategorias.value = Array.prototype.map.call(document.querySelectorAll("input[name^='categorias[']:checked"), e => e.value);
-				 	form.appendChild(campoCategorias);			
-											
+				function enviar(){	
+		 			
+		 			Array.prototype.map.call(document.querySelectorAll("input[name^='categorias[']:checked"), e => {
+		 			 			 				
+		 				let campoCategorias = document.createElement("input");
+		 				campoCategorias.setAttribute('type', 'checkbox');
+		 				campoCategorias.name = "categorias"; 
+		 				campoCategorias.value = e.value;
+		 				campoCategorias.checked = true;
+		 				form.appendChild(campoCategorias);	
+		 						 				
+		 			});
+		 			
+		 			
 					let campoTags = document.createElement('input');
 				 	
 					campoTags.type = 'text';
 					campoTags.name = 'tags';
 					campoTags.value = document.querySelector('#tags').value;
-					form.appendChild(campoTags);					
-							
-					form.submit();			
+					form.appendChild(campoTags);
+		 			
+		 			form.submit();		 			
+		 					
 				}
 
 				/* Exibe erro no processo de upload - Extensão, tamanho e Exception do back */
@@ -1240,7 +1304,6 @@ body {
 		
 				/*]]>*/
 				</script>
-		
 </body>
 </html>
 

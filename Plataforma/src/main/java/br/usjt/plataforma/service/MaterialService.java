@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.usjt.plataforma.model.bean.Categoria;
 import br.usjt.plataforma.model.bean.Material;
 import br.usjt.plataforma.repository.MaterialRepository;
 
@@ -31,7 +30,7 @@ public class MaterialService {
 
 	public List<Material> listar() {
 
-		return (ArrayList<Material>) repository.findAll();
+		return (ArrayList<Material>) repository.findAllByOrderByDataRegistroDesc();
 
 	}
 	

@@ -17,11 +17,12 @@
 
 <link rel="stylesheet"
 	href="https://www.jqueryscript.net/css/jquerysctipttop.css">
-	
-	<link rel="stylesheet"
-	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">	
-	<script src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css">
+<script
+	src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 
 
@@ -57,15 +58,15 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
-<style type="text/css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+<script defer
+	src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
+<style type="text/css">
 .invisivel {
 	display: none;
 }
-
-
-
-
 </style>
 
 </head>
@@ -92,7 +93,177 @@
 
 	<div class="container-fluid">
 
-		<div class="row" style="margin: 40px 0">
+		<div class="row" style="margin-top: 20px">
+
+			<div class="col-md-12">
+
+				<h1 class="text-right" style="margin: 10px 0 20px 0">
+					<span class="badge" style="background-color: #AB0F41; color: #fff">Post</span>
+				</h1>
+
+
+			</div>
+
+		</div>
+
+		<!--  -->
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="bs-stepper">
+					<div class="bs-stepper-header" role="tablist">
+
+						<div class="step" data-target="#conteudo-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="conteudo-part" id="conteudo-part-trigger">
+								<span class="bs-stepper-circle">1</span> <span
+									class="bs-stepper-label">Criar conteúdo</span>
+							</button>
+						</div>
+						<div class="line"></div>
+						<div class="step" data-target="#classificacao-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="classificacao-part"
+								id="classificacao-part-trigger">
+								<span class="bs-stepper-circle">2</span> <span
+									class="bs-stepper-label">Realizar classificação</span>
+							</button>
+						</div>
+						<div class="line"></div>
+						<div class="step" data-target="#preview-part">
+							<button type="button" class="step-trigger" role="tab"
+								aria-controls="preview-part" id="preview-part-trigger">
+								<span class="bs-stepper-circle">3</span> <span
+									class="bs-stepper-label">Preview</span>
+							</button>
+						</div>
+
+
+					</div>
+
+					<div class="bs-stepper-content">
+
+						<div id="conteudo-part" class="content" role="tabpanel"
+							aria-labelledby="conteudo-part-trigger">
+
+							<!--  -->
+
+							<div class="row">
+
+								<div class="col-md-10">
+
+									<div id="editor"
+										style="margin-left: 45px; background-color: #ccc;">
+										<div id='edit' style="min-height: 800px !important;">
+
+											<h2>Título</h2>
+
+										</div>
+									</div>
+
+								</div>
+
+								<div class="col-md-2">
+
+									
+										<input type="text" class="form-control" aria-label="Small"
+											aria-describedby="inputGroup-sizing-sm" name="filtro"
+											id="filtrar-tabela" placeholder="Pesquisar material">
+								
+									<div th:each="material : ${materiais}" style="padding: 5px 0"
+										class="material text-center">
+
+										<div class="card p-1"
+											th:if="${#strings.contains(material, 'Figura')}">
+
+											<div class="card-header text-right"
+												style="padding: 2px 2px; margin-bottom: 2px; font-size: 0.8em">
+												<a th:href="@{${'http://localhost:3000/' + material.url }}"
+													class="badge badge-info" target="_blank">Exibir</a>
+											</div>
+
+											<a href="#" data-toggle="modal"
+												th:data-target="'#cam_' + ${material.id}" title="Detalhes">
+												<img class="card-img-top text-center"
+												th:src="@{${'http://localhost:3000/' + material.url }}"
+												alt="Img" border="0" />
+
+											</a>
+
+											<div class="card-body text-center"
+												style="margin: 0; padding: 2px 0">
+
+
+												<small><p class="card-title nome"
+														th:text="${material.nome}"
+														style="margin: 0; padding: 2px 0"></p></small>
+
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+
+
+							<!--  -->
+
+						</div>
+
+						<!--  -->
+
+						<div id="classificacao-part" class="content" role="tabpanel"
+							aria-labelledby="classificacao-part-trigger">
+
+							<!--  -->
+
+							<div id="editor"
+								style="margin-left: 40px; background-color: #ccc;">
+								<div id='edit' style="min-height: 800px !important;">
+
+									<h2>Título</h2>
+
+								</div>
+							</div>
+
+
+							<!--  -->
+
+						</div>
+
+						<!--  -->
+
+						<div id="preview-part" class="content" role="tabpanel"
+							aria-labelledby="preview-part-trigger">
+
+							<!--  -->
+
+							<div id="editor"
+								style="margin-left: 40px; background-color: #ccc;">
+								<div id='edit' style="min-height: 800px !important;">
+
+									<h2>Título</h2>
+
+								</div>
+							</div>
+
+
+							<!--  -->
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- 	<div class="row" style="margin: 40px 0">
 
 			<div class="col-md-2" style="border-right: 1px solid #ccc">
 
@@ -103,7 +274,6 @@
 						aria-describedby="inputGroup-sizing-sm" name="filtro"
 						id="filtrar-tabela" placeholder="Pesquisar material">
 				</div>
-
 
 				<div th:each="material : ${materiais}" style="padding: 5px 0"
 					class="material text-center">
@@ -148,7 +318,7 @@
 			<div class="col-md-8">
 
 
-				<div id="editor" style="margin-left: 40px; ">
+				<div id="editor" style="margin-left: 40px;">
 					<div id='edit' style="min-height: 800px !important;">
 
 						<h2>Título</h2>
@@ -174,22 +344,23 @@
 							th:id="${categoria.id}" class="mdl-switch__input"> <span
 							class="mdl-switch__label" th:text="${categoria.nome}"></span>
 						</label>
-						
 					</div>
 
 				</th:block>
-				
+
 				<div class="clearfix" style="margin: 30px 0;"></div>
-				
+
 				<h5 style="margin-bottom: 15px">Tags</h5>
-				
-				<div class="input-group input-group-sm mb-3 d-flex justify-content-center">
-					<input id="tags" name="tags" type="text" value="" class="form-control" aria-label="Small"
+
+				<div
+					class="input-group input-group-sm mb-3 d-flex justify-content-center">
+					<input id="tags" name="tags" type="text" value=""
+						class="form-control" aria-label="Small"
 						aria-describedby="inputGroup-sizing-sm">
 				</div>
-				
-				
-				
+
+
+
 
 			</div>
 
@@ -198,136 +369,157 @@
 
 
 
+ -->
+			</div>
+
+		</div>
 
 
-	</div>
+		<script th:src="@{/js/froala_editor.min.js}"></script>
+		<script th:src="@{/js/plugins/align.min.js}"></script>
+		<script th:src="@{/js/plugins/code_beautifier.min.js}"></script>
+		<script th:src="@{/js/plugins/code_view.min.js}"></script>
+		<script th:src="@{/js/plugins/colors.min.js}"></script>
+		<script th:src="@{/js/plugins/emoticons.min.js}"></script>
+		<script th:src="@{/js/plugins/draggable.min.js}"></script>
+		<script th:src="@{/js/plugins/font_size.min.js}"></script>
+		<script th:src="@{/js/plugins/font_family.min.js}"></script>
+		<script th:src="@{/js/plugins/image.min.js}"></script>
+		<script th:src="@{/js/plugins/image_manager.min.js}"></script>
+		<script th:src="@{/js/plugins/line_breaker.min.js}"></script>
+		<script th:src="@{/js/plugins/quick_insert.min.js}"></script>
+		<script th:src="@{/js/plugins/link.min.js}"></script>
+		<script th:src="@{/js/plugins/lists.min.js}"></script>
+		<script th:src="@{/js/plugins/paragraph_format.min.js}"></script>
+		<script th:src="@{/js/plugins/paragraph_style.min.js}"></script>
+		<script th:src="@{/js/plugins/video.min.js}"></script>
+		<script th:src="@{/js/plugins/table.min.js}"></script>
+		<script th:src="@{/js/plugins/url.min.js}"></script>
+		<script th:src="@{/js/plugins/emoticons.min.js}"></script>
+		<script th:src="@{/js/plugins/file.min.js}"></script>
+		<script th:src="@{/js/plugins/entities.min.js}"></script>
+		<script th:src="@{/js/plugins/inline_style.min.js}"></script>
+		<script th:src="@{/js/plugins/save.min.js}"></script>
+		<script th:src="@{/js/plugins/fullscreen.min.js}"></script>
 
 
-	<script th:src="@{/js/froala_editor.min.js}"></script>
-	<script th:src="@{/js/plugins/align.min.js}"></script>
-	<script th:src="@{/js/plugins/code_beautifier.min.js}"></script>
-	<script th:src="@{/js/plugins/code_view.min.js}"></script>
-	<script th:src="@{/js/plugins/colors.min.js}"></script>
-	<script th:src="@{/js/plugins/emoticons.min.js}"></script>
-	<script th:src="@{/js/plugins/draggable.min.js}"></script>
-	<script th:src="@{/js/plugins/font_size.min.js}"></script>
-	<script th:src="@{/js/plugins/font_family.min.js}"></script>
-	<script th:src="@{/js/plugins/image.min.js}"></script>
-	<script th:src="@{/js/plugins/image_manager.min.js}"></script>
-	<script th:src="@{/js/plugins/line_breaker.min.js}"></script>
-	<script th:src="@{/js/plugins/quick_insert.min.js}"></script>
-	<script th:src="@{/js/plugins/link.min.js}"></script>
-	<script th:src="@{/js/plugins/lists.min.js}"></script>
-	<script th:src="@{/js/plugins/paragraph_format.min.js}"></script>
-	<script th:src="@{/js/plugins/paragraph_style.min.js}"></script>
-	<script th:src="@{/js/plugins/video.min.js}"></script>
-	<script th:src="@{/js/plugins/table.min.js}"></script>
-	<script th:src="@{/js/plugins/url.min.js}"></script>
-	<script th:src="@{/js/plugins/emoticons.min.js}"></script>
-	<script th:src="@{/js/plugins/file.min.js}"></script>
-	<script th:src="@{/js/plugins/entities.min.js}"></script>
-	<script th:src="@{/js/plugins/inline_style.min.js}"></script>
-	<script th:src="@{/js/plugins/save.min.js}"></script>
-	<script th:src="@{/js/plugins/fullscreen.min.js}"></script>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
 
+			/* Ativa o step by step */
+			document.addEventListener('DOMContentLoaded', function() {
 
-	<script type="text/javascript">
-	
-	
-	
-		var campo = document.querySelector("#filtrar-tabela");
+				stepper = new Stepper(document.querySelector('.bs-stepper'), {
+					linear : false,
+					animation : true
+				});
 
-		campo.addEventListener("input", function() {
+			});
 
-			var materiais = document.querySelectorAll(".material");
+			/* Próximo passo do step by step */
+			function nextStep() {
 
-			if (this.value.length > 0) {
+				stepper.next();
 
-				for (var i = 0; i < materiais.length; i++) {
-
-					var material = materiais[i];
-
-					var pNome = material.querySelector(".nome");
-
-					var nome = pNome.textContent;
-
-					var expressao = new RegExp(this.value, "i");
-
-					if (!expressao.test(nome)) {
-
-						material.classList.add("invisivel");
-
-					} else {
-
-						material.classList.remove("invisivel");
-					}
-				}
-
-			} else {
-
-				for (var i = 0; i < materiais.length; i++) {
-
-					var material = materiais[i];
-
-					material.classList.remove("invisivel");
-
-				}
+				return;
 
 			}
 
-		});
+			/* var campo = document.querySelector("#filtrar-tabela");
 
-		$(document).ready(
-				function() {
-					
-					$('#tags').tagsInput({
-						
-						  interactive: true,
-						  placeholder: 'Adicionar tag',
-						  width: 'auto',
-						  height: 'auto',
-						  hide: true,
-						  delimiter: ',',
-						  removeWithBackspace: true
-					});
-					
-				
+			campo.addEventListener("input", function() {
 
-					$('#edit').froalaEditor(
-							{
-								toolbarInline : true,
-								toolbarButtons : [ 'bold', 'italic',
-										'underline', 'strikeThrough', 'color',
-										'emoticons', 'undo', 'redo', '-',
-										'paragraphFormat', 'align', 'formatOL',
-										'formatUL', 'indent', 'outdent',
-										'insertLink' ],
-								toolbarButtonsXS : null,
-								toolbarButtonsSM : null,
-								toolbarButtonsMD : null,
+				var materiais = document.querySelectorAll(".material");
 
-								imageDefaultAlign : 'center',
+				if (this.value.length > 0) {
 
-								quickInsertButtons : [ 'embedly', 'table',
-										'ul', 'ol', 'hr' ],
-								imageEditButtons : [ 'imageAlign',
-										'imageRemove', 'imageDisplay',
-										'imageStyle', 'imageSize' ]
-							});
+					for (var i = 0; i < materiais.length; i++) {
 
-					$("h1").click(
+						var material = materiais[i];
+
+						var pNome = material.querySelector(".nome");
+
+						var nome = pNome.textContent;
+
+						var expressao = new RegExp(this.value, "i");
+
+						if (!expressao.test(nome)) {
+
+							material.classList.add("invisivel");
+
+						} else {
+
+							material.classList.remove("invisivel");
+						}
+					}
+
+				} else {
+
+					for (var i = 0; i < materiais.length; i++) {
+
+						var material = materiais[i];
+
+						material.classList.remove("invisivel");
+
+					}
+
+				}
+
+			}); */
+
+			$(document)
+					.ready(
 							function() {
 
-								var markupStr = $('#edit').froalaEditor(
-										'html.get', true);
+								$('#edit')
+										.froalaEditor(
+												{
+													toolbarInline : true,
+													toolbarButtons : [ 'bold',
+															'italic',
+															'underline',
+															'strikeThrough',
+															'color',
+															'emoticons',
+															'undo', 'redo',
+															'-',
+															'paragraphFormat',
+															'align',
+															'formatOL',
+															'formatUL',
+															'indent',
+															'outdent',
+															'insertLink' ],
+													toolbarButtonsXS : null,
+													toolbarButtonsSM : null,
+													toolbarButtonsMD : null,
 
-								console.log(markupStr);
+													imageDefaultAlign : 'center',
+
+													quickInsertButtons : [
+															'embedly', 'table',
+															'ul', 'ol', 'hr' ],
+													imageEditButtons : [
+															'imageAlign',
+															'imageRemove',
+															'imageDisplay',
+															'imageStyle',
+															'imageSize' ]
+												});
+
+								$("h1").click(
+										function() {
+
+											var markupStr = $('#edit')
+													.froalaEditor('html.get',
+															true);
+
+											console.log(markupStr);
+										});
+
 							});
 
-				});
-	</script>
-
-
-
+			/*]]>*/
+		</script>
 </body>
 </html>

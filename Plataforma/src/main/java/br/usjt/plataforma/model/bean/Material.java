@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tb_material")
@@ -39,8 +40,11 @@ public abstract class Material implements Serializable {
 
 	private LocalDateTime dataRegistro;
 
+	private String tags;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "material_x_categoria", joinColumns = @JoinColumn(name = "id_material", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id"))
+	@JsonBackReference
 	private List<Categoria> categorias = new ArrayList<>();
 
 	public Material() {
@@ -111,6 +115,14 @@ public abstract class Material implements Serializable {
 
 	public void setDataRegistro(LocalDateTime dataRegistro) {
 		this.dataRegistro = dataRegistro;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 	public abstract String toString();
