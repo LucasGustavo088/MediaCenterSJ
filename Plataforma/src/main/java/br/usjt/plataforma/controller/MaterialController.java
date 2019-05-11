@@ -15,7 +15,7 @@ import br.usjt.plataforma.model.bean.Texto;
 import br.usjt.plataforma.model.bean.Video;
 import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
-import br.usjt.plataforma.service.TagService;
+//import br.usjt.plataforma.service.TagService;
 
 @RestController
 @Controller
@@ -29,7 +29,7 @@ public class MaterialController {
 	CategoriaService categoriaService;
 
 	@Autowired
-	TagService tagService;
+	//TagService tagService;
 
 	@GetMapping()
 	public ModelAndView listar() {
@@ -48,7 +48,7 @@ public class MaterialController {
 
 		mv.addObject("categorias", this.categoriaService.listar());
 
-		mv.addObject("tags", this.tagService.listar());
+		//mv.addObject("tags", this.tagService.listar());
 
 		return mv;
 	}
