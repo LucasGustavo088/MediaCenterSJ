@@ -1,0 +1,29 @@
+package br.usjt.plataforma.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.usjt.plataforma.model.bean.Post;
+import br.usjt.plataforma.repository.PostRepository;
+
+@Service
+public class PostService {
+	
+	private final PostRepository repository;
+	
+	@Autowired
+	public PostService(PostRepository postRepository) {
+		
+		this.repository = postRepository;
+	}
+	
+	public void salvar(Post post) {
+		
+		post.setDataRegistro(LocalDateTime.now());
+		
+		repository.save(post);
+	}
+
+}
