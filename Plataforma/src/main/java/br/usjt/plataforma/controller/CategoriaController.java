@@ -1,5 +1,7 @@
 package br.usjt.plataforma.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,23 +12,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.usjt.plataforma.model.bean.Categoria;
 import br.usjt.plataforma.service.CategoriaService;
+import br.usjt.plataforma.service.UsuarioService;
 
 @Controller
 @RequestMapping("categorias")
 public class CategoriaController {
-
+	
 	@Autowired
 	CategoriaService categoriaService;
-
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
 	@GetMapping
-	public ModelAndView listar() {
+	public ModelAndView listar(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView("categorias");
 
 		mv.addObject("categorias", this.categoriaService.listar());
 
 		mv.addObject(new Categoria());
-
+		
 		return mv;
 	}
 

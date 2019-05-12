@@ -15,6 +15,8 @@ public class Usuario {
 	private Long id;
 	@Column(nullable = false, length = 200)
 	private String nome;
+	@Column(nullable = false, length = 200)
+	private String senha;
 	@Column(nullable = false, length = 30)
 	private String fone;
 	@Column(nullable = true, length = 100)
@@ -58,6 +60,14 @@ public class Usuario {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
