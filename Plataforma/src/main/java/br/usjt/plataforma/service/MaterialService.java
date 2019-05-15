@@ -34,5 +34,11 @@ public class MaterialService {
 
 	}
 	
+	public List<Material> filtrar(String palavra) {
+
+		return (ArrayList<Material>) repository.filtrarPorNome(palavra);
+
+	}
+	
 
 }

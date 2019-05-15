@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -17,7 +16,6 @@ import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
 import br.usjt.plataforma.service.TagService;
 
-@RestController
 @Controller
 @RequestMapping("materiais")
 public class MaterialController {
@@ -114,17 +112,5 @@ public class MaterialController {
 		return redirectView;
 	}
 
-	/*
-	 * @RequestMapping(value = "/listar", method = RequestMethod.GET, produces =
-	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<Object> listarM() {
-	 * 
-	 * List<JSONObject> entities = new ArrayList<JSONObject>();
-	 * 
-	 * for (Material m : this.materialService.listar()) { JSONObject entity = new
-	 * JSONObject(); entity.put("nome", m.getNome()); entity.put("url", m.getUrl());
-	 * entities.add(entity); }
-	 * 
-	 * return new ResponseEntity<Object>(entities.toString(), HttpStatus.OK); }
-	 */
-
+	
 }

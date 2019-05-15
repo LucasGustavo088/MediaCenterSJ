@@ -1,6 +1,8 @@
 package br.usjt.plataforma.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,12 @@ public class PostService {
 		post.setDataRegistro(LocalDateTime.now());
 		
 		repository.save(post);
+	}
+	
+	public List<Post> listar() {
+
+		return repository.findAllByOrderByDataRegistroDesc();
+
 	}
 
 }

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Post listar</title>
+
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+	crossorigin="anonymous">
+
+<!-- Scrollbar Custom CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+<!-- Font Awesome JS -->
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+	integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+	crossorigin="anonymous"></script>
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+	integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" th:href="@{/css/starrr.css}" />
+
+<style type="text/css">
+
+/*
+    DEMO STYLE
+*/
+@import
+	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+	font-family: 'Poppins', sans-serif;
+	background: #fafafa;
+}
+
+p {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.2em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #696969;
+	text-align: justify;
+}
+
+h5 {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.4em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #999;
+}
+
+a, a:hover, a:focus {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+.navbar {
+	padding: 15px 10px;
+	background: #fff;
+	border: none;
+	border-radius: 0;
+	margin-bottom: 40px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+	box-shadow: none;
+	outline: none !important;
+	border: none;
+}
+
+.line {
+	width: 100%;
+	height: 1px;
+	border-bottom: 1px dashed #ddd;
+	margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+#sidebar {
+	width: 250px;
+	position: fixed;
+	top: 0;
+	left: -250px;
+	height: 100vh;
+	z-index: 999;
+	background: #7386D5;
+	color: #fff;
+	transition: all 0.3s;
+	overflow-y: scroll;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+	left: 0;
+}
+
+#dismiss {
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	background: #7386D5;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+#dismiss:hover {
+	background: #fff;
+	color: #7386D5;
+}
+
+.overlay {
+	display: none;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 998;
+	opacity: 0;
+	transition: all 0.5s ease-in-out;
+}
+
+.overlay.active {
+	display: block;
+	opacity: 1;
+}
+
+#sidebar .sidebar-header {
+	padding: 20px;
+	background: #6d7fcc;
+}
+
+#sidebar ul.components {
+	padding: 20px 0;
+	border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+	color: #fff;
+	padding: 10px;
+}
+
+#sidebar ul li a {
+	padding: 10px;
+	font-size: 1.1em;
+	display: block;
+}
+
+#sidebar ul li a:hover {
+	color: #7386D5;
+	background: #fff;
+}
+
+#sidebar ul li.active>a, a[aria-expanded="true"] {
+	color: #fff;
+	background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+	position: relative;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+ul ul a {
+	font-size: 0.9em !important;
+	padding-left: 30px !important;
+	background: #6d7fcc;
+}
+
+ul.CTAs {
+	padding: 20px;
+}
+
+ul.CTAs a {
+	text-align: center;
+	font-size: 0.9em !important;
+	display: block;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+
+a.download {
+	background: #fff;
+	color: #7386D5;
+}
+
+a.article, a.article:hover {
+	background: #6d7fcc !important;
+	color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+	width: 100%;
+	padding: 20px;
+	min-height: 100vh;
+	transition: all 0.3s;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.destaque {
+	transition: all .2s ease-in-out;
+}
+
+.destaque:hover {
+	transform: scale(1.04);
+	-webkit-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+}
+
+.tituloPost {
+	border-left: 8px solid #AB0F41;
+	color: #AB0F41;
+	padding: 8px;
+	margin: 0.6em 0px 0px 0px;
+	text-align: left;
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	position: absolute;
+	bottom: 30px;
+	background-color: #fff;
+	opacity: 0.9;
+	width: 100%;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<!-- Sidebar  -->
+		<nav id="sidebar">
+			<div id="dismiss">
+				<i class="fas fa-arrow-left"></i>
+			</div>
+
+
+
+			<div class="sidebar-header">
+				<img
+					src="https://coubsecure-s.akamaihd.net/get/b66/p/coub/simple/cw_image/27bc8ee8d80/f7c965feecf5c3d2203da/med_1471408894_00031.jpg"
+					style="width: 150px; border-radius: 80%;" />
+			</div>
+
+			<ul class="list-unstyled components">
+				<p>Dummy Heading</p>
+				<li class="active"><a href="#homeSubmenu"
+					data-toggle="collapse" aria-expanded="false">Home</a>
+					<ul class="collapse list-unstyled" id="homeSubmenu">
+						<li><a href="#">Home 1</a></li>
+						<li><a href="#">Home 2</a></li>
+						<li><a href="#">Home 3</a></li>
+					</ul></li>
+				<li><a href="#">About</a> <a href="#pageSubmenu"
+					data-toggle="collapse" aria-expanded="false">Pages</a>
+					<ul class="collapse list-unstyled" id="pageSubmenu">
+						<li><a href="#">Page 1</a></li>
+						<li><a href="#">Page 2</a></li>
+						<li><a href="#">Page 3</a></li>
+					</ul></li>
+				<li><a href="#">Portfolio</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+
+			<ul class="list-unstyled CTAs">
+				<li><a
+					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
+					class="download">Download source</a></li>
+				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
+					class="article">Back to article</a></li>
+			</ul>
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content">
+
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="container-fluid">
+
+					<button type="button" id="sidebarCollapse" class="btn btn-info">
+						<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+					</button>
+					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+						type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-align-justify"></i>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="nav navbar-nav ml-auto">
+							<li class="nav-item active"><a class="nav-link" href="#">Page</a>
+							</li>
+							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<div class="container-fluid">
+
+				<div class="row">
+
+
+					<div class="col-md-4" th:each="post : ${posts}">
+						<div class="destaque">
+
+							<h5
+								style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
+								th:text="${post.titulo}"></h5>
+
+						</div>
+					</div>
+
+
+				</div>
+
+
+				<div class="row text-center" style="margin-top: 40px">
+
+					<div class="col-md-8">
+
+						<div style="margin-top: 20px;" th:each="post,count : ${posts}">
+
+							<div style="position: relative">
+
+								<img th:src="${post.destaque}" class="img-fluid" style="padding: 18px"/>
+
+								<!-- <div class="my-rating" style="position: absolute; top: 8px;"></div> -->
+
+								<div class="tituloPost">
+								
+									<div class="my-rating"></div>
+
+									<h3 th:text="${post.titulo}"
+										style="margin-bottom: 0px; padding-bottom: 0px"></h3>
+
+									<small
+										th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
+										style="margin-top: 0"></small>
+
+								</div>
+
+
+							</div>
+
+
+							<!-- <div class="tituloPost">
+
+								<h3 th:text="${post.titulo}"
+									style="margin-bottom: 0px; padding-bottom: 0px"></h3>
+
+								<small
+									th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
+									style="margin-top: 0"></small>
+
+							</div> -->
+
+
+							<div style="margin-top: 20px;" th:id="'conteudo_' +${post.id}"></div>
+
+
+							<th:block th:each="categoria : ${post.categorias}">
+
+								<small><span th:text="${categoria.nome}"
+									style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+
+							</th:block>
+
+
+
+							<div class="line"></div>
+
+						</div>
+
+
+					</div>
+
+					<div class="col-md-4">ddd</div>
+
+				</div>
+
+
+
+
+			</div>
+
+		</div>
+	</div>
+
+	<div class="overlay"></div>
+
+	<!-- jQuery CDN - Slim version (=without AJAX) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<!-- Popper.JS -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+		crossorigin="anonymous"></script>
+	<!-- Bootstrap JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+		crossorigin="anonymous"></script>
+	<!-- jQuery Custom Scroller CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<script type="text/javascript" th:src="@{/js/starrr.js}"></script>
+
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			
+			let posts = [[${posts}]];
+		
+			let destaques = document.querySelectorAll(".destaque");
+			
+			let countDestaque = 0;
+			
+			function addBackGroundImage(destaque){
+				
+				destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				
+				countDestaque++;
+			}
+		
+		
+			posts.forEach((post) => {
+				
+				let cam = '#conteudo_' + post.id;
+				
+				document.querySelector(cam).innerHTML = post.conteudo;
+				
+				/*  */
+				
+				addBackGroundImage(post.destaque);
+				
+			});
+			
+			//document.querySelectorAll(".destaque").forEach((destaque) => destaque.style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;");
+			
+		 	//let destaques = document.querySelectorAll(".destaque");
+			
+			//destaques[0].style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+			
+			//destaques[0].querySelector(".titulo").innerText = posts[0].titulo; 
+			
+			//destaques[1].innerHTML = '<img src="https://img.ibxk.com.br///2019/05/13/13121824107095-t1200x480.jpg" class=" img-fluid"/>';
+			//destaques[2].innerHTML = '<img src="http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg" class=" img-fluid"/>';
+			 
+			
+		
+			$(document).ready(function() {
+				$("#sidebar").mCustomScrollbar({
+					theme : "minimal"
+				});
+
+				$('#dismiss, .overlay').on('click', function() {
+					$('#sidebar').removeClass('active');
+					$('.overlay').removeClass('active');
+				});
+
+				$('#sidebarCollapse').on('click', function() {
+					$('#sidebar').addClass('active');
+					$('.overlay').addClass('active');
+					$('.collapse.in').toggleClass('in');
+					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+				});
+				
+				$(".my-rating").starRating({
+					useFullStars: true,
+				    starSize: 25,
+				    strokeColor: '#AB0F41',
+				    hoverColor: '#AB0F41',
+				    callback: function(currentRating, $el){
+				        // make a server call here
+				    }
+				});
+			});
+
+		/*]]>*/
+	</script>
+
+</body>
+
+</html>
