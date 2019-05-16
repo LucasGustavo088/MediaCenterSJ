@@ -1,5 +1,7 @@
 package br.usjt.plataforma.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import br.usjt.plataforma.model.bean.Video;
 import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
 import br.usjt.plataforma.service.TagService;
+import br.usjt.plataforma.service.UsuarioService;
 
 @Controller
 @RequestMapping("materiais")
@@ -25,12 +28,15 @@ public class MaterialController {
 
 	@Autowired
 	CategoriaService categoriaService;
-
+	
+	@Autowired
+	UsuarioService usuarioService;
+	
 	@Autowired
 	TagService tagService;
 
 	@GetMapping()
-	public ModelAndView listar() {
+	public ModelAndView listar(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView("materiais");
 
