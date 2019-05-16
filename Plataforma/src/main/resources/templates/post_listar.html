@@ -255,6 +255,17 @@ a.article, a.article:hover {
 	opacity: 0.9;
 	width: 100%;
 }
+
+.circle img {
+	background-color: #ddd;
+	border-radius: 100%;
+	height: 150px;
+	object-fit: cover;
+	width: 150px;
+}
+
+
+
 </style>
 
 </head>
@@ -271,14 +282,17 @@ a.article, a.article:hover {
 
 
 			<div class="sidebar-header">
-				<img
-					src="https://coubsecure-s.akamaihd.net/get/b66/p/coub/simple/cw_image/27bc8ee8d80/f7c965feecf5c3d2203da/med_1471408894_00031.jpg"
-					style="width: 150px; border-radius: 80%;" />
+
+				<div class="circle">
+
+					<img src="http://localhost:3000/sdfsfdsfdfsfd.jpg" />
+
+				</div>
 			</div>
 
 			<ul class="list-unstyled components">
 				<p>Dummy Heading</p>
-				<li class="active"><a href="#homeSubmenu"
+				<!-- <li class="active"><a href="#homeSubmenu"
 					data-toggle="collapse" aria-expanded="false">Home</a>
 					<ul class="collapse list-unstyled" id="homeSubmenu">
 						<li><a href="#">Home 1</a></li>
@@ -291,18 +305,18 @@ a.article, a.article:hover {
 						<li><a href="#">Page 1</a></li>
 						<li><a href="#">Page 2</a></li>
 						<li><a href="#">Page 3</a></li>
-					</ul></li>
-				<li><a href="#">Portfolio</a></li>
-				<li><a href="#">Contact</a></li>
+					</ul></li> -->
+				<li><a href="#">Perfil</a></li>
+				<li><a href="#">Logout</a></li>
 			</ul>
 
-			<ul class="list-unstyled CTAs">
+			<!-- <ul class="list-unstyled CTAs">
 				<li><a
 					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
 					class="download">Download source</a></li>
 				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
 					class="article">Back to article</a></li>
-			</ul>
+			</ul> -->
 		</nav>
 
 		<!-- Page Content  -->
@@ -312,7 +326,7 @@ a.article, a.article:hover {
 				<div class="container-fluid">
 
 					<button type="button" id="sidebarCollapse" class="btn btn-info">
-						<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+						<i class="fas fa-align-left"></i>
 					</button>
 					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 						type="button" data-toggle="collapse"
@@ -353,7 +367,7 @@ a.article, a.article:hover {
 				</div>
 
 
-				<div class="row text-center" style="margin-top: 40px">
+				<div class="row" style="margin-top: 40px">
 
 					<div class="col-md-8">
 
@@ -361,12 +375,15 @@ a.article, a.article:hover {
 
 							<div style="position: relative">
 
-								<img th:src="${post.destaque}" class="img-fluid" style="padding: 18px"/>
+								<div class="text-center">
 
-								<!-- <div class="my-rating" style="position: absolute; top: 8px;"></div> -->
+									<img th:src="${post.destaque}" class="img-fluid"
+										style="padding: 18px" />
+
+								</div>
 
 								<div class="tituloPost">
-								
+
 									<div class="my-rating"></div>
 
 									<h3 th:text="${post.titulo}"
@@ -397,12 +414,34 @@ a.article, a.article:hover {
 							<div style="margin-top: 20px;" th:id="'conteudo_' +${post.id}"></div>
 
 
-							<th:block th:each="categoria : ${post.categorias}">
+							<div class="row" style="margin-top: 20px">
 
-								<small><span th:text="${categoria.nome}"
-									style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+								<div class="col-md-6 text-left">
 
-							</th:block>
+									<small>
+										<p>
+											Tags: <span th:text="${post.tags}"></span>
+										</p>
+									</small>
+
+								</div>
+								<div class="col-md-6 text-right">
+
+									<th:block th:each="categoria : ${post.categorias}">
+
+										<small><span th:text="${categoria.nome}"
+											style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #212529; color: #fff; text-align: left"></span></small>
+
+									</th:block>
+
+								</div>
+
+
+							</div>
+
+
+
+
 
 
 
@@ -413,7 +452,8 @@ a.article, a.article:hover {
 
 					</div>
 
-					<div class="col-md-4">ddd</div>
+					<div class="col-md-4" id="stickThis"
+						style="background-color: #999">ddd</div>
 
 				</div>
 
@@ -487,12 +527,23 @@ a.article, a.article:hover {
 			//destaques[1].innerHTML = '<img src="https://img.ibxk.com.br///2019/05/13/13121824107095-t1200x480.jpg" class=" img-fluid"/>';
 			//destaques[2].innerHTML = '<img src="http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg" class=" img-fluid"/>';
 			 
+			function sticktothetop() {
+    var window_top = $(window).scrollTop();
+    var top = $('#stick-here').offset().top;
+    if (window_top > top) {
+        $('#stickThis').addClass('stick');
+        $('#stick-here').height($('#stickThis').outerHeight());
+    } else {
+        $('#stickThis').removeClass('stick');
+        $('#stick-here').height(0);
+    }
+}
 			
 		
 			$(document).ready(function() {
 				$("#sidebar").mCustomScrollbar({
 					theme : "minimal"
-				});
+				}); 
 
 				$('#dismiss, .overlay').on('click', function() {
 					$('#sidebar').removeClass('active');
@@ -515,6 +566,9 @@ a.article, a.article:hover {
 				        // make a server call here
 				    }
 				});
+				
+				$(window).scroll(sticktothetop);
+			    sticktothetop();
 			});
 
 		/*]]>*/
