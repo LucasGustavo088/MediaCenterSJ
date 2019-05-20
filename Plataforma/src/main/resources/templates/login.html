@@ -95,3 +95,120 @@
 </body>
 
 </html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Login</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#locales').change(function() {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != '') {
+					//window.location.replace('test?lang=' + selectedOption);
+					var currentURL = window.location.pathname;
+					//"Replace" the current URL with the current URL.
+					window.location.replace(currentURL + '?lang='+selectedOption);
+				}
+			});
+		});
+	</script>
+
+</head>
+<body>
+</head>
+
+<body>
+
+
+	<div class="container-fluid">
+		<div onclick="popularLogin();" class="col-md-2 btn-success btn"
+				style="margin-top: 8px; margin-left: 10px; height: 40px; width: 160px;"
+				id="mensagem_alerta">Preencher login
+				
+				
+				</div>
+				
+				<th:block th:include="index :: combo"></th:block>
+				
+		<!--  <c:if test="${not empty alertas}">
+		<div class="col-md-12">
+			
+            <c:forEach var="alerta" items="${alertas}" varStatus="myIndex">
+            <div class="container-row alert alert-${alerta.tipo}" id="alerta${myIndex.index}">    
+                ${alerta.mensagem}
+
+                <a style="float: right; cursor: pointer;" onclick="remover_alerta(${myIndex.index})">
+                    X
+                </a>
+            </div>
+            </c:forEach>
+        </div>
+        </c:if>-->
+        
+		<div class="row" style="margin-top: 60px">
+			
+			<div class="col-md-4"></div>
+
+
+			<div class="col-md-4">
+
+				<form method="post" th:action="@{/logar}" th:object="${usuario}">
+					<div class="form-group">
+						<label for="email" th:text="#{email}"></label> <input type="email"
+							class="form-control" id="email" th:field="*{email}">
+
+					</div>
+					<div class="form-group">
+						<label for="senha" th:text="#{password}"></label> <input type="password"
+							class="form-control" id="senha" th:field="*{senha}">
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary"
+							style="margin-top: 40px" th:text="#{login}"></button>
+					</div>
+				</form>
+			</div>
+
+
+
+			<div class="col-md-4"></div>
+
+
+		</div>
+
+	</div>
+
+	<script src="../static/js/jquery.min.js" th:href="@{/js/jquery.min.js}"></script>
+
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+
+	<script>
+		function popularLogin() {
+			document.getElementById("email").value = 'admin@admin.com';
+			document.getElementById("senha").value = 'admin';
+		}
+		
+		function remover_alerta(id) {
+	        $('#alerta' + id).remove();
+	        $.ajax({
+	            url: enderecoBack + '/utilizador/remover_alerta/' + id,
+	            dataType: 'json',
+	            method: 'get',
+	            data: {
+	                '_token': "{{ csrf_token() }}"
+	            },
+	        });
+	    }
+	</script>
+
+</body>
+
+</html>
