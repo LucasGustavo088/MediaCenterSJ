@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Categorias</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="/figuras">Plataforma</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="/categorias">Categorias
+				</a></li>				
+				<li class="nav-item"><a class="nav-link" href="/tags">Tags</a></li>
+				<li class="nav-item"><a class="nav-link" href="/materiais">Materiais</a></li>
+
+
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<div class="col-md-4">
+
+				<form class="form-inline" method="post" style="margin: 20px 0"
+					th:object="${categoria}" th:action="@{/categorias}">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Nome"
+							th:field="*{nome}" />
+
+						<button type="submit" class="btn btn-primary">Adicionar</button>
+					</div>
+				</form>
+
+			</div>
+
+			<div class="col-md-8">
+
+				<table class="table">
+				
+					<h2>Categorias</h2>
+
+					<tbody>
+						<tr th:each="categoria : ${categorias}">
+							<td th:text="${categoria.id}"></td>
+							<td th:text="${categoria.nome}"></td>
+
+							<td
+								th:text="${#temporals.format(categoria.dataRegistro, 'dd/MM/yyyy HH:mm')}"></td>
+
+							<td>
+
+								<form class="form-inline" method="post"
+									th:action="@{/categorias/atualizar}">
+
+									<div class="form-group">
+
+										<input type="text" id="id" name="id"
+											th:value="${categoria.id}" /> <input type="text" id="nome"
+											name="nome" class="form-control" placeholder="Nome"
+											th:value="${categoria.nome}" />
+
+										<button type="submit" class="btn btn-primary">Salvar</button>
+									</div>
+
+								</form>
+
+							</td>
+
+						</tr>
+					</tbody>
+
+				</table>
+
+			</div>
+
+		</div>
+
+	</div>
+
+<script src="../static/js/jquery.min.js" th:href="@{/js/jquery.min.js}"></script>
+
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+
+</body>
+</html>
