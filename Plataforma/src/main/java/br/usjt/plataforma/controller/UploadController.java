@@ -1,5 +1,6 @@
 package br.usjt.plataforma.controller;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class UploadController {
 	private UploadService uploadService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws JSONException {
 			
 		JSONObject json = new JSONObject();
 		

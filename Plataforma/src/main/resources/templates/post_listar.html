@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Post listar</title>
+<title>Time line ;D</title>
 
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet"
@@ -28,6 +28,9 @@
 	crossorigin="anonymous"></script>
 
 <link rel="stylesheet" th:href="@{/css/starrr.css}" />
+
+<link rel="stylesheet" th:href="@{/css/bookblock.css}" />
+<link rel="stylesheet" th:href="@{/css/default.css}" />
 
 <style type="text/css">
 
@@ -264,8 +267,25 @@ a.article, a.article:hover {
 	width: 150px;
 }
 
+.sticky {
+	position: fixed;
+	top: 0;
+	z-index: 899;
+}
 
+.navbar-light {
+	-webkit-box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+	-moz-box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+	box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+}
 
+.fixed-top {
+	z-index: 899;
+}
+
+.invisivel {
+	display: none;
+}
 </style>
 
 </head>
@@ -322,7 +342,8 @@ a.article, a.article:hover {
 		<!-- Page Content  -->
 		<div id="content">
 
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+
 				<div class="container-fluid">
 
 					<button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -338,22 +359,32 @@ a.article, a.article:hover {
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="#">Page</a>
+							<li class="nav-item active"><a class="nav-link" href="book">Book</a>
 							</li>
+							<!-- <li class="nav-item"><a class="nav-link" href="#">Page</a></li>
 							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+							<li class="nav-item"><a class="nav-link" href="#">Page</a></li> -->
 						</ul>
 					</div>
+
+
+
+				</div>
+				<div class="navbar-right">
+
+					<a href="#" class="navbar-brand pull-right">LAB's</a>
+
 				</div>
 			</nav>
 
-			<div class="container-fluid">
+			<div class="container-fluid" style="margin-top: 90px">
 
 				<div class="row">
 
+					<div class="col-md-4" th:each="post,count : ${posts}">
 
-					<div class="col-md-4" th:each="post : ${posts}">
+						<!-- <a href="#" th:onclick="'top(post_' + ${count.index} + ');'"> -->
+
 						<div class="destaque">
 
 							<h5
@@ -361,24 +392,30 @@ a.article, a.article:hover {
 								th:text="${post.titulo}"></h5>
 
 						</div>
+
+						<!-- </a> -->
+
 					</div>
 
 
 				</div>
 
 
-				<div class="row" style="margin-top: 40px">
+				<div class="row" style="margin-top: 60px">
 
 					<div class="col-md-8">
 
-						<div style="margin-top: 20px;" th:each="post,count : ${posts}">
+						<div th:each="post,count : ${posts}">
+
+							<!-- <span th:id="'post_' + ${count.index}"></span> -->
 
 							<div style="position: relative">
 
 								<div class="text-center">
 
+
 									<img th:src="${post.destaque}" class="img-fluid"
-										style="padding: 18px" />
+										style="padding: 18px; padding-top: 0px" />
 
 								</div>
 
@@ -397,18 +434,6 @@ a.article, a.article:hover {
 
 
 							</div>
-
-
-							<!-- <div class="tituloPost">
-
-								<h3 th:text="${post.titulo}"
-									style="margin-bottom: 0px; padding-bottom: 0px"></h3>
-
-								<small
-									th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
-									style="margin-top: 0"></small>
-
-							</div> -->
 
 
 							<div style="margin-top: 20px;" th:id="'conteudo_' +${post.id}"></div>
@@ -442,9 +467,6 @@ a.article, a.article:hover {
 
 
 
-
-
-
 							<div class="line"></div>
 
 						</div>
@@ -452,8 +474,82 @@ a.article, a.article:hover {
 
 					</div>
 
-					<div class="col-md-4" id="stickThis"
-						style="background-color: #999">ddd</div>
+					<div class="col-md-4">
+
+						<!--  555 -->
+
+						<div class="input-group input-group-lg" style="margin-bottom: 30px">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroup-sizing-lg" style="background-color: #17a2b8; color: #fff;">Pesquisar</span>
+							</div>
+							<input type="text" class="form-control" aria-label="Large"
+								aria-describedby="inputGroup-sizing-sm" name="filtro"
+							id="filtrar-tabela">
+						</div>
+
+						<!--  -->
+
+						<div th:each="post : ${posts}" class="text-center" id="materiais">
+
+
+							<!-- <div class="card p-1 m-3 material"
+								th:if="${#strings.contains(material, 'Figura')}"> -->
+
+							<div class="card p-1 m-3 material">
+							
+							<div class="row">
+							
+							<div class="col-md-4">
+							
+							<a href="#" data-toggle="modal"
+									th:data-target="'#cam_' + ${post.id}" title="Detalhes"> <img
+									class="card-img-top text-center" th:src="@{${post.destaque }}"
+									alt="Img" border="0" />
+							
+							</div>
+							<div class="col-md-8">
+							
+							<p class="card-title" th:text="${post.titulo}"
+										style="margin: 0; padding: 2px 0"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+							</div>
+							
+							</div>
+
+								<!-- <a href="#" data-toggle="modal"
+									th:data-target="'#cam_' + ${post.id}" title="Detalhes"> <img
+									class="card-img-top text-center" th:src="@{${post.destaque }}"
+									alt="Img" border="0" />
+
+								</a>
+
+								<div class="card-body text-center"
+									style="margin: 0; padding: 2px 0">
+
+
+									<p class="card-title" th:text="${post.titulo}"
+										style="margin: 0; padding: 2px 0"></p>
+
+									<p class="card-text text-muted">
+										<small
+											th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+									</p>
+
+								</div> -->
+
+							</div>
+
+
+
+
+						</div>
+
+						<!--  -->
+					</div>
 
 				</div>
 
@@ -465,7 +561,10 @@ a.article, a.article:hover {
 		</div>
 	</div>
 
+
+
 	<div class="overlay"></div>
+
 
 	<!-- jQuery CDN - Slim version (=without AJAX) -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -486,6 +585,8 @@ a.article, a.article:hover {
 		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
 	<script type="text/javascript" th:src="@{/js/starrr.js}"></script>
+
+
 
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
@@ -516,28 +617,79 @@ a.article, a.article:hover {
 				
 			});
 			
-			//document.querySelectorAll(".destaque").forEach((destaque) => destaque.style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;");
+
+			/*  */
 			
-		 	//let destaques = document.querySelectorAll(".destaque");
-			
-			//destaques[0].style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
-			
-			//destaques[0].querySelector(".titulo").innerText = posts[0].titulo; 
-			
-			//destaques[1].innerHTML = '<img src="https://img.ibxk.com.br///2019/05/13/13121824107095-t1200x480.jpg" class=" img-fluid"/>';
-			//destaques[2].innerHTML = '<img src="http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg" class=" img-fluid"/>';
-			 
-			function sticktothetop() {
-    var window_top = $(window).scrollTop();
-    var top = $('#stick-here').offset().top;
-    if (window_top > top) {
-        $('#stickThis').addClass('stick');
-        $('#stick-here').height($('#stickThis').outerHeight());
-    } else {
-        $('#stickThis').removeClass('stick');
-        $('#stick-here').height(0);
-    }
-}
+			var campo = document.querySelector("#filtrar-tabela");
+
+			campo.addEventListener("input", function() {
+				
+				var materiais_div = document.querySelector("#materiais");				
+				
+				var materiais = document.querySelectorAll(".material");
+				
+
+				if (this.value.length > 0) {
+					
+					materiais.forEach(function (material) {
+						
+						material.classList.add("invisivel");
+												
+					});
+					
+															
+					var xhr = new XMLHttpRequest();
+					
+					xhr.open("GET", "http://localhost:8080/api/posts/filtrar/" + this.value);
+
+					xhr.addEventListener("load", function () {
+					
+						if (xhr.status == 200) {
+							
+							console.log(xhr.status);
+				            console.log(xhr.responseText);
+				            
+				            var resposta = xhr.responseText;
+				            var lista = JSON.parse(resposta);
+				            
+				            
+				            lista.forEach(function (material) {
+				            	
+				            	var dataString = new Date(material.dataRegistro);
+				            	
+				            	var data = dataString.getDate() + '/' + (dataString.getMonth() + 1) + '/' +  dataString.getFullYear() + ' ' + dataString.getHours() + ':' + dataString.getMinutes(); 
+				            
+				            	var materialDiv = document.createElement("div");
+				            					            	
+				            	materialDiv.innerHTML = '<div class=\"card p-1 m-3 material\"><a href=\"#\" data-toggle=\"modal\"th:data-target=\"#cam_1\" title=\"Detalhes\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'"alt=\"Img\" border=\"0\" /></a><div class=\"card-body text-center\"style=\"margin: 0; padding: 2px 0\"><p class=\"card-title\"style=\"margin: 0; padding: 2px 0\">'+ material.titulo +'</p><p class=\"card-text text-muted\"><small>'+ data +'</small></p></div></div>';
+				            				            
+				            	materiais_div.appendChild(materialDiv);
+				            
+				            });
+				           				            
+				            
+						}
+						
+					});
+					
+					xhr.send();					
+				
+				} else {
+					
+					//document.getElementsByClassName("material").remove();
+					
+					 materiais.forEach(function (material) {
+						
+						material.remove();
+												
+					}); 
+
+					
+				}
+
+			});
+			/*  */
+
 			
 		
 			$(document).ready(function() {
@@ -567,8 +719,8 @@ a.article, a.article:hover {
 				    }
 				});
 				
-				$(window).scroll(sticktothetop);
-			    sticktothetop();
+					
+				
 			});
 
 		/*]]>*/

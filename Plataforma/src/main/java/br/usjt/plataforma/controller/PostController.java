@@ -65,4 +65,18 @@ public class PostController {
 
 		return mv;
 	}
+	
+	@GetMapping("book")
+	public ModelAndView book() {
+
+		ModelAndView mv = new ModelAndView("book");
+
+		mv.addObject("posts", this.postService.listar());
+		
+		mv.addObject("materiais", this.materialService.listar());
+
+		mv.addObject("categorias", this.categoriaService.listar());
+
+		return mv;
+	}
 }

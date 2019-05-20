@@ -1,7 +1,6 @@
 package br.usjt.plataforma.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,12 @@ public class PostService {
 	public List<Post> listar() {
 
 		return repository.findAllByOrderByDataRegistroDesc();
+
+	}
+	
+	public List<Post> filtrar(String palavra) {
+
+		return repository.filtrarPorNome(palavra);
 
 	}
 
