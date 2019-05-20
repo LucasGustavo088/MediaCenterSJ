@@ -28,8 +28,6 @@ public class MaterialController {
 	CategoriaService categoriaService;
 
 
-	@Autowired
-	//TagService tagService;
 
 	@GetMapping()
 	public ModelAndView listar() {
@@ -48,13 +46,10 @@ public class MaterialController {
 
 		mv.addObject("categorias", this.categoriaService.listar());
 		
-
+		return mv;
+		
+	}
 	
-	@Autowired
-	UsuarioService usuarioService;
-	
-	@Autowired
-	TagService tagService;
 
 	@GetMapping()
 	public ModelAndView listar(HttpSession session) {
@@ -73,9 +68,6 @@ public class MaterialController {
 
 		mv.addObject("categorias", this.categoriaService.listar());
 
-		mv.addObject("tags", this.tagService.listar());
-
->>>>>>> refs/remotes/origin/internacionalizacao
 		return mv;
 	}
 

@@ -65,7 +65,7 @@ public class PostController {
 
 		return mv;
 	}
-<<<<<<< HEAD
+
 	
 	@GetMapping("book")
 	public ModelAndView book() {
@@ -80,6 +80,5 @@ public class PostController {
 
 		return mv;
 	}
-=======
->>>>>>> refs/remotes/origin/internacionalizacao
+
 }
