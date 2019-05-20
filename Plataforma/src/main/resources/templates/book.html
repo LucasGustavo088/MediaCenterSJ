@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Book</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+
+<link rel="stylesheet" th:href="@{/css/bookblock.css}" />
+<link rel="stylesheet" th:href="@{/css/default.css}" />
+<link rel="stylesheet" th:href="@{/css/book.css}" />
+
+<style type="text/css">
+@import
+	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.tituloPost {
+	border-left: 8px solid #AB0F41;
+	color: #AB0F41;
+	padding: 8px;
+	margin: 0.6em 0px 0px 0px;
+	text-align: left;
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	position: absolute;
+	bottom: 30px;
+	background-color: #fff;
+	opacity: 0.9;
+	width: 100%;
+}
+
+.destaque {
+	transition: all .2s ease-in-out;
+}
+
+.destaque:hover {
+	transform: scale(1.04);
+	-webkit-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+	<div class="container">
+		<div class="bb-custom-wrapper">
+
+			<div id="bb-bookblock" class="bb-bookblock">
+				<div class="bb-item">
+					<div class="bb-custom-firstpage" style="padding-top: 80px">
+
+						<!--  -->
+
+						<div class="row">
+
+							<div class="col-md-4" th:each="post,count : ${posts}">
+
+								<!-- <a href="#" th:onclick="'top(post_' + ${count.index} + ');'"> -->
+
+								<div class="destaque">
+
+									<h6
+										style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff;"
+										th:text="${post.titulo}"></h6>
+
+								</div>
+
+								<!-- </a> -->
+
+							</div>
+
+
+						</div>
+						<!--  -->
+					</div>
+					<div class="bb-custom-side">
+
+						<p>
+							<b>LAB's</b> | Plataforma multimídia
+						</p>
+
+					</div>
+				</div>
+
+				<div class="bb-item" th:each="post,count : ${posts}">
+
+					<div class="bb-custom-side" style="padding-top: 40px">
+
+						<!-- <span th:id="'post_' + ${count.index}"></span> -->
+
+						<div style="position: relative">
+
+							<div class="text-center">
+
+
+								<img th:src="${post.destaque}" class="img-fluid"
+									style="padding: 18px; padding-top: 0px" />
+
+							</div>
+
+							<div class="tituloPost">
+
+								<h3 th:text="${post.titulo}"
+									style="margin-bottom: 0px; padding-bottom: 0px"></h3>
+
+								<small
+									th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
+									style="margin-top: 0"></small>
+
+							</div>
+
+
+						</div>
+
+						<th:block th:each="categoria : ${post.categorias}">
+
+							<small style="margin: 0; padding: 0"><span th:text="${categoria.nome}"
+								style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #212529; color: #fff; text-align: left"></span></small>
+
+						</th:block>
+						
+
+						<div class="row" style="margin: 10px; padding: 10px; display: none">
+
+							<div class="col-md-6 text-left">
+
+								<small>
+									<p>
+										Tags: <span th:text="${post.tags}"></span>
+									</p>
+								</small>
+
+							</div>
+							<div class="col-md-6 text-right">
+
+								<th:block th:each="categoria : ${post.categorias}">
+
+									<small><span th:text="${categoria.nome}"
+										style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #212529; color: #fff; text-align: left"></span></small>
+
+								</th:block>
+
+							</div>
+
+
+						</div>
+
+
+					</div>
+
+					<div class="bb-custom-side" style="padding-top: 10px">
+
+						<div th:id="'conteudo_' +${post.id}"></div>
+
+
+
+
+
+
+					</div>
+
+				</div>
+
+			
+			</div>
+
+			<nav>
+				<a id="bb-nav-first" href="#"
+					class="bb-custom-icon bb-custom-icon-first">First page</a> <a
+					id="bb-nav-prev" href="#"
+					class="bb-custom-icon bb-custom-icon-arrow-left">Previous</a> <a
+					id="bb-nav-next" href="#"
+					class="bb-custom-icon bb-custom-icon-arrow-right">Next</a> <a
+					id="bb-nav-last" href="#"
+					class="bb-custom-icon bb-custom-icon-last">Last page</a>
+			</nav>
+
+		</div>
+
+	</div>
+	<!-- /container -->
+
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/modernizr.custom.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/jquery.bookblock.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/jquerypp.custom.js}"></script>
+
+
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			
+			let posts = [[${posts}]];
+		
+			let destaques = document.querySelectorAll(".destaque");
+			
+			let countDestaque = 0;
+			
+			function addBackGroundImage(destaque){
+				
+				destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				
+				countDestaque++;
+			} 
+		
+		
+			posts.forEach((post) => {
+				
+				let cam = '#conteudo_' + post.id;
+				
+				document.querySelector(cam).innerHTML = post.conteudo;
+				
+				/*  */
+				
+				addBackGroundImage(post.destaque);
+				
+			});
+			
+		var Page = (function() {
+
+			var config = {
+				$bookBlock : $('#bb-bookblock'),
+				$navNext : $('#bb-nav-next'),
+				$navPrev : $('#bb-nav-prev'),
+				$navFirst : $('#bb-nav-first'),
+				$navLast : $('#bb-nav-last')
+			}, init = function() {
+				config.$bookBlock.bookblock({
+					speed : 1000,
+					shadowSides : 0.8,
+					shadowFlip : 0.4
+				});
+				initEvents();
+			}, initEvents = function() {
+
+				var $slides = config.$bookBlock.children();
+
+				// add navigation events
+				config.$navNext.on('click touchstart', function() {
+					config.$bookBlock.bookblock('next');
+					return false;
+				});
+
+				config.$navPrev.on('click touchstart', function() {
+					config.$bookBlock.bookblock('prev');
+					return false;
+				});
+
+				config.$navFirst.on('click touchstart', function() {
+					config.$bookBlock.bookblock('first');
+					return false;
+				});
+
+				config.$navLast.on('click touchstart', function() {
+					config.$bookBlock.bookblock('last');
+					return false;
+				});
+
+				// add swipe events
+				$slides.on({
+					'swipeleft' : function(event) {
+						config.$bookBlock.bookblock('next');
+						return false;
+					},
+					'swiperight' : function(event) {
+						config.$bookBlock.bookblock('prev');
+						return false;
+					}
+				});
+
+				// add keyboard events
+				$(document).keydown(function(e) {
+					var keyCode = e.keyCode || e.which, arrow = {
+						left : 37,
+						up : 38,
+						right : 39,
+						down : 40
+					};
+
+					switch (keyCode) {
+					case arrow.left:
+						config.$bookBlock.bookblock('prev');
+						break;
+					case arrow.right:
+						config.$bookBlock.bookblock('next');
+						break;
+					}
+				});
+			};
+
+			return {
+				init : init
+			};
+
+		})();
+		
+		
+		Page.init();
+		
+		/*]]>*/
+		</script>
+	<script>
+		
+	</script>
+
+
+</body>
+
+</html>
