@@ -1,5 +1,4 @@
 package br.usjt.plataforma;
-
 import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;

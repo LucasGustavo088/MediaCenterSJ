@@ -5,15 +5,31 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Categorias</title>
+<title th:text="#{categories}"></title>
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#locales').change(function() {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != '') {
+					//window.location.replace('test?lang=' + selectedOption);
+					var currentURL = window.location.pathname;
+					//"Replace" the current URL with the current URL.
+					window.location.replace(currentURL + '?lang='+selectedOption);
+				}
+			});
+		});
+	</script>
 
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="/figuras">Plataforma</a>
+		<a class="navbar-brand" href="/figuras" th:text="#{platform}"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -21,13 +37,11 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="/categorias">Categorias
-				</a></li>				
-				<li class="nav-item"><a class="nav-link" href="/tags">Tags</a></li>
-				<li class="nav-item"><a class="nav-link" href="/materiais">Materiais</a></li>
-
-
+				<li class="nav-item"><a class="nav-link" href="/categorias" th:text="#{categories}"></a></li>
+				<li class="nav-item"><a class="nav-link" href="/posts" th:text="#{posts}"></a></li>
+				<li class="nav-item"><a class="nav-link" href="/materiais" th:text="#{materials}"></a></li>
 			</ul>
+			<th:block th:include="index :: combo"></th:block>
 		</div>
 	</nav>
 
@@ -43,7 +57,7 @@
 						<input type="text" class="form-control" placeholder="Nome"
 							th:field="*{nome}" />
 
-						<button type="submit" class="btn btn-primary">Adicionar</button>
+						<button type="submit" class="btn btn-primary" th:text="#{add}"></button>
 					</div>
 				</form>
 
@@ -53,7 +67,7 @@
 
 				<table class="table">
 				
-					<h2>Categorias</h2>
+					<h2 th:text="#{categories}"></h2>
 
 					<tbody>
 						<tr th:each="categoria : ${categorias}">
@@ -75,7 +89,7 @@
 											name="nome" class="form-control" placeholder="Nome"
 											th:value="${categoria.nome}" />
 
-										<button type="submit" class="btn btn-primary">Salvar</button>
+										<button type="submit" class="btn btn-primary" th:text="#{save}"></button>
 									</div>
 
 								</form>
