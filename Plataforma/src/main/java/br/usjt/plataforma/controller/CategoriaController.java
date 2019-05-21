@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,13 +18,13 @@ import br.usjt.plataforma.service.UsuarioService;
 @Controller
 @RequestMapping("categorias")
 public class CategoriaController {
-	
+
 	@Autowired
 	CategoriaService categoriaService;
-	
+
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 	@GetMapping
 	public ModelAndView listar(HttpSession session) {
 
@@ -32,7 +33,7 @@ public class CategoriaController {
 		mv.addObject("categorias", this.categoriaService.listar());
 
 		mv.addObject(new Categoria());
-		
+
 		return mv;
 	}
 
@@ -43,13 +44,13 @@ public class CategoriaController {
 
 			this.categoriaService.salvar(categoria);
 		}
-		
+
 		return "redirect:/categorias";
 	}
 
 	@PostMapping("/atualizar")
 	public String atualizar(@RequestParam("id") Long id, @RequestParam("nome") String nome) {
-		
+
 		if (nome != null && !nome.isEmpty()) {
 
 			Categoria categoria = this.categoriaService.get(id);
@@ -61,18 +62,15 @@ public class CategoriaController {
 
 		return "redirect:/categorias";
 	}
-	
-	
-	
-	
 
-//	@GetMapping(path = "editar/{id}")
-//	public String atualizar(@PathVariable("id") int id) {
-//
-//		System.out.println("----->> " + id);
-//
-//		return "redirect:/categorias";
-//	}
-//
+/*	@GetMapping(path = "editar/{id}")
+	public void filtrar(@PathVariable("id") int id) {
+
+		System.out.println("----->> " + id);
+		
+		
+
+		//return "redirect:/categorias";
+	}*/
 
 }

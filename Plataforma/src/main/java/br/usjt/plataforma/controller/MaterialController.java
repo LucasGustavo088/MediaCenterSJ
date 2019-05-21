@@ -27,8 +27,6 @@ public class MaterialController {
 	@Autowired
 	CategoriaService categoriaService;
 
-
-
 	@GetMapping()
 	public ModelAndView listar() {
 
@@ -51,7 +49,7 @@ public class MaterialController {
 	}
 	
 
-	@GetMapping()
+/*	@GetMapping()
 	public ModelAndView listar(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView("materiais");
@@ -69,7 +67,7 @@ public class MaterialController {
 		mv.addObject("categorias", this.categoriaService.listar());
 
 		return mv;
-	}
+	}*/
 
 	@PostMapping("figura")
 	public RedirectView adicionarFigura(Figura figura) {

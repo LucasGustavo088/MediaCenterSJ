@@ -5,7 +5,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<<<<<<< HEAD
 <title>Time line ;D</title>
 
 <!-- Bootstrap CSS CDN -->
@@ -57,7 +56,7 @@ p {
 
 h5 {
 	font-family: 'Poppins', sans-serif;
-	font-size: 1.4em;
+	font-size: 1.2em;
 	font-weight: 300;
 	line-height: 1.7em;
 	color: #999;
@@ -382,7 +381,7 @@ a.article, a.article:hover {
 
 				<div class="row">
 
-					<div class="col-md-4" th:each="post,count : ${posts}">
+					<div class="col-md-3" th:each="post,count : ${posts}">
 
 						<!-- <a href="#" th:onclick="'top(post_' + ${count.index} + ');'"> -->
 
@@ -479,13 +478,15 @@ a.article, a.article:hover {
 
 						<!--  555 -->
 
-						<div class="input-group input-group-lg" style="margin-bottom: 30px">
+						<div class="input-group input-group-lg"
+							style="margin-bottom: 30px">
 							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-lg" style="background-color: #17a2b8; color: #fff;">Pesquisar</span>
+								<span class="input-group-text" id="inputGroup-sizing-lg"
+									style="background-color: #17a2b8; color: #fff;">Pesquisar</span>
 							</div>
 							<input type="text" class="form-control" aria-label="Large"
 								aria-describedby="inputGroup-sizing-sm" name="filtro"
-							id="filtrar-tabela">
+								id="filtrar-tabela">
 						</div>
 
 						<!--  -->
@@ -496,51 +497,23 @@ a.article, a.article:hover {
 							<!-- <div class="card p-1 m-3 material"
 								th:if="${#strings.contains(material, 'Figura')}"> -->
 
-							<div class="card p-1 m-3 material">
-							
-							<div class="row">
-							
-							<div class="col-md-4">
-							
-							<a href="#" data-toggle="modal"
-									th:data-target="'#cam_' + ${post.id}" title="Detalhes"> <img
-									class="card-img-top text-center" th:src="@{${post.destaque }}"
-									alt="Img" border="0" />
-							
-							</div>
-							<div class="col-md-8">
-							
-							<p class="card-title" th:text="${post.titulo}"
-										style="margin: 0; padding: 2px 0"></p>
-
-									<p class="card-text text-muted">
-										<small
-											th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
-							</div>
-							
-							</div>
-
-								<!-- <a href="#" data-toggle="modal"
-									th:data-target="'#cam_' + ${post.id}" title="Detalhes"> <img
-									class="card-img-top text-center" th:src="@{${post.destaque }}"
-									alt="Img" border="0" />
-
-								</a>
-
-								<div class="card-body text-center"
-									style="margin: 0; padding: 2px 0">
+							<div class="card p-3 m-3 material"
+								style="border: 1px solid #17a2b8">
 
 
-									<p class="card-title" th:text="${post.titulo}"
-										style="margin: 0; padding: 2px 0"></p>
 
-									<p class="card-text text-muted">
-										<small
-											th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
+								<img class="card-img-top text-center"
+									th:src="@{${post.destaque }}" alt="Img" border="0" /> <small><p
+										class="card-title" th:text="${post.titulo}"
+										style="margin: 10px 0"></p></small>
 
-								</div> -->
+								<p class="card-text text-muted">
+									<small
+										th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy HH:mm')}"
+										style="font-size: 0.7em"></small>
+								</p>
+
+
 
 							</div>
 
@@ -596,6 +569,10 @@ a.article, a.article:hover {
 		
 			let destaques = document.querySelectorAll(".destaque");
 			
+			//let links = document.querySelectorAll("a");
+			
+			
+			
 			let countDestaque = 0;
 			
 			function addBackGroundImage(destaque){
@@ -611,6 +588,31 @@ a.article, a.article:hover {
 				let cam = '#conteudo_' + post.id;
 				
 				document.querySelector(cam).innerHTML = post.conteudo;
+				
+				let links = document.querySelector(cam).querySelectorAll("a");
+				
+				 
+				/* var new_element = document.createElement('span');
+				new_element.innerHTML = 'Two Edited'; */
+				
+				var video = document.createElement('video');
+								 
+				links.forEach(a => {
+					
+					if(a.href.includes(".mp4"))
+						
+						//a.replaceWith('<source src="' + a.href + '" type="video/mp4"/>');
+					
+						video.controls = true;
+
+					video.src = a.href;
+					video.type="video/mp4";
+					
+					
+					a.replaceWith(video);
+					
+					
+				});
 				
 				/*  */
 				
@@ -662,8 +664,11 @@ a.article, a.article:hover {
 				            
 				            	var materialDiv = document.createElement("div");
 				            					            	
-				            	materialDiv.innerHTML = '<div class=\"card p-1 m-3 material\"><a href=\"#\" data-toggle=\"modal\"th:data-target=\"#cam_1\" title=\"Detalhes\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'"alt=\"Img\" border=\"0\" /></a><div class=\"card-body text-center\"style=\"margin: 0; padding: 2px 0\"><p class=\"card-title\"style=\"margin: 0; padding: 2px 0\">'+ material.titulo +'</p><p class=\"card-text text-muted\"><small>'+ data +'</small></p></div></div>';
-				            				            
+				            	//materialDiv.innerHTML = '<div class=\"card p-1 m-3 material\"><a href=\"#\" data-toggle=\"modal\"th:data-target=\"#cam_1\" title=\"Detalhes\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'"alt=\"Img\" border=\"0\" /></a><div class=\"card-body text-center\"style=\"margin: 0; padding: 2px 0\"><p class=\"card-title\"style=\"margin: 0; padding: 2px 0\">'+ material.titulo +'</p><p class=\"card-text text-muted\"><small>'+ data +'</small></p></div></div>';
+				            		
+				            	
+				            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
+				            	
 				            	materiais_div.appendChild(materialDiv);
 				            
 				            });
@@ -722,572 +727,6 @@ a.article, a.article:hover {
 				
 					
 				
-=======
-<title>Post listar</title>
-
-<!-- Bootstrap CSS CDN -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-	crossorigin="anonymous">
-
-<!-- Scrollbar Custom CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-<!-- Font Awesome JS -->
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-	integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-	crossorigin="anonymous"></script>
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-	integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-	crossorigin="anonymous"></script>
-
-<link rel="stylesheet" th:href="@{/css/starrr.css}" />
-
-<style type="text/css">
-
-/*
-    DEMO STYLE
-*/
-@import
-	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
-body {
-	font-family: 'Poppins', sans-serif;
-	background: #fafafa;
-}
-
-p {
-	font-family: 'Poppins', sans-serif;
-	font-size: 1.2em;
-	font-weight: 300;
-	line-height: 1.7em;
-	color: #696969;
-	text-align: justify;
-}
-
-h5 {
-	font-family: 'Poppins', sans-serif;
-	font-size: 1.4em;
-	font-weight: 300;
-	line-height: 1.7em;
-	color: #999;
-}
-
-a, a:hover, a:focus {
-	color: inherit;
-	text-decoration: none;
-	transition: all 0.3s;
-}
-
-.navbar {
-	padding: 15px 10px;
-	background: #fff;
-	border: none;
-	border-radius: 0;
-	margin-bottom: 40px;
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-	box-shadow: none;
-	outline: none !important;
-	border: none;
-}
-
-.line {
-	width: 100%;
-	height: 1px;
-	border-bottom: 1px dashed #ddd;
-	margin: 40px 0;
-}
-
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-#sidebar {
-	width: 250px;
-	position: fixed;
-	top: 0;
-	left: -250px;
-	height: 100vh;
-	z-index: 999;
-	background: #7386D5;
-	color: #fff;
-	transition: all 0.3s;
-	overflow-y: scroll;
-	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-}
-
-#sidebar.active {
-	left: 0;
-}
-
-#dismiss {
-	width: 35px;
-	height: 35px;
-	line-height: 35px;
-	text-align: center;
-	background: #7386D5;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	cursor: pointer;
-	-webkit-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
-}
-
-#dismiss:hover {
-	background: #fff;
-	color: #7386D5;
-}
-
-.overlay {
-	display: none;
-	position: fixed;
-	width: 100vw;
-	height: 100vh;
-	background: rgba(0, 0, 0, 0.7);
-	z-index: 998;
-	opacity: 0;
-	transition: all 0.5s ease-in-out;
-}
-
-.overlay.active {
-	display: block;
-	opacity: 1;
-}
-
-#sidebar .sidebar-header {
-	padding: 20px;
-	background: #6d7fcc;
-}
-
-#sidebar ul.components {
-	padding: 20px 0;
-	border-bottom: 1px solid #47748b;
-}
-
-#sidebar ul p {
-	color: #fff;
-	padding: 10px;
-}
-
-#sidebar ul li a {
-	padding: 10px;
-	font-size: 1.1em;
-	display: block;
-}
-
-#sidebar ul li a:hover {
-	color: #7386D5;
-	background: #fff;
-}
-
-#sidebar ul li.active>a, a[aria-expanded="true"] {
-	color: #fff;
-	background: #6d7fcc;
-}
-
-a[data-toggle="collapse"] {
-	position: relative;
-}
-
-.dropdown-toggle::after {
-	display: block;
-	position: absolute;
-	top: 50%;
-	right: 20px;
-	transform: translateY(-50%);
-}
-
-ul ul a {
-	font-size: 0.9em !important;
-	padding-left: 30px !important;
-	background: #6d7fcc;
-}
-
-ul.CTAs {
-	padding: 20px;
-}
-
-ul.CTAs a {
-	text-align: center;
-	font-size: 0.9em !important;
-	display: block;
-	border-radius: 5px;
-	margin-bottom: 5px;
-}
-
-a.download {
-	background: #fff;
-	color: #7386D5;
-}
-
-a.article, a.article:hover {
-	background: #6d7fcc !important;
-	color: #fff !important;
-}
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-#content {
-	width: 100%;
-	padding: 20px;
-	min-height: 100vh;
-	transition: all 0.3s;
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-.destaque {
-	transition: all .2s ease-in-out;
-}
-
-.destaque:hover {
-	transform: scale(1.04);
-	-webkit-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
-	-moz-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
-	box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
-}
-
-.tituloPost {
-	border-left: 8px solid #AB0F41;
-	color: #AB0F41;
-	padding: 8px;
-	margin: 0.6em 0px 0px 0px;
-	text-align: left;
-	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
-	-moz-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
-	box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
-	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
-	position: absolute;
-	bottom: 30px;
-	background-color: #fff;
-	opacity: 0.9;
-	width: 100%;
-}
-
-.circle img {
-	background-color: #ddd;
-	border-radius: 100%;
-	height: 150px;
-	object-fit: cover;
-	width: 150px;
-}
-
-
-
-</style>
-
-</head>
-
-<body>
-
-	<div class="wrapper">
-		<!-- Sidebar  -->
-		<nav id="sidebar">
-			<div id="dismiss">
-				<i class="fas fa-arrow-left"></i>
-			</div>
-
-
-
-			<div class="sidebar-header">
-
-				<div class="circle">
-
-					<img src="http://localhost:3000/sdfsfdsfdfsfd.jpg" />
-
-				</div>
-			</div>
-
-			<ul class="list-unstyled components">
-				<p>Dummy Heading</p>
-				<!-- <li class="active"><a href="#homeSubmenu"
-					data-toggle="collapse" aria-expanded="false">Home</a>
-					<ul class="collapse list-unstyled" id="homeSubmenu">
-						<li><a href="#">Home 1</a></li>
-						<li><a href="#">Home 2</a></li>
-						<li><a href="#">Home 3</a></li>
-					</ul></li>
-				<li><a href="#">About</a> <a href="#pageSubmenu"
-					data-toggle="collapse" aria-expanded="false">Pages</a>
-					<ul class="collapse list-unstyled" id="pageSubmenu">
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li>
-						<li><a href="#">Page 3</a></li>
-					</ul></li> -->
-				<li><a href="#">Perfil</a></li>
-				<li><a href="#">Logout</a></li>
-			</ul>
-
-			<!-- <ul class="list-unstyled CTAs">
-				<li><a
-					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
-					class="download">Download source</a></li>
-				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
-					class="article">Back to article</a></li>
-			</ul> -->
-		</nav>
-
-		<!-- Page Content  -->
-		<div id="content">
-
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<div class="container-fluid">
-
-					<button type="button" id="sidebarCollapse" class="btn btn-info">
-						<i class="fas fa-align-left"></i>
-					</button>
-					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
-						type="button" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<i class="fas fa-align-justify"></i>
-					</button>
-
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="#">Page</a>
-							</li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-
-			<div class="container-fluid">
-
-				<div class="row">
-
-
-					<div class="col-md-4" th:each="post : ${posts}">
-						<div class="destaque">
-
-							<h5
-								style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
-								th:text="${post.titulo}"></h5>
-
-						</div>
-					</div>
-
-
-				</div>
-
-
-				<div class="row" style="margin-top: 40px">
-
-					<div class="col-md-8">
-
-						<div style="margin-top: 20px;" th:each="post,count : ${posts}">
-
-							<div style="position: relative">
-
-								<div class="text-center">
-
-									<img th:src="${post.destaque}" class="img-fluid"
-										style="padding: 18px" />
-
-								</div>
-
-								<div class="tituloPost">
-
-									<div class="my-rating"></div>
-
-									<h3 th:text="${post.titulo}"
-										style="margin-bottom: 0px; padding-bottom: 0px"></h3>
-
-									<small
-										th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
-										style="margin-top: 0"></small>
-
-								</div>
-
-
-							</div>
-
-
-							<!-- <div class="tituloPost">
-
-								<h3 th:text="${post.titulo}"
-									style="margin-bottom: 0px; padding-bottom: 0px"></h3>
-
-								<small
-									th:text="${#temporals.format(post.dataRegistro, 'dd/MM/yyyy')}"
-									style="margin-top: 0"></small>
-
-							</div> -->
-
-
-							<div style="margin-top: 20px;" th:id="'conteudo_' +${post.id}"></div>
-
-
-							<div class="row" style="margin-top: 20px">
-
-								<div class="col-md-6 text-left">
-
-									<small>
-										<p>
-											Tags: <span th:text="${post.tags}"></span>
-										</p>
-									</small>
-
-								</div>
-								<div class="col-md-6 text-right">
-
-									<th:block th:each="categoria : ${post.categorias}">
-
-										<small><span th:text="${categoria.nome}"
-											style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #212529; color: #fff; text-align: left"></span></small>
-
-									</th:block>
-
-								</div>
-
-
-							</div>
-
-
-
-
-
-
-
-							<div class="line"></div>
-
-						</div>
-
-
-					</div>
-
-					<div class="col-md-4" id="stickThis"
-						style="background-color: #999">ddd</div>
-
-				</div>
-
-
-
-
-			</div>
-
-		</div>
-	</div>
-
-	<div class="overlay"></div>
-
-	<!-- jQuery CDN - Slim version (=without AJAX) -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<!-- Popper.JS -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-		crossorigin="anonymous"></script>
-	<!-- Bootstrap JS -->
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-		crossorigin="anonymous"></script>
-	<!-- jQuery Custom Scroller CDN -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<script type="text/javascript" th:src="@{/js/starrr.js}"></script>
-
-	<script type="text/javascript" th:inline="javascript">
-		/*<![CDATA[*/
-			
-			let posts = [[${posts}]];
-		
-			let destaques = document.querySelectorAll(".destaque");
-			
-			let countDestaque = 0;
-			
-			function addBackGroundImage(destaque){
-				
-				destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
-				
-				countDestaque++;
-			}
-		
-		
-			posts.forEach((post) => {
-				
-				let cam = '#conteudo_' + post.id;
-				
-				document.querySelector(cam).innerHTML = post.conteudo;
-				
-				/*  */
-				
-				addBackGroundImage(post.destaque);
-				
-			});
-			
-			//document.querySelectorAll(".destaque").forEach((destaque) => destaque.style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;");
-			
-		 	//let destaques = document.querySelectorAll(".destaque");
-			
-			//destaques[0].style.cssText = "height: 500px ;background: url(http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg) top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
-			
-			//destaques[0].querySelector(".titulo").innerText = posts[0].titulo; 
-			
-			//destaques[1].innerHTML = '<img src="https://img.ibxk.com.br///2019/05/13/13121824107095-t1200x480.jpg" class=" img-fluid"/>';
-			//destaques[2].innerHTML = '<img src="http://localhost:3000/eca439d9-6136-423e-a06a-a9184785a973.jpg" class=" img-fluid"/>';
-			 
-			function sticktothetop() {
-    var window_top = $(window).scrollTop();
-    var top = $('#stick-here').offset().top;
-    if (window_top > top) {
-        $('#stickThis').addClass('stick');
-        $('#stick-here').height($('#stickThis').outerHeight());
-    } else {
-        $('#stickThis').removeClass('stick');
-        $('#stick-here').height(0);
-    }
-}
-			
-		
-			$(document).ready(function() {
-				$("#sidebar").mCustomScrollbar({
-					theme : "minimal"
-				}); 
-
-				$('#dismiss, .overlay').on('click', function() {
-					$('#sidebar').removeClass('active');
-					$('.overlay').removeClass('active');
-				});
-
-				$('#sidebarCollapse').on('click', function() {
-					$('#sidebar').addClass('active');
-					$('.overlay').addClass('active');
-					$('.collapse.in').toggleClass('in');
-					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
-				});
-				
-				$(".my-rating").starRating({
-					useFullStars: true,
-				    starSize: 25,
-				    strokeColor: '#AB0F41',
-				    hoverColor: '#AB0F41',
-				    callback: function(currentRating, $el){
-				        // make a server call here
-				    }
-				});
-				
-				$(window).scroll(sticktothetop);
-			    sticktothetop();
->>>>>>> refs/remotes/origin/internacionalizacao
 			});
 
 		/*]]>*/

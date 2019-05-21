@@ -41,15 +41,19 @@ public class PostController {
 	}
 
 	@PostMapping
-	public RedirectView salvar(Post post) {
-
+	public String salvar(Post post) {
+		
 		postService.salvar(post);
+
+		/*postService.salvar(post);
 
 		RedirectView redirectView = new RedirectView();
 
 		redirectView.setUrl("/materiais/listar");
 
-		return redirectView;
+		return redirectView;*/
+		
+		return "redirect:/posts/listar";
 	}
 	
 	@GetMapping("listar")
