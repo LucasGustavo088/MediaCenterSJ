@@ -134,14 +134,9 @@
 							<div class="card p-1 m-3 material"
 								th:if="${#strings.contains(material, 'Figura')}">
 
-
-								<a href="#" data-toggle="modal"
-									th:data-target="'#cam_' + ${material.id}" title="Detalhes">
-									<img class="card-img-top text-center"
+								<img class="card-img-top text-center"
 									th:src="@{${'http://localhost:3000/' + material.url }}"
-									alt="Img" border="0" />
-
-								</a>
+									alt="Img" border="0" /> </a>
 
 								<div class="card-body text-center"
 									style="margin: 0; padding: 2px 0">
@@ -151,10 +146,14 @@
 										style="margin: 0; padding: 2px 0"></p>
 
 									<p class="card-text text-muted">
-										<small
+										<a href="#" data-toggle="modal"
+											th:data-target="'#cam_' + ${material.id}"
+											class="badge badge-info" target="_blank">Imagem</a> <small
 											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 									</p>
-
+									
+									<button th:attr="onclick=|definirDestaque('${'http://localhost:3000/' + material.url}')|">opa</button> 
+																		 
 								</div>
 
 							</div>
@@ -241,7 +240,16 @@
 						<form method="post" th:action="@{/posts}" th:object="${post}"
 							id="form">
 
-							<div class="form-group" style="font-size: 1.2em">
+
+
+														
+							<div id="cam_destaque" style="max-height: 250px !important; min-height: 250px !important; border: 1px solid #ccc">
+								
+							</div>
+
+							
+							<div class="form-group"
+								style="font-size: 1.2em; margin-top: 24px">
 								<label for="nome"><b>Título</b></label> <input type="text"
 									class="form-control" id="titulo" name="titulo"
 									aria-describedby="titulo" th:field="*{titulo}">
@@ -253,11 +261,8 @@
 							</h6>
 
 							<input id="tags" name="tags" type="text" class="form-control"
-								th:field="*{tags}">
-								
-								
-								<input id="destaque" name="destaque" type="text" class="form-control"
-								th:field="*{destaque}">
+								th:field="*{tags}"> <input id="destaque" name="destaque"
+								type="hidden" class="form-control" th:field="*{destaque}">
 
 
 							<h6 style="margin: 30px 0 7px 0">
@@ -285,21 +290,20 @@
 
 							<div class="clearfix"></div>
 
-							<div class="form-group"
-								style="margin-top: 24px; font-size: 1.2em">
-								<label for="nome"><b>Conteúdo</b></label>
-							</div>
+							<!-- <div id="editor" style="margin-top: 30px">
+								<div id='edit' style="min-height: 400px !important;">
 
-							<div id="editor" style="margin-left: 45px; border-left:">
-								<div id='edit' style="min-height: 800px !important;">
-
-									<p>...</p>
+								</div>
+							</div> -->
+							
+							<div id="editor" style="margin-top: 30px">
+								<div id='edit'>
 
 								</div>
 							</div>
 
-							<input id="conteudo" name="conteudo" type="text" class="form-control"
-								th:field="*{conteudo}">
+							<input id="conteudo" name="conteudo" type="hidden"
+								class="form-control" th:field="*{conteudo}">
 
 							<button type="submit" class="btn btn btn-primary float-right"
 								style="margin: 30px 0">Salvar</button>
@@ -724,9 +728,7 @@
 					xhr.send();					
 				
 				} else {
-					
-					//document.getElementsByClassName("material").remove();
-					
+										
 					 materiais.forEach(function (material) {
 						
 						material.remove();
@@ -738,30 +740,15 @@
 
 			});
 			
-			/* Injeta categorias e tags no form atual e realiza o envio */
-			function enviar(){	
-	 			
-	 			/* Array.prototype.map.call(document.querySelectorAll("input[name^='categorias[']:checked"), e => {
-	 			 			 				
-	 				let campoCategorias = document.createElement("input");
-	 				campoCategorias.setAttribute('type', 'checkbox');
-	 				campoCategorias.name = "categorias"; 
-	 				campoCategorias.value = e.value;
-	 				campoCategorias.checked = true;
-	 				form.appendChild(campoCategorias);	
-	 						 				
-	 			});
-	 			
-	 			
-				let campoTags = document.createElement('input');
-			 	
-				campoTags.type = 'text';
-				campoTags.name = 'tags';
-				campoTags.value = document.querySelector('#tags').value;
-				form.appendChild(campoTags);
-	 			
-				document.querySelector("#form").submit(); */	 			
-	 					
+					
+			function definirDestaque(src){
+				
+				console.log(src);
+				
+				document.querySelector("#destaque").value = src;
+				
+				document.querySelector("#cam_destaque").style.cssText = "padding-top: 12px; height: 250px ;background: url("+ src +") center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				
 			}
 			
 
@@ -769,41 +756,14 @@
 					.ready(
 							function() {
 
-								$('#edit')
+								$('#editor')
 										.froalaEditor(
-												{
-													toolbarInline : true,
-													toolbarButtons : [ 'bold',
-															'italic',
-															'underline',
-															'strikeThrough',
-															'color',
-															'emoticons',
-															'undo', 'redo',
-															'-',
-															'paragraphFormat',
-															'align',
-															'formatOL',
-															'formatUL',
-															'indent',
-															'outdent',
-															'insertLink' ],
-													toolbarButtonsXS : null,
-													toolbarButtonsSM : null,
-													toolbarButtonsMD : null,
-													
-													imageDefaultAlign : 'center',
-
-													quickInsertButtons : [
-															'embedly', 'table',
-															'ul', 'ol', 'hr','video' ],
-													imageEditButtons : [
-															'imageAlign',
-															'imageRemove',
-															'imageDisplay',
-															'imageStyle',
-															'imageSize' ]
-												});
+												{placeholderText: 'Insira o conteúdo ;D ...',height: 500}
+												
+												
+												);
+								
+								
 								
 								
 								$('#tags').tagsInput({
@@ -816,32 +776,20 @@
 									  delimiter: ', ',
 									  removeWithBackspace: true
 								});
-								
+																						
 								
 								$("#form").submit(function( event ) {
 									  
-									var markupStr = $('#edit')
-									.froalaEditor('html.get',
-											true);
+									 var conteudo = $('#editor').froalaEditor('html.get', true);
+																		 
+									 document.querySelector("#conteudo").value = conteudo;										 
+										 
 									
-									 $("#conteudo").val(markupStr);
 									 
 								});
 								
-
-								/* $("#enviar").click(
-										function() { 
-											
-											var markupStr = $('#edit')
-													.froalaEditor('html.get',
-															true);
-
-											console.log(markupStr);
-											
-											$("#conteudo").html(markupStr);
-											
-											$("#titulo").val(markupStr);
-								}); */
+								
+													
 								
 
 							});

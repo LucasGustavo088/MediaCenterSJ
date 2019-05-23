@@ -32,6 +32,12 @@ public class PostService {
 		return repository.findAllByOrderByDataRegistroDesc();
 
 	}
+	
+	/*public List<Post> listarUltimosPostados() {
+
+		return repository.listarUltimos();
+
+	}*/
 
 	public List<Post> filtrar(String palavra) {
 

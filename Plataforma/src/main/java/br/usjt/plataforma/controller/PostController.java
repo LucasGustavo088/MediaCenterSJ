@@ -26,7 +26,7 @@ public class PostController {
 	@Autowired
 	CategoriaService categoriaService;
 
-	@GetMapping()
+	@GetMapping("adicionar")
 	public ModelAndView adicionar() {
 
 		ModelAndView mv = new ModelAndView("post");
@@ -53,19 +53,19 @@ public class PostController {
 
 		return redirectView;*/
 		
-		return "redirect:/posts/listar";
+		return "redirect:/posts";
 	}
 	
-	@GetMapping("listar")
+	@GetMapping()
 	public ModelAndView listar() {
 
 		ModelAndView mv = new ModelAndView("post_listar");
 
 		mv.addObject("posts", this.postService.listar());
 		
-		mv.addObject("materiais", this.materialService.listar());
+		/*mv.addObject("materiais", this.materialService.listar());
 
-		mv.addObject("categorias", this.categoriaService.listar());
+		mv.addObject("categorias", this.categoriaService.listar());*/
 
 		return mv;
 	}

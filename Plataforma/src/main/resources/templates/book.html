@@ -67,7 +67,7 @@
 
 								<!-- <a href="#" th:onclick="'top(post_' + ${count.index} + ');'"> -->
 
-								<div class="destaque">
+								<div th:if="${count.index < 3}" class="destaque">
 
 									<h6
 										style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff;"
@@ -158,14 +158,11 @@
 
 					</div>
 
-					<div class="bb-custom-side" style="padding-top: 10px">
+					<div class="bb-custom-side" style="padding-top: 10px; overflow-y: auto;">
 
 						<div th:id="'conteudo_' +${post.id}"></div>
 
-
-
-
-
+						<span style="margin-top: 40px; display: block;"></span>
 
 					</div>
 
@@ -212,7 +209,11 @@
 			
 			function addBackGroundImage(destaque){
 				
-				destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				if(countDestaque < 3){
+				
+					destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				
+				}
 				
 				countDestaque++;
 			} 
