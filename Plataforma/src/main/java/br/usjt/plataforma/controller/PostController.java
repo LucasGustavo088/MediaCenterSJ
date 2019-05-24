@@ -44,15 +44,7 @@ public class PostController {
 	public String salvar(Post post) {
 		
 		postService.salvar(post);
-
-		/*postService.salvar(post);
-
-		RedirectView redirectView = new RedirectView();
-
-		redirectView.setUrl("/materiais/listar");
-
-		return redirectView;*/
-		
+			
 		return "redirect:/posts";
 	}
 	
@@ -62,10 +54,6 @@ public class PostController {
 		ModelAndView mv = new ModelAndView("post_listar");
 
 		mv.addObject("posts", this.postService.listar());
-		
-		/*mv.addObject("materiais", this.materialService.listar());
-
-		mv.addObject("categorias", this.categoriaService.listar());*/
 
 		return mv;
 	}

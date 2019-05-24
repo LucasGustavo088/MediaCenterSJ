@@ -326,17 +326,8 @@ audio:active {
 
 
 
-			<div class="sidebar-header">
-
-				<div class="circle">
-
-					<!-- <img src="http://localhost:3000/sdfsfdsfdfsfd.jpg" /> -->
-
-				</div>
-			</div>
-
 			<ul class="list-unstyled components">
-				<p>Dummy Heading</p>
+				<p th:text="${usuario.nome}"></p>
 				<!-- <li class="active"><a href="#homeSubmenu"
 					data-toggle="collapse" aria-expanded="false">Home</a>
 					<ul class="collapse list-unstyled" id="homeSubmenu">
@@ -353,15 +344,20 @@ audio:active {
 					</ul></li> -->
 				<li><a href="#">Perfil</a></li>
 				<li><a href="#">Logout</a></li>
+				<li>
+				
+				<select id="locales" class="form-control" style="background-color: #7386D5; color: #fff;">
+									 <option value="" selected disabled hidden>Idioma</option>
+									 <option value="pt" th:text="#{lang.pt}"></option>
+									<option value="en" th:text="#{lang.eng}"></option>
+									<option value="es" th:text="#{lang.es}"></option>
+							</select>
+				</li> 
+				
+				
 			</ul>
 
-			<!-- <ul class="list-unstyled CTAs">
-				<li><a
-					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
-					class="download">Download source</a></li>
-				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
-					class="article">Back to article</a></li>
-			</ul> -->
+			
 		</nav>
 
 		<!-- Page Content  -->
@@ -371,46 +367,44 @@ audio:active {
 
 				<div class="container-fluid">
 
-
-					<a href="#" class="navbar-brand pull-right"
-						th:text="#{nome_plataforma}"></a>
-
+					<button type="button" id="sidebarCollapse" class="btn btn-info">
+						<i class="fas fa-align-left"></i>
+					</button>
+					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+						type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-align-justify"></i>
+					</button>
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
+							<li class="nav-item active"><a class="nav-link" href="book">Book</a>
+							</li>
 						
-						<li class="nav-item active"><a class="nav-link" href="#"
-								th:text="#{cadastro}"></a></li>
-
-							<li class="nav-item active"><a class="nav-link"
-								href="#" data-toggle="modal" data-target="#login">Login</a></li>
-
-						
-							<li class="nav-item "><select id="locales" class="form-control" style="padding: 4px">
-									 <option value="" selected disabled hidden>Idioma</option>
-									 <option value="pt" th:text="#{lang.pt}"></option>
-									<option value="en" th:text="#{lang.eng}"></option>
-									<option value="es" th:text="#{lang.es}"></option>
-							</select>
-							</li> 
-
-							
-
 						</ul>
 					</div>
 
 
 
 				</div>
+				<div class="navbar-right">
 
+					<a href="#" class="navbar-brand pull-right"
+						th:text="#{nome_plataforma}"></a>
+
+				</div>
 			</nav>
+			
+			
 
 			<div class="container-fluid" style="margin-top: 90px">
 
-
-
 				<div class="row">
 
+
+					
 
 
 					<div class="col-md-3" th:each="post,count : ${posts}">
@@ -422,6 +416,8 @@ audio:active {
 								<h5
 									style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
 									th:text="${post.titulo}"></h5>
+
+								<!-- <button th:attr="onclick=|foco(${'#conteudo_' + post.id}')|">opa</button> -->
 
 							</div>
 
@@ -525,6 +521,10 @@ audio:active {
 
 						<div th:each="post : ${posts}" class="text-center" id="materiais">
 
+
+							<!-- <div class="card p-1 m-3 material"
+								th:if="${#strings.contains(material, 'Figura')}"> -->
+
 							<div class="card p-3 m-3 material"
 								style="border: 1px solid #17a2b8">
 
@@ -555,38 +555,7 @@ audio:active {
 
 				</div>
 
-				<!-- Login -->
-				<div class="modal fade" id="login" tabindex="-1" role="dialog"
-					aria-labelledby="login" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Login</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
 
-								<form method="post" th:action="@{/login}" th:object="${usuario}">
-									<div class="form-group">
-										<label for="email">E-mail</label> <input type="email"
-											class="form-control" id="email" th:field="*{email}">
-
-									</div>
-									<div class="form-group">
-										<label for="senha">Senha</label> <input type="password"
-											class="form-control" id="senha" th:field="*{senha}">
-									</div>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-secondary">Login</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
 
 
 			</div>
@@ -658,7 +627,7 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
-				/* console.log(imgs); */
+				console.log(imgs);
 				
 				imgs.forEach(img =>{
 					
@@ -685,7 +654,7 @@ audio:active {
 					
 					if(a.href.includes(".mp3")){
 						
-						/* console.log(a.text); */
+						console.log(a.text);
 						
 						let audio = document.createElement('audio');
 					
@@ -737,8 +706,8 @@ audio:active {
 					
 						if (xhr.status == 200) {
 							
-							/* console.log(xhr.status);
-				            console.log(xhr.responseText); */
+							console.log(xhr.status);
+				            console.log(xhr.responseText);
 				            
 				            var resposta = xhr.responseText;
 				            var lista = JSON.parse(resposta);
@@ -815,13 +784,15 @@ audio:active {
 			        $("html, body").animate({ scrollTop: $($(this).attr("href")).offset().top - 75 }, 1000);
 			    });
 				
+				
 				$('#locales').change (function(){
 					var selectedOption = $('#locales').val();
 					if (selectedOption != ''){
-					window.location.replace ('index?lang=' +
+					window.location.replace ('perfil?lang=' +
 					selectedOption);
 					}
 				});
+				
 				
 			});
 			
