@@ -15,10 +15,10 @@
 			$('#locales').change(function() {
 				var selectedOption = $('#locales').val();
 				if (selectedOption != '') {
-					//window.location.replace('test?lang=' + selectedOption);
-					var currentURL = window.location.pathname;
+					window.location.replace('index?lang=' + selectedOption);
+					//var currentURL = window.location.pathname;
 					//"Replace" the current URL with the current URL.
-					window.location.replace(currentURL + '?lang='+selectedOption);
+					//window.location.replace(currentURL + '?lang='+selectedOption);
 				}
 			});
 		});

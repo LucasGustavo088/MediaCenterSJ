@@ -1,5 +1,6 @@
 package br.usjt.plataforma;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
