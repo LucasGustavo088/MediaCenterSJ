@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+
 <title th:text="#{nome_plataforma}"></title>
 
 <!-- Bootstrap CSS CDN -->
@@ -297,21 +297,20 @@ a.article, a.article:hover {
 }
 
 video {
-   outline: 0;
+	outline: 0;
 }
 
 video:active {
-    outline: none;
+	outline: none;
 }
 
 audio {
-   outline: 0;
+	outline: 0;
 }
 
 audio:active {
-    outline: none;
+	outline: none;
 }
-
 </style>
 
 </head>
@@ -328,36 +327,21 @@ audio:active {
 
 			<ul class="list-unstyled components">
 				<p th:text="${usuario.nome}"></p>
-				<!-- <li class="active"><a href="#homeSubmenu"
-					data-toggle="collapse" aria-expanded="false">Home</a>
-					<ul class="collapse list-unstyled" id="homeSubmenu">
-						<li><a href="#">Home 1</a></li>
-						<li><a href="#">Home 2</a></li>
-						<li><a href="#">Home 3</a></li>
-					</ul></li>
-				<li><a href="#">About</a> <a href="#pageSubmenu"
-					data-toggle="collapse" aria-expanded="false">Pages</a>
-					<ul class="collapse list-unstyled" id="pageSubmenu">
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li>
-						<li><a href="#">Page 3</a></li>
-					</ul></li> -->
+
 				<li><a href="#">Perfil</a></li>
-				<li><a href="#">Logout</a></li>
-				<li>
-				
-				<select id="locales" class="form-control" style="background-color: #7386D5; color: #fff;">
-									 <option value="" selected disabled hidden>Idioma</option>
-									 <option value="pt" th:text="#{lang.pt}"></option>
-									<option value="en" th:text="#{lang.eng}"></option>
-									<option value="es" th:text="#{lang.es}"></option>
-							</select>
-				</li> 
-				
-				
+				<li><a href="/logout">Logout</a></li>
+				<li><select id="locales" class="form-control"
+					style="background-color: #7386D5; color: #fff;">
+						<option value="" selected disabled hidden>Idioma</option>
+						<option value="pt" th:text="#{lang.pt}"></option>
+						<option value="en" th:text="#{lang.eng}"></option>
+						<option value="es" th:text="#{lang.es}"></option>
+				</select></li>
+
+
 			</ul>
 
-			
+
 		</nav>
 
 		<!-- Page Content  -->
@@ -380,11 +364,9 @@ audio:active {
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="book">Book</a>
-							</li>
-							<!-- <li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Page</a></li> -->
+							<li class="nav-item active"><a class="nav-link"
+								href="posts/book">Book</a></li>
+
 						</ul>
 					</div>
 
@@ -393,7 +375,7 @@ audio:active {
 				</div>
 				<div class="navbar-right">
 
-					<a href="#" class="navbar-brand pull-right"
+					<a href="/perfil" class="navbar-brand pull-right"
 						th:text="#{nome_plataforma}"></a>
 
 				</div>
@@ -405,19 +387,18 @@ audio:active {
 
 					<div class="col-md-3" th:each="post,count : ${posts}">
 
-						<a th:href="${'#post_' + post.id}" class="scroll"> 
+						<a th:href="${'#post_' + post.id}" class="scroll">
 
-						<div th:if="${count.index < 4}" class="destaque">
+							<div th:if="${count.index < 4}" class="destaque">
 
-							<h5
-								style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
-								th:text="${post.titulo}"></h5>
+								<h5
+									style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
+									th:text="${post.titulo}"></h5>
 
-							<!-- <button th:attr="onclick=|foco(${'#conteudo_' + post.id}')|">opa</button> -->
 
-						</div>
+							</div>
 
-						 </a>
+						</a>
 
 					</div>
 
@@ -445,7 +426,25 @@ audio:active {
 
 								<div class="tituloPost">
 
-									<div class="my-rating"></div>
+									<!--  -->
+
+									<th:block th:if="${not #lists.isEmpty(post.avaliacoes)}">
+
+										<div class="rating" th:data-rating="${post.mediaAvaliacoes()}"></div>
+										
+									</th:block>
+
+									<!--  -->
+
+									<th:block th:if="${#lists.isEmpty(post.avaliacoes)}">
+
+										<div class="rating" th:id="${post.id}"></div>
+
+									</th:block>
+
+									<!--  -->
+
+
 
 									<h3 th:text="${post.titulo}"
 										style="margin-bottom: 0px; padding-bottom: 0px"></h3>
@@ -458,6 +457,8 @@ audio:active {
 
 
 							</div>
+
+
 
 
 							<div class="conteudo" th:id="'conteudo_' +${post.id}"></div>
@@ -502,11 +503,21 @@ audio:active {
 
 						<!--  555 -->
 
-						<div class="input-group input-group-lg"
-							style="margin-bottom: 30px">
+
+						<th:block th:each="categoria : ${categorias}">
+
+							<a th:href="'/categorias/' + ${categoria.id}"><small><span
+									th:text="${categoria.nome}"
+									style="padding: 6px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff; display: inline-block;"></span></small></a>
+
+						</th:block>
+
+
+						<div class="input-group input-group-lg" style="margin: 30px 0px;">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="inputGroup-sizing-lg"
-									style="background-color: #17a2b8; color: #fff;" th:text="#{pesquisar}"></span>
+									style="background-color: #17a2b8; color: #fff;"
+									th:text="#{pesquisar}"></span>
 							</div>
 							<input type="text" class="form-control" aria-label="Large"
 								aria-describedby="inputGroup-sizing-sm" name="filtro"
@@ -518,18 +529,14 @@ audio:active {
 						<div th:each="post : ${posts}" class="text-center" id="materiais">
 
 
-							<!-- <div class="card p-1 m-3 material"
-								th:if="${#strings.contains(material, 'Figura')}"> -->
-
 							<div class="card p-3 m-3 material"
 								style="border: 1px solid #17a2b8">
 
 
-
-								<img class="card-img-top text-center"
-									th:src="@{${post.destaque }}" alt="Img" border="0" /> <small><p
-										class="card-title" th:text="${post.titulo}"
-										style="margin: 10px 0"></p></small>
+								<a th:href="${'posts/' + post.id}"> <img
+									class="card-img-top text-center" th:src="@{${post.destaque }}"
+									alt="Img" border="0" /></a> <small><p class="card-title"
+										th:text="${post.titulo}" style="margin: 10px 0"></p></small>
 
 								<p class="card-text text-muted">
 									<small
@@ -563,10 +570,10 @@ audio:active {
 
 	<div class="overlay"></div>
 
-<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 
 	<!-- jQuery CDN - Slim version (=without AJAX) -->
-<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script> -->
 	<!-- Popper.JS -->
@@ -596,7 +603,7 @@ audio:active {
 			
 			//let links = document.querySelectorAll("a");
 			
-			
+			var materiaisDefault = document.querySelectorAll(".material");
 			
 			let countDestaque = 0;
 			
@@ -623,7 +630,7 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
-				console.log(imgs);
+				
 				
 				imgs.forEach(img =>{
 					
@@ -699,6 +706,12 @@ audio:active {
 					xhr.open("GET", "http://localhost:8080/api/posts/filtrar/" + this.value);
 
 					xhr.addEventListener("load", function () {
+						
+						materiaisDefault.forEach(function(material) {
+
+							material.classList.add("invisivel");
+
+						});
 					
 						if (xhr.status == 200) {
 							
@@ -717,7 +730,7 @@ audio:active {
 				            
 				            	var materialDiv = document.createElement("div");				            					            	
 				            	
-				            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
+				            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><a href=\"posts/'+ material.id +'\" class=\"scroll\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/></a><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
 				            	
 				            	materiais_div.appendChild(materialDiv);
 				            
@@ -732,13 +745,18 @@ audio:active {
 				
 				} else {
 					
-					//document.getElementsByClassName("material").remove();
+					materiais.forEach(function(material) {
+
+						material.classList.add("invisivel");
+
+					});
 					
-					 materiais.forEach(function (material) {
-						
-						material.remove();
-												
-					}); 
+					materiaisDefault.forEach(function(material) {
+
+						material.classList.remove("invisivel");
+						console.log(material);
+
+					});
 
 					
 				}
@@ -765,15 +783,57 @@ audio:active {
 					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
 				});
 				
-				$(".my-rating").starRating({
+				$(".rating").starRating({
 					useFullStars: true,
 				    starSize: 25,
 				    strokeColor: '#AB0F41',
 				    hoverColor: '#AB0F41',
 				    callback: function(currentRating, $el){
-				        // make a server call here
-				    }
+				    	
+				    	/* console.log('rated ' + currentRating);
+				        console.log('DOM element ', $el[0].id); */				        
+				        
+				        var xhr = new XMLHttpRequest();
+						
+						xhr.open("GET", "http://localhost:8080/api/posts/avaliar/"+ $el[0].id + "/" + currentRating);
+
+						xhr.addEventListener("load", function () {
+						
+							if (xhr.status == 200) {
+								
+								console.log(xhr.status);
+					            console.log(xhr.responseText);
+					            
+					            /*
+					            var resposta = xhr.responseText;
+					            var lista = JSON.parse(resposta);
+					            
+					            
+					            lista.forEach(function (material) {
+					            	
+					            	var dataString = new Date(material.dataRegistro);
+					            	
+					            	var data = dataString.getDate() + '/' + (dataString.getMonth() + 1) + '/' +  dataString.getFullYear() + ' ' + dataString.getHours() + ':' + dataString.getMinutes(); 
+					            
+					            	var materialDiv = document.createElement("div");				            					            	
+					            	
+					            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
+					            	
+					            	materiais_div.appendChild(materialDiv);
+					            
+					            }); */
+					           				            
+					            
+							}
+							
+						});
+						
+						xhr.send();			
+				        
+				      }
 				});
+				
+				
 				
 				$("a.scroll").click(function( event ) {
 			        event.preventDefault();

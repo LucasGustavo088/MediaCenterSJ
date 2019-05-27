@@ -15,8 +15,9 @@ public interface PostRepository extends CrudRepository<Post, Long>{
 	@Query("SELECT p FROM Post p WHERE p.titulo LIKE %:palavra% ORDER BY data_registro DESC")
 	public List<Post> filtrarPorNome(@Param("palavra") String palavra);
 	
-	/*@Query("SELECT p FROM Post p ORDER BY data_registro DESC LIMIT 4")
-	public List<Post> listarUltimos();*/
+	@Query("SELECT p FROM Post p WHERE p.id =:id")
+	public Post findById(long id);
 	
+
 
 }

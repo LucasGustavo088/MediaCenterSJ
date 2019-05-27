@@ -28,25 +28,14 @@ public class UsuarioController {
 		return "redirect:/perfil";
 	
 
-	/*	if (usuarioService.login(usuario)) {
-
-			httpSession.setAttribute("usuario", usuario);
-
-			return "redirect:/posts";
-			
-		} else {
-
-			Alerta.alerta("E-mail ou senhas incorretos.", "danger", httpSession);
-			return "redirect:/login";
-		}*/
 	}
 
 	@GetMapping(path = "/logout")
 	public String logout(HttpSession httpSession) {
 
-		httpSession.setAttribute("logado", 0);
+		httpSession.setAttribute("usuario", 0);
 
-		return "redirect:/login";
+		return "redirect:/index";
 	}
 
 }

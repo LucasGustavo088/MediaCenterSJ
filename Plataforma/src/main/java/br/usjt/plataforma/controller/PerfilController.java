@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.usjt.plataforma.model.bean.Usuario;
+import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.PostService;
 
 @Controller
@@ -17,9 +18,12 @@ public class PerfilController {
 	
 	@Autowired
 	PostService postService;
+	
+	@Autowired
+	CategoriaService categoriaService;
 
 	@GetMapping()
-	public ModelAndView adicionar(HttpSession httpSession) {
+	public ModelAndView perfil(HttpSession httpSession) {
 
 		ModelAndView mv = new ModelAndView();
 
@@ -28,6 +32,8 @@ public class PerfilController {
 		mv.addObject("usuario", usuario);
 		
 		mv.addObject("posts", this.postService.listar());
+		
+		mv.addObject("categorias", this.categoriaService.listar());
 
 		if (usuario.getPapel().equals("Administrador")) {
 			

@@ -18,9 +18,7 @@ public class CategoriaResource {
 	
 	@GetMapping("/{id}")
 	public Categoria filtrar(@PathVariable long id) {
-		
-		System.out.println(id);
-		
+			
 		Categoria categoria = categoriaService.get(id);
 		
 		System.out.println(categoria.getId());

@@ -5,7 +5,28 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Post</title>
+
+<title th:text="#{nome_plataforma}"></title>
+
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+	crossorigin="anonymous">
+
+<!-- Scrollbar Custom CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+<!-- Font Awesome JS -->
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+	integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+	crossorigin="anonymous"></script>
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+	integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+	crossorigin="anonymous"></script>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 
@@ -64,575 +85,905 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
 <style type="text/css">
+
+/*
+    DEMO STYLE
+*/
+@import
+	"https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+	font-family: 'Poppins', sans-serif;
+	background: #fafafa;
+}
+
+p {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.2em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #696969;
+	text-align: justify;
+}
+
+h5 {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.2em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #999;
+}
+
+a, a:hover, a:focus {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+.navbar {
+	padding: 15px 10px;
+	background: #fff;
+	border: none;
+	border-radius: 0;
+	margin-bottom: 40px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+	box-shadow: none;
+	outline: none !important;
+	border: none;
+}
+
+.line {
+	width: 100%;
+	height: 1px;
+	border-bottom: 1px dashed #ddd;
+	margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+#sidebar {
+	width: 250px;
+	position: fixed;
+	top: 0;
+	left: -250px;
+	height: 100vh;
+	z-index: 999;
+	background: #7386D5;
+	color: #fff;
+	transition: all 0.3s;
+	overflow-y: scroll;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+	left: 0;
+}
+
+#dismiss {
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	background: #7386D5;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+#dismiss:hover {
+	background: #fff;
+	color: #7386D5;
+}
+
+.overlay {
+	display: none;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 998;
+	opacity: 0;
+	transition: all 0.5s ease-in-out;
+}
+
+.overlay.active {
+	display: block;
+	opacity: 1;
+}
+
+#sidebar .sidebar-header {
+	padding: 20px;
+	background: #6d7fcc;
+}
+
+#sidebar ul.components {
+	padding: 20px 0;
+	border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+	color: #fff;
+	padding: 10px;
+}
+
+#sidebar ul li a {
+	padding: 10px;
+	font-size: 1.1em;
+	display: block;
+}
+
+#sidebar ul li a:hover {
+	color: #7386D5;
+	background: #fff;
+}
+
+#sidebar ul li.active>a, a[aria-expanded="true"] {
+	color: #fff;
+	background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+	position: relative;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+ul ul a {
+	font-size: 0.9em !important;
+	padding-left: 30px !important;
+	background: #6d7fcc;
+}
+
+ul.CTAs {
+	padding: 20px;
+}
+
+ul.CTAs a {
+	text-align: center;
+	font-size: 0.9em !important;
+	display: block;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+
+a.download {
+	background: #fff;
+	color: #7386D5;
+}
+
+a.article, a.article:hover {
+	background: #6d7fcc !important;
+	color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+	width: 100%;
+	padding: 20px;
+	min-height: 100vh;
+	transition: all 0.3s;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.destaque {
+	transition: all .2s ease-in-out;
+}
+
+.destaque:hover {
+	transform: scale(1.04);
+	-webkit-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
+}
+
+.tituloPost {
+	border-left: 8px solid #AB0F41;
+	color: #AB0F41;
+	padding: 8px;
+	margin: 0.6em 0px 0px 0px;
+	text-align: left;
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	-webkit-box-shadow: 0px 6px 5px 3px rgba(0, 0, 0, 0.29);
+	position: absolute;
+	bottom: 30px;
+	background-color: #fff;
+	opacity: 0.9;
+	width: 100%;
+}
+
+.circle img {
+	background-color: #ddd;
+	border-radius: 100%;
+	height: 150px;
+	object-fit: cover;
+	width: 150px;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	z-index: 899;
+}
+
+.navbar-light {
+	-webkit-box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+	-moz-box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+	box-shadow: 0px 6px 12px -1px rgba(153, 153, 153, 1);
+}
+
+.fixed-top {
+	z-index: 899;
+}
+
 .invisivel {
+	display: none;
+}
+
+.fr-quick-insert {
 	display: none;
 }
 </style>
 
 </head>
+
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="/figuras">Plataforma</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="/categorias">Categorias
-				</a></li>
-				<li class="nav-item"><a class="nav-link" href="/tags">Tags</a></li>
-				<li class="nav-item"><a class="nav-link" href="/materiais">Materiais</a></li>
+	<div class="wrapper">
+		<!-- Sidebar  -->
+		<nav id="sidebar">
+			<div id="dismiss">
+				<i class="fas fa-arrow-left"></i>
+			</div>
+
+
+
+			<ul class="list-unstyled components">
+				<p th:text="${usuario.nome}"></p>
+
+				<li><a href="#">Perfil</a></li>
+				<li><a href="/logout">Logout</a></li>
+
 
 
 			</ul>
-		</div>
-	</nav>
-
-	<div class="container-fluid">
-
-		<div class="row" style="margin-top: 20px">
-
-			<div class="col-md-12">
-
-				<h1 class="text-right" style="margin: 10px 0 20px 0">
-					<span class="badge" style="background-color: #AB0F41; color: #fff">Post</span>
-				</h1>
 
 
-			</div>
+		</nav>
 
-		</div>
+		<!-- Page Content  -->
+		<div id="content">
 
-		<!--  -->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 
-		<div class="row">
+				<div class="container-fluid">
 
-			<div class="col-md-12">
+					<button type="button" id="sidebarCollapse" class="btn btn-info">
+						<i class="fas fa-align-left"></i>
+					</button>
+					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+						type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-align-justify"></i>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="nav navbar-nav ml-auto" style="font-size: 1.1em">
+							<li class="nav-item active"><a class="nav-link"
+								href="/materiais">Material</a></li>
+							<li class="nav-item active"><a class="nav-link"
+								href="/posts/adicionar">Post</a></li>
+
+						</ul>
+					</div>
 
 
-				<!--  -->
+
+				</div>
+				<div class="navbar-right">
+
+					<a href="/perfil" class="navbar-brand pull-right"
+						th:text="#{nome_plataforma}"></a>
+
+				</div>
+			</nav>
+
+
+
+			<div class="container-fluid" style="margin-top: 90px">
+
+
+				<div class="row" style="margin-top: 20px">
+
+					<div class="col-md-12">
+
+						<h3 class="text-right" style="margin: 10px 0 20px 0">
+							<span class="badge"
+								style="background-color: #AB0F41; color: #fff">Post</span>
+						</h3>
+
+
+					</div>
+
+				</div>
+
 
 				<div class="row">
 
-					<div class="col-md-2">
+					<div class="col-md-12">
 
 
-						<input type="text" class="form-control" aria-label="Small"
-							aria-describedby="inputGroup-sizing-sm" name="filtro"
-							id="filtrar-tabela" placeholder="Pesquisar material"
-							style="margin: 26px 0">
+						<!--  -->
 
-						<!-- 555 -->
+						<div class="row">
 
-						<div th:each="material : ${materiais}" class="text-center"
-							id="materiais">
+							<div class="col-md-3">
 
 
-							<div class="card p-1 m-3 material"
-								th:if="${#strings.contains(material, 'Figura')}">
+								<div class="input-group input-group-lg"
+									style="margin-bottom: 30px">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroup-sizing-lg"
+											style="background-color: #17a2b8; color: #fff;"
+											th:text="#{pesquisar}"></span>
+									</div>
+									<input type="text" class="form-control" aria-label="Large"
+										aria-describedby="inputGroup-sizing-sm" name="filtro"
+										id="filtrar-tabela">
+								</div>
 
-								<img class="card-img-top text-center"
-									th:src="@{${'http://localhost:3000/' + material.url }}"
-									alt="Img" border="0" /> </a>
+								<!-- 555 -->
 
-								<div class="card-body text-center"
-									style="margin: 0; padding: 2px 0">
+								<div th:each="material : ${materiais}" id="materiais">
 
 
-									<p class="card-title" th:text="${material.nome}"
-										style="margin: 0; padding: 2px 0"></p>
+									<div class="card p-2 m-2 material"
+										th:if="${#strings.contains(material, 'Figura')}">
 
-									<p class="card-text text-muted">
-										<a href="#" data-toggle="modal"
-											th:data-target="'#cam_' + ${material.id}"
-											class="badge badge-info" target="_blank">Imagem</a> <small
-											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
-									
-									<button th:attr="onclick=|definirDestaque('${'http://localhost:3000/' + material.url}')|">opa</button> 
-																		 
+										<img class="card-img-top text-center"
+											th:src="@{${'http://localhost:3000/' + material.url }}"
+											alt="Img" border="0" style="margin-bottom: 5px" />
+
+										<div class="card-body" style="margin: 0; padding: 2px 0">
+
+
+											<a th:href="@{${'http://localhost:3000/' + material.url }}"
+												target="_blank" th:title="${material.nome}"
+												th:text="${material.nome}" style="font-size: 1.1em; "> </a>
+
+											<p class="card-text text-muted" style="font-size: 1em; margin-top: 6px">
+												<a href="#" data-toggle="modal"
+													th:data-target="'#cam_' + ${material.id}"
+													class="badge badge-info" target="_blank">Imagem</a> <small
+													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+
+												<span><button
+														class="btn btn-warning btn-sm float-right"
+														th:attr="onclick=|definirDestaque('${'http://localhost:3000/' + material.url}')|">Destaque</button>
+												</span>
+											</p>
+
+
+										</div>
+
+									</div>
+
+
+									<div class="card p-2 m-2 material"
+										th:if="${#strings.contains(material, 'Texto')}">
+
+										<div class="card-body" style="margin: 0; padding: 2px 0">
+
+											<a th:href="@{${'http://localhost:3000/' + material.url }}"
+												target="_blank" th:title="${material.nome}"
+												th:text="${material.nome}" style="font-size: 1.1em"> </a>
+
+
+											<p class="card-text text-muted" style="font-size: 1em">
+												<a href="#" data-toggle="modal"
+													th:data-target="'#cam_' + ${material.id}"
+													class="badge badge-info" target="_blank">Texto</a> <small
+													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+
+												<small th:text="${material.tamanho}"></small>
+											</p>
+										</div>
+
+									</div>
+
+
+
+									<div class="card p-2 m-2 material"
+										th:if="${#strings.contains(material, 'Audio')}">
+
+										<div class="card-body" style="margin: 0; padding: 2px 0">
+
+											<a th:href="@{${'http://localhost:3000/' + material.url }}"
+												target="_blank" th:title="${material.nome}"
+												th:text="${material.nome}" style="font-size: 1.1em"> </a>
+
+
+
+											<p class="card-text text-muted" style="font-size: 1em">
+												<a href="#" data-toggle="modal"
+													th:data-target="'#cam_' + ${material.id}"
+													class="badge badge-info" target="_blank">Áudio</a> <small
+													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+												| <small th:text="${material.tamanho}"></small>
+											</p>
+										</div>
+
+									</div>
+
+									<div class="card p-2 m-2 material"
+										th:if="${#strings.contains(material, 'Video')}">
+
+										<div class="card-body" style="margin: 0; padding: 2px 0">
+
+											<a th:href="@{${'http://localhost:3000/' + material.url }}"
+												target="_blank" th:title="${material.nome}"
+												th:text="${material.nome}" style="font-size: 1.1em"> </a>
+
+
+
+											<p class="card-text text-muted" style="font-size: 1em">
+												<a href="#" data-toggle="modal"
+													th:data-target="'#cam_' + ${material.id}"
+													class="badge badge-info" target="_blank">Vídeo</a> <small
+													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
+												| <small th:text="${material.tamanho}"></small>
+											</p>
+										</div>
+
+									</div>
+
 								</div>
 
 							</div>
 
 
-							<div class="card p-1 m-3 material"
-								th:if="${#strings.contains(material, 'Texto')}"
-								style="padding: 5px 0">
 
-								<div class="card-body text-center"
-									style="margin: 0; padding: 2px 0">
+							<div class="col-md-9">
 
-									<a th:href="@{${'http://localhost:3000/' + material.url }}"
-										target="_blank" th:title="${material.nome}"
-										th:text="${material.nome}"> </a>
+								<form method="post" th:action="@{/posts}" th:object="${post}"
+									id="form">
 
 
-									<p class="card-text text-muted">
-										<a href="#" data-toggle="modal"
-											th:data-target="'#cam_' + ${material.id}"
-											class="badge badge-info" target="_blank">Texto</a> <small
-											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
-								</div>
+									<div class="form-group"
+										style="font-size: 1.2em;">
+										<label for="nome"><b>Imagem de destaque</b></label> 
+									</div>
 
-							</div>
+									<div id="cam_destaque"
+										style="max-height: 200px !important; min-height: 200px !important; border: 1px solid #ccc">
 
-
-
-							<div class="card p-1 m-3 material"
-								th:if="${#strings.contains(material, 'Audio')}"
-								style="padding: 5px 0">
-
-								<div class="card-body text-center"
-									style="margin: 0; padding: 2px 0">
-
-									<a th:href="@{${'http://localhost:3000/' + material.url }}"
-										target="_blank" th:title="${material.nome}"
-										th:text="${material.nome}"> </a>
+									</div>
 
 
-
-									<p class="card-text text-muted">
-										<a href="#" data-toggle="modal"
-											th:data-target="'#cam_' + ${material.id}"
-											class="badge badge-info" target="_blank">Áudio</a> <small
-											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
-								</div>
-
-							</div>
-
-							<div class="card p-1 m-3 material"
-								th:if="${#strings.contains(material, 'Video')}"
-								style="padding: 5px 0">
-
-								<div class="card-body text-center"
-									style="margin: 0; padding: 2px 0">
-
-									<a th:href="@{${'http://localhost:3000/' + material.url }}"
-										target="_blank" th:title="${material.nome}"
-										th:text="${material.nome}"> </a>
+									<div class="form-group"
+										style="font-size: 1.2em; margin-top: 24px">
+										<label for="nome"><b>Título</b></label> <input type="text"
+											class="form-control" id="titulo" name="titulo"
+											aria-describedby="titulo" th:field="*{titulo}">
+									</div>
 
 
+									<div class="form-group"
+										style="font-size: 1.2em; margin-top: 24px; margin-bottom: 4px">
+										<label for="nome"><b>Tags</b></label> 
+									</div>
 
-									<p class="card-text text-muted">
-										<a href="#" data-toggle="modal"
-											th:data-target="'#cam_' + ${material.id}"
-											class="badge badge-info" target="_blank">Vídeo</a> <small
-											th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
-									</p>
-								</div>
-
-							</div>
-
-						</div>
-
-					</div>
+									<input id="tags" name="tags" type="text" class="form-control"
+										th:field="*{tags}"> <input id="destaque"
+										name="destaque" type="hidden" class="form-control"
+										th:field="*{destaque}">
 
 
+									<div class="form-group"
+										style="font-size: 1.2em; margin-top: 24px; margin-bottom: 4px">
+										<label for="nome"><b>Categorias</b></label> 
+									</div>
 
-					<div class="col-md-10">
+									<div class="clearfix"></div>
 
-						<form method="post" th:action="@{/posts}" th:object="${post}"
-							id="form">
+									<div style="border: 1px solid #ddd; margin: 0; float: left;"
+										class="rounded">
 
+										<div style="float: left; margin: 5px 12px 4px 0; padding: 7px"
+											th:each="categoria : ${categorias}">
+											<label
+												class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+												th:for="'cat_' + ${categoria.id}"> <input
+												type="checkbox" th:value="${categoria.id}"
+												th:id="'cat_' +${categoria.id}" name="categorias[]"
+												class="mdl-checkbox__input" th:field="*{categorias}">
+												<span class="mdl-checkbox__label"
+												th:text="${categoria.nome}"></span>
+											</label>
+										</div>
 
+									</div>
 
-														
-							<div id="cam_destaque" style="max-height: 250px !important; min-height: 250px !important; border: 1px solid #ccc">
+									<div class="clearfix"></div>
+
 								
-							</div>
 
-							
-							<div class="form-group"
-								style="font-size: 1.2em; margin-top: 24px">
-								<label for="nome"><b>Título</b></label> <input type="text"
-									class="form-control" id="titulo" name="titulo"
-									aria-describedby="titulo" th:field="*{titulo}">
-							</div>
+									<div id="editor" style="margin-top: 30px">
+										<div id='edit'></div>
+									</div>
 
+									<input id="conteudo" name="conteudo" type="hidden"
+										class="form-control" th:field="*{conteudo}">
 
-							<h6 style="margin: 24px 0 4px 0">
-								<b>Tags</b>
-							</h6>
+									<button type="submit" class="btn btn btn-primary float-right"
+										style="margin: 30px 0">Salvar</button>
 
-							<input id="tags" name="tags" type="text" class="form-control"
-								th:field="*{tags}"> <input id="destaque" name="destaque"
-								type="hidden" class="form-control" th:field="*{destaque}">
-
-
-							<h6 style="margin: 30px 0 7px 0">
-								<b>Categorias</b>
-							</h6>
-
-							<div class="clearfix"></div>
-
-							<div style="border: 1px solid #ddd; margin: 0; float: left;"
-								class="rounded">
-
-								<div style="float: left; margin: 5px 12px 4px 0; padding: 7px"
-									th:each="categoria : ${categorias}">
-									<label
-										class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-										th:for="'cat_' + ${categoria.id}"> <input
-										type="checkbox" th:value="${categoria.id}"
-										th:id="'cat_' +${categoria.id}" name="categorias[]"
-										class="mdl-checkbox__input" th:field="*{categorias}">
-										<span class="mdl-checkbox__label" th:text="${categoria.nome}"></span>
-									</label>
-								</div>
+								</form>
 
 							</div>
 
-							<div class="clearfix"></div>
 
-							<!-- <div id="editor" style="margin-top: 30px">
-								<div id='edit' style="min-height: 400px !important;">
 
-								</div>
-							</div> -->
-							
-							<div id="editor" style="margin-top: 30px">
-								<div id='edit'>
+						</div>
 
-								</div>
-							</div>
 
-							<input id="conteudo" name="conteudo" type="hidden"
-								class="form-control" th:field="*{conteudo}">
 
-							<button type="submit" class="btn btn btn-primary float-right"
-								style="margin: 30px 0">Salvar</button>
+						<!--  -->
 
-						</form>
+
 
 					</div>
-
 
 
 				</div>
 
 
 
-				<!--  -->
+			</div>
+
+
+			<!-- Modal Detalhes -->
+			<div th:each="material : ${materiais}">
+
+				<div th:if="${#strings.contains(material, 'Figura')}">
+
+					<div class="modal fade" th:id="'cam_' + ${material.id}"
+						tabindex="-1" role="dialog"
+						th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered mw-100 w-50"
+							role="document">
+							<div class="modal-content">
+
+								<div class="modal-body">
+
+									<div class="row">
+
+										<div class="col-md-4 text-center">
+
+											<img th:src="@{${'http://localhost:3000/' + material.url }}"
+												alt="Img" class="img-fluid" style="border: 0;" /> <p class="text-center">
+												<small><span th:text="${material.tamanho}"></span></small>
+											</p>
+										</div>
+
+										<div class="col-md-8">
+
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome</b></small>
+											</div>
+
+											<p th:text="${material.nome}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome original</b></small>
+											</div>
+
+											<p th:text="${material.nomeOriginal}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Autor</b></small>
+											</div>
+
+											<p th:text="${material.autor}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Tags</b></small>
+											</div>
+
+											<p th:text="${material.tags}" style="font-size: 1em"></p>
+
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Categorias</b></small>
+											</div>
+
+											<th:block th:each="categoria : ${material.categorias}">
+
+												<small><span th:text="${categoria.nome}"
+													style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+
+											</th:block>
+
+
+										</div>
+
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div th:if="${#strings.contains(material, 'Texto')}">
+
+					<div class="modal fade" th:id="'cam_' + ${material.id}"
+						tabindex="-1" role="dialog"
+						th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered mw-100 w-50"
+							role="document">
+							<div class="modal-content">
+
+								<div class="modal-body">
+
+									<div class="row">
+
+										<div class="col-md-4 text-center">
+
+											<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
+												style="width: 96px; height: 96px; border: 0" border="0">
+
+											<p class="text-center">
+												<small><span th:text="${material.tamanho}"></span></small>
+											</p>
+
+										</div>
+
+										<div class="col-md-8">
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome</b></small>
+											</div>
+
+											<p th:text="${material.nome}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome original</b></small>
+											</div>
+
+											<p th:text="${material.nomeOriginal}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Resumo</b></small>
+											</div>
+
+											<p th:text="${material.resumo}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Tags</b></small>
+											</div>
+
+											<p th:text="${material.tags}" style="font-size: 1em"></p>
+
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Categorias</b></small>
+											</div>
+
+											<th:block th:each="categoria : ${material.categorias}">
+
+												<small><span th:text="${categoria.nome}"
+													style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+
+											</th:block>
+
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div th:if="${#strings.contains(material, 'Audio')}">
+
+					<div class="modal fade" th:id="'cam_' + ${material.id}"
+						tabindex="-1" role="dialog"
+						th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered mw-100 w-50"
+							role="document">
+							<div class="modal-content">
+
+								<div class="modal-body">
+
+									<div class="row">
+
+										<div class="col-md-4 text-center">
+
+											<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
+												style="width: 96px; height: 96px; border: 0" border="0">
+
+											<p class="text-center">
+												<small><span th:text="${material.tamanho}"></span></small>
+											</p>
+
+										</div>
+
+										<div class="col-md-8">
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome</b></small>
+											</div>
+
+											<p th:text="${material.nome}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome original</b></small>
+											</div>
+
+											<p th:text="${material.nomeOriginal}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Duração</b></small>
+											</div>
+
+											<p th:text="${material.duracao} + ' Min.'" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Tags</b></small>
+											</div>
+
+											<p th:text="${material.tags}" style="font-size: 1em"></p>
+
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Categorias</b></small>
+											</div>
+
+											<th:block th:each="categoria : ${material.categorias}">
+
+												<small><span th:text="${categoria.nome}"
+													style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+
+											</th:block>
+
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div th:if="${#strings.contains(material, 'Video')}">
+
+					<div class="modal fade" th:id="'cam_' + ${material.id}"
+						tabindex="-1" role="dialog"
+						th:aria-labelledby="'cam_' + ${material.id}" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered mw-100 w-50"
+							role="document">
+							<div class="modal-content">
+
+								<div class="modal-body">
+
+									<div class="row">
+
+										<div class="col-md-4 text-center">
+
+											<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
+												style="width: 96px; height: 96px; border: 0" border="0">
+
+											<p class="text-center">
+												<small><span th:text="${material.tamanho}"></span></small>
+											</p>
+
+										</div>
+
+										<div class="col-md-8">
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome</b></small>
+											</div>
+
+											<p th:text="${material.nome}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Nome original</b></small>
+											</div>
+
+											<p th:text="${material.nomeOriginal}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Produção</b></small>
+											</div>
+
+											<p th:text="${material.producao}" style="font-size: 1em"></p>
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Tags</b></small>
+											</div>
+
+											<p th:text="${material.tags}" style="font-size: 1em"></p>
+
+
+											<div style="margin: 0; padding: 0">
+												<small><b>Categorias</b></small>
+											</div>
+
+											<th:block th:each="categoria : ${material.categorias}">
+
+												<small><span th:text="${categoria.nome}"
+													style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
+
+											</th:block>
+
+
+										</div>
+
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
 
 
 
 			</div>
 
-
 		</div>
-
-
-
 	</div>
 
 
-	<!-- Modal Detalhes -->
-	<div th:each="material : ${materiais}">
 
-		<div th:if="${#strings.contains(material, 'Figura')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered mw-100 w-50"
-					role="document">
-					<div class="modal-content">
-
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img th:src="@{${'http://localhost:3000/' + material.url }}"
-										alt="Img" class="img-fluid" style="border: 0;" /> <small><span
-										th:text="${material.tamanho}"></span></small>
-
-								</div>
-
-								<div class="col-md-8">
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Autor</b></small>
-									</div>
-
-									<p th:text="${material.autor}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Tags</b></small>
-									</div>
-
-									<p th:text="${material.tags}"></p>
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Categorias</b></small>
-									</div>
-
-									<th:block th:each="categoria : ${material.categorias}">
-
-										<small><span th:text="${categoria.nome}"
-											style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
-
-									</th:block>
-
-
-								</div>
-
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Texto')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered mw-100 w-50"
-					role="document">
-					<div class="modal-content">
-
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconPdf.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Resumo</b></small>
-									</div>
-
-									<p th:text="${material.resumo}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Tags</b></small>
-									</div>
-
-									<p th:text="${material.tags}"></p>
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Categorias</b></small>
-									</div>
-
-									<th:block th:each="categoria : ${material.categorias}">
-
-										<small><span th:text="${categoria.nome}"
-											style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
-
-									</th:block>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Audio')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered mw-100 w-50"
-					role="document">
-					<div class="modal-content">
-
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconMp3.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Duração</b></small>
-									</div>
-
-									<p th:text="${material.duracao} + ' Min.'"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Tags</b></small>
-									</div>
-
-									<p th:text="${material.tags}"></p>
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Categorias</b></small>
-									</div>
-
-									<th:block th:each="categoria : ${material.categorias}">
-
-										<small><span th:text="${categoria.nome}"
-											style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
-
-									</th:block>
-
-
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div th:if="${#strings.contains(material, 'Video')}">
-
-			<div class="modal fade" th:id="'cam_' + ${material.id}" tabindex="-1"
-				role="dialog" th:aria-labelledby="'cam_' + ${material.id}"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered mw-100 w-50"
-					role="document">
-					<div class="modal-content">
-
-						<div class="modal-body">
-
-							<div class="row">
-
-								<div class="col-md-4 text-center">
-
-									<img class="img-fluid" src="/figuras/iconVideo.png" alt="Img"
-										style="width: 96px; height: 96px; border: 0" border="0">
-
-									<p>
-										<small><span th:text="${material.tamanho}"></span></small>
-									</p>
-
-								</div>
-
-								<div class="col-md-8">
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome</b></small>
-									</div>
-
-									<p th:text="${material.nome}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Nome original</b></small>
-									</div>
-
-									<p th:text="${material.nomeOriginal}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Produção</b></small>
-									</div>
-
-									<p th:text="${material.producao}"></p>
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Tags</b></small>
-									</div>
-
-									<p th:text="${material.tags}"></p>
-
-
-									<div style="margin: 0; padding: 0">
-										<small><b>Categorias</b></small>
-									</div>
-
-									<th:block th:each="categoria : ${material.categorias}">
-
-										<small><span th:text="${categoria.nome}"
-											style="padding: 4px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff"></span></small>
-
-									</th:block>
-
-
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-
-	</div>
+	<div class="overlay"></div>
+
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+		crossorigin="anonymous"></script>
+		
+			<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+		
 
 
 	<script th:src="@{/js/froala_editor.min.js}"></script>
@@ -666,135 +1017,197 @@
 		src="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
+	
 
 	<script type="text/javascript" th:inline="javascript">
-			/*<![CDATA[*/
+		/*<![CDATA[*/
+
+		var campo = document.querySelector("#filtrar-tabela");		
 		
-			
-			<!-- 555 -->
+		var materiaisDefault = document.querySelectorAll(".material");
 
-			var campo = document.querySelector("#filtrar-tabela");
-
-			campo.addEventListener("input", function() {
-				
-				var materiais_div = document.querySelector("#materiais");				
-				
-				var materiais = document.querySelectorAll(".material");
-				
-
-				if (this.value.length > 0) {
-					
-					materiais.forEach(function (material) {
-						
-						material.classList.add("invisivel");
-												
-					});
-					
-															
-					var xhr = new XMLHttpRequest();
-					
-					xhr.open("GET", "http://localhost:8080/api/materiais/filtrar/" + this.value);
-
-					xhr.addEventListener("load", function () {
-					
-						if (xhr.status == 200) {
+		campo
+				.addEventListener(
+						"input",
+						function() {
 							
-							console.log(xhr.status);
-				            console.log(xhr.responseText);
-				            
-				            var resposta = xhr.responseText;
-				            var lista = JSON.parse(resposta);
-				            
-				            
-				            lista.forEach(function (material) {
-				            	
-				            	var dataString = new Date(material.dataRegistro);
-				            	
-				            	var data = dataString.getDate() + '/' + (dataString.getMonth() + 1) + '/' +  dataString.getFullYear() + ' ' + dataString.getHours() + ':' + dataString.getMinutes(); 
-				            
-				            	var materialDiv = document.createElement("div");
-				            					            	
-				            	materialDiv.innerHTML = '<div class=\"card p-1 m-3 material\"><a href=\"#\" data-toggle=\"modal\"th:data-target=\"#cam_1\" title=\"Detalhes\"><img class=\"card-img-top text-center\" src=\"http://localhost:3000/'+ material.url +'"alt=\"Img\" border=\"0\" /></a><div class=\"card-body text-center\"style=\"margin: 0; padding: 2px 0\"><p class=\"card-title\"style=\"margin: 0; padding: 2px 0\">'+ material.nome +'</p><p class=\"card-text text-muted\"><small>'+ data +'</small></p></div></div>';
-				            				            
-				            	materiais_div.appendChild(materialDiv);
-				            
-				            });
-				           				            
-				            
-						}
-						
-					});
-					
-					xhr.send();					
-				
-				} else {
-										
-					 materiais.forEach(function (material) {
-						
-						material.remove();
-												
-					}); 
+							materiaisDefault.forEach(function(material) {
 
-					
-				}
-
-			});
-			
-					
-			function definirDestaque(src){
-				
-				console.log(src);
-				
-				document.querySelector("#destaque").value = src;
-				
-				document.querySelector("#cam_destaque").style.cssText = "padding-top: 12px; height: 250px ;background: url("+ src +") center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
-				
-			}
-			
-
-			$(document)
-					.ready(
-							function() {
-
-								$('#editor')
-										.froalaEditor(
-												{placeholderText: 'Insira o conteúdo ;D ...',height: 500}
-												
-												
-												);
-								
-								
-								
-								
-								$('#tags').tagsInput({
-									
-									  interactive: true,
-									  placeholder: 'Adicionar tag',
-									  width: 'auto',
-									  height: 'auto',
-									  hide: true,
-									  delimiter: ', ',
-									  removeWithBackspace: true
-								});
-																						
-								
-								$("#form").submit(function( event ) {
-									  
-									 var conteudo = $('#editor').froalaEditor('html.get', true);
-																		 
-									 document.querySelector("#conteudo").value = conteudo;										 
-										 
-									
-									 
-								});
-								
-								
-													
-								
+								material.classList.add("invisivel");
 
 							});
 
-			/*]]>*/
-		</script>
+							var materiais_div = document
+									.querySelector("#materiais");
+
+							var materiais = document
+									.querySelectorAll(".material");
+
+							if (this.value.length > 0) {
+
+								materiais.forEach(function(material) {
+
+									material.classList.add("invisivel");
+
+								});
+
+								var xhr = new XMLHttpRequest();
+
+								xhr.open("GET",
+										"http://localhost:8080/api/materiais/filtrar/"
+												+ this.value);
+
+								xhr
+										.addEventListener(
+												"load",
+												function() {
+
+													if (xhr.status == 200) {
+
+														console.log(xhr.status);
+														console
+																.log(xhr.responseText);
+
+														var resposta = xhr.responseText;
+														var lista = JSON
+																.parse(resposta);
+
+														lista
+																.forEach(function(
+																		material) {
+
+																	var dataString = new Date(
+																			material.dataRegistro);
+
+																	var data = dataString
+																			.getDate()
+																			+ '/'
+																			+ (dataString
+																					.getMonth() + 1)
+																			+ '/'
+																			+ dataString
+																					.getFullYear()
+																			+ ' '
+																			+ dataString
+																					.getHours()
+																			+ ':'
+																			+ dataString
+																					.getMinutes();
+
+																	var materialDiv = document
+																			.createElement("div");
+
+																																			
+																			
+																			if(material.url.includes(".jpg")){
+																				
+																				materialDiv.innerHTML ='<div class=\"card p-2 m-2 material\"><img class=\"card-img-top text-center\" src=\"http://localhost:3000/'+ material.url +'\" border=\"0\" style=\"margin-bottom: 5px\" \/><div class=\"card-body\" style=\"margin: 0; padding: 2px 0\"><a href=\"http://localhost:3000/'+ material.url +'\" "target=\"_blank\" style=\"font-size: 1.1em; \">'+ material.nome +'<\/a><p class=\"card-text text-muted\" style=\"font-size: 1em; margin-top: 6px\"><a href=\"#\" data-toggle=\"modal\" data-target=\"#cam_' + material.id + '\" class=\"badge badge-info\" target=\"_blank\">Imagem<\/a> <small>'+ data +'<\/small><span><button class=\"btn btn-warning btn-sm float-right\" onclick=\"definirDestaque(\'http://localhost:3000/'+ material.url +'\')\">Destaque<\/button><\/span><\/p><\/div><\/div>';
+
+																			}else{
+																				
+																				var tipo = '';
+																				
+																				if(material.url.includes(".mp3")){tipo = 'Áudio';}
+																				if(material.url.includes(".mp4")){tipo = 'Vídeo';}
+																				if(material.url.includes(".pdf")){tipo = 'Texto';}
+																				
+																				materialDiv.innerHTML ='<div class=\"card p-2 m-2 material\"><div class=\"card-body\" style=\"margin: 0; padding: 2px 0\"><a href=\"http:\/\/localhost:3000\/'+ material.url +'\" target=\"_blank\" title=\"'+ material.nome +'\" style=\"font-size: 1.1em\">'+ material.nome +' <\/a><p class=\"card-text text-muted\" style=\"font-size: 1em\"><a href=\"#\" data-toggle=\"modal\" data-target=\"#cam_'+ material.id +'\" class=\"badge badge-info\" target=\"_blank\">'+ tipo +'<\/a> <small>'+ data +'<\/small> | <small>'+ material.tamanho +'<\/small><\/p><\/div><\/div>';
+																				
+																			}
+																			
+																	materiais_div
+																			.appendChild(materialDiv);
+
+																});
+
+													}
+
+												});
+
+								xhr.send();
+
+							} else {
+
+								materiais.forEach(function(material) {
+
+									material.classList.add("invisivel");
+
+								});
+								
+								materiaisDefault.forEach(function(material) {
+
+									material.classList.remove("invisivel");
+									console.log(material);
+
+								});
+								
+								
+							}
+
+						});
+
+		function definirDestaque(src) {
+
+			console.log(src);
+
+			document.querySelector("#destaque").value = src;
+
+			document.querySelector("#cam_destaque").style.cssText = "padding-top: 12px; height: 250px ;background: url("
+					+ src
+					+ ") center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+
+		}
+
+		$(document).ready(function() {
+
+			$('#editor').froalaEditor({
+				placeholderText : 'Insira o conteúdo ;D ...',
+				height : 500,
+
+			}
+
+			);
+
+			$('#tags').tagsInput({
+
+				interactive : true,
+				placeholder : 'Adicionar tag',
+				width : 'auto',
+				height : 'auto',
+				hide : true,
+				delimiter : ', ',
+				removeWithBackspace : true
+			});
+
+			$("#form").submit(function(event) {
+
+				var conteudo = $('#editor').froalaEditor('html.get', true);
+
+				document.querySelector("#conteudo").value = conteudo;
+
+			});
+			
+			$("#sidebar").mCustomScrollbar({
+				theme : "minimal"
+			}); 
+
+			$('#dismiss, .overlay').on('click', function() {
+				$('#sidebar').removeClass('active');
+				$('.overlay').removeClass('active');
+			});
+
+			$('#sidebarCollapse').on('click', function() {
+				$('#sidebar').addClass('active');
+				$('.overlay').addClass('active');
+				$('.collapse.in').toggleClass('in');
+				$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+			});
+
+		});
+
+		/*]]>*/
+	</script>
+
 </body>
+
 </html>

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -44,6 +45,10 @@ public class Post implements Serializable {
 	private LocalDateTime dataRegistro;
 
 	private String destaque;
+
+	@OneToMany(mappedBy = "post")
+	@JsonBackReference
+	private List<Avaliacao> avaliacoes = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -99,6 +104,27 @@ public class Post implements Serializable {
 
 	public void setDestaque(String destaque) {
 		this.destaque = destaque;
+	}
+
+	public List<Avaliacao> getAvaliacoes() {
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+	
+	public double mediaAvaliacoes() {
+		
+		double total = 0;
+		
+		for(Avaliacao a: this.avaliacoes) {
+			
+			total += a.getNota();
+		}
+		
+		return total / this.avaliacoes.size();
+		
 	}
 
 }

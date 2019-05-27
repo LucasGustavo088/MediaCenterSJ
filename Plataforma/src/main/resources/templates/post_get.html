@@ -325,43 +325,16 @@ audio:active {
 			</div>
 
 
-
-			<div class="sidebar-header">
-
-				<div class="circle">
-
-					<!-- <img src="http://localhost:3000/sdfsfdsfdfsfd.jpg" /> -->
-
-				</div>
-			</div>
-
 			<ul class="list-unstyled components">
-				<p>Dummy Heading</p>
-				<!-- <li class="active"><a href="#homeSubmenu"
-					data-toggle="collapse" aria-expanded="false">Home</a>
-					<ul class="collapse list-unstyled" id="homeSubmenu">
-						<li><a href="#">Home 1</a></li>
-						<li><a href="#">Home 2</a></li>
-						<li><a href="#">Home 3</a></li>
-					</ul></li>
-				<li><a href="#">About</a> <a href="#pageSubmenu"
-					data-toggle="collapse" aria-expanded="false">Pages</a>
-					<ul class="collapse list-unstyled" id="pageSubmenu">
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li>
-						<li><a href="#">Page 3</a></li>
-					</ul></li> -->
+				<p th:text="${usuario.nome}"></p>
+
 				<li><a href="#">Perfil</a></li>
-				<li><a href="#">Logout</a></li>
+				<li><a href="/logout">Logout</a></li>
+
+
 			</ul>
 
-			<!-- <ul class="list-unstyled CTAs">
-				<li><a
-					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
-					class="download">Download source</a></li>
-				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
-					class="article">Back to article</a></li>
-			</ul> -->
+
 		</nav>
 
 		<!-- Page Content  -->
@@ -371,30 +344,29 @@ audio:active {
 
 				<div class="container-fluid">
 
-
-					<a href="#" class="navbar-brand pull-right"
-						th:text="#{nome_plataforma}"></a>
-
+					<button type="button" id="sidebarCollapse" class="btn btn-info">
+						<i class="fas fa-align-left"></i>
+					</button>
+					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+						type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-align-justify"></i>
+					</button>
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-						
-						<li class="nav-item active"><a class="nav-link" href="#"
-								th:text="#{cadastro}"></a></li>
+
+							<th:block th:if="${usuario.papel == 'Administrador'}">
+								<li class="nav-item active"><a class="nav-link"
+									href="/materiais">Material</a></li>
+								<li class="nav-item active"><a class="nav-link"
+									href="/posts/adicionar">Post</a></li>
+							</th:block>
 
 							<li class="nav-item active"><a class="nav-link"
-								href="#" data-toggle="modal" data-target="#login">Login</a></li>
-
-						
-							<li class="nav-item "><select id="locales" class="form-control" style="padding: 4px">
-									 <option value="" selected disabled hidden>Idioma</option>
-									 <option value="pt" th:text="#{lang.pt}"></option>
-									<option value="en" th:text="#{lang.eng}"></option>
-									<option value="es" th:text="#{lang.es}"></option>
-							</select>
-							</li> 
-
-							
+								href="/posts/book">Book</a></li>
 
 						</ul>
 					</div>
@@ -402,18 +374,20 @@ audio:active {
 
 
 				</div>
+				<div class="navbar-right">
 
+					<a href="/perfil" class="navbar-brand pull-right"
+						th:text="#{nome_plataforma}"></a>
+
+				</div>
 			</nav>
 
 			<div class="container-fluid" style="margin-top: 90px">
 
 
+				<div class="row" style="display: none">
 
-				<div class="row">
-
-
-
-					<div class="col-md-3" th:each="post,count : ${posts}">
+					<div class="col-md-3" th:each="post,count : ${postsDestaque}">
 
 						<a th:href="${'#post_' + post.id}" class="scroll">
 
@@ -422,6 +396,7 @@ audio:active {
 								<h5
 									style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
 									th:text="${post.titulo}"></h5>
+
 
 							</div>
 
@@ -433,7 +408,7 @@ audio:active {
 				</div>
 
 
-				<div class="row" style="margin-top: 60px">
+				<div class="row" style="margin-top: 40px">
 
 					<div class="col-md-8">
 
@@ -453,7 +428,7 @@ audio:active {
 
 								<div class="tituloPost">
 
-									<div class="my-rating"></div>
+									<div class="rating" th:id="${post.id}"></div>
 
 									<h3 th:text="${post.titulo}"
 										style="margin-bottom: 0px; padding-bottom: 0px"></h3>
@@ -510,11 +485,21 @@ audio:active {
 
 						<!--  555 -->
 
-						<div class="input-group input-group-lg"
-							style="margin-bottom: 30px">
+
+						<th:block th:each="categoria : ${categorias}">
+
+							<a th:href="'/categorias/' + ${categoria.id}"><small><span
+									th:text="${categoria.nome}"
+									style="padding: 6px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff; display: inline-block;"></span></small></a>
+
+						</th:block>
+
+
+						<div class="input-group input-group-lg" style="margin: 30px 0px;">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="inputGroup-sizing-lg"
-									style="background-color: #17a2b8; color: #fff;">Pesquisar</span>
+									style="background-color: #17a2b8; color: #fff;"
+									th:text="#{pesquisar}"></span>
 							</div>
 							<input type="text" class="form-control" aria-label="Large"
 								aria-describedby="inputGroup-sizing-sm" name="filtro"
@@ -523,17 +508,21 @@ audio:active {
 
 						<!--  -->
 
-						<div th:each="post : ${posts}" class="text-center" id="materiais">
+						<div th:each="post : ${postsDestaque}" class="text-center"
+							id="materiais">
+
+
+							<!-- <div class="card p-1 m-3 material"
+								th:if="${#strings.contains(material, 'Figura')}"> -->
 
 							<div class="card p-3 m-3 material"
 								style="border: 1px solid #17a2b8">
 
 
-
-								<img class="card-img-top text-center"
-									th:src="@{${post.destaque }}" alt="Img" border="0" /> <small><p
-										class="card-title" th:text="${post.titulo}"
-										style="margin: 10px 0"></p></small>
+								<a th:href="${'/posts/' + post.id}"> <img
+									class="card-img-top text-center" th:src="@{${post.destaque }}"
+									alt="Img" border="0" /></a> <small><p class="card-title"
+										th:text="${post.titulo}" style="margin: 10px 0"></p></small>
 
 								<p class="card-text text-muted">
 									<small
@@ -555,38 +544,7 @@ audio:active {
 
 				</div>
 
-				<!-- Login -->
-				<div class="modal fade" id="login" tabindex="-1" role="dialog"
-					aria-labelledby="login" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Login</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
 
-								<form method="post" th:action="@{/login}" th:object="${usuario}">
-									<div class="form-group">
-										<label for="email">E-mail</label> <input type="email"
-											class="form-control" id="email" th:field="*{email}">
-
-									</div>
-									<div class="form-group">
-										<label for="senha" th:text="#{senha}"></label> <input type="password"
-											class="form-control" id="senha" th:field="*{senha}">
-									</div>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-secondary">Login</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
 
 
 			</div>
@@ -600,6 +558,10 @@ audio:active {
 
 	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 
+	<!-- jQuery CDN - Slim version (=without AJAX) -->
+	<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script> -->
 	<!-- Popper.JS -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
@@ -623,11 +585,10 @@ audio:active {
 			
 			var posts = [[${posts}]];
 		
+			
+				
 			let destaques = document.querySelectorAll(".destaque");
-			
-			//let links = document.querySelectorAll("a");
-			
-			
+						
 			
 			let countDestaque = 0;
 			
@@ -654,7 +615,7 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
-				/* console.log(imgs); */
+				console.log(imgs);
 				
 				imgs.forEach(img =>{
 					
@@ -681,7 +642,7 @@ audio:active {
 					
 					if(a.href.includes(".mp3")){
 						
-						/* console.log(a.text); */
+						console.log(a.text);
 						
 						let audio = document.createElement('audio');
 					
@@ -704,10 +665,13 @@ audio:active {
 				
 			});
 			
+					
 
 			/*  */
 			
 			var campo = document.querySelector("#filtrar-tabela");
+			
+			var materiaisDefault = document.querySelectorAll(".material");
 
 			campo.addEventListener("input", function() {
 				
@@ -724,6 +688,12 @@ audio:active {
 												
 					});
 					
+					materiaisDefault.forEach(function(material) {
+
+						material.classList.add("invisivel");
+
+					});
+					
 															
 					var xhr = new XMLHttpRequest();
 					
@@ -733,8 +703,8 @@ audio:active {
 					
 						if (xhr.status == 200) {
 							
-							/* console.log(xhr.status);
-				            console.log(xhr.responseText); */
+							console.log(xhr.status);
+				            console.log(xhr.responseText);
 				            
 				            var resposta = xhr.responseText;
 				            var lista = JSON.parse(resposta);
@@ -748,7 +718,7 @@ audio:active {
 				            
 				            	var materialDiv = document.createElement("div");				            					            	
 				            	
-				            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
+				            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><a href=\"/posts/'+ material.id +'\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/></a><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
 				            	
 				            	materiais_div.appendChild(materialDiv);
 				            
@@ -763,12 +733,17 @@ audio:active {
 				
 				} else {
 					
-					//document.getElementsByClassName("material").remove();
+					materiais.forEach(function(material) {
+
+						material.classList.add("invisivel");
+
+					});
 					
-					 materiais.forEach(function (material) {
-						
-						material.remove();
-												
+					materiaisDefault.forEach(function(material) {
+
+						material.classList.remove("invisivel");
+						console.log(material);
+
 					}); 
 
 					
@@ -796,29 +771,64 @@ audio:active {
 					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
 				});
 				
-				$(".my-rating").starRating({
+				$(".rating").starRating({
 					useFullStars: true,
 				    starSize: 25,
 				    strokeColor: '#AB0F41',
 				    hoverColor: '#AB0F41',
 				    callback: function(currentRating, $el){
-				        // make a server call here
-				    }
+				    	
+				    	console.log('rated ' + currentRating);
+				        console.log('DOM element ', $el[0].id);
+				        
+				        
+				        var xhr = new XMLHttpRequest();
+						
+						xhr.open("GET", "http://localhost:8080/api/posts/avaliar/"+ $el[0].id + "/" + currentRating);
+
+						xhr.addEventListener("load", function () {
+						
+							if (xhr.status == 200) {
+								
+								/* console.log(xhr.status);
+					            console.log(xhr.responseText);
+					            
+					            var resposta = xhr.responseText;
+					            var lista = JSON.parse(resposta);
+					            
+					            
+					            lista.forEach(function (material) {
+					            	
+					            	var dataString = new Date(material.dataRegistro);
+					            	
+					            	var data = dataString.getDate() + '/' + (dataString.getMonth() + 1) + '/' +  dataString.getFullYear() + ' ' + dataString.getHours() + ':' + dataString.getMinutes(); 
+					            
+					            	var materialDiv = document.createElement("div");				            					            	
+					            	
+					            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
+					            	
+					            	materiais_div.appendChild(materialDiv);
+					            
+					            }); */
+					           				            
+					            
+							}
+							
+						});
+						
+						xhr.send();			
+				        
+				      }
 				});
+				
+				
 				
 				$("a.scroll").click(function( event ) {
 			        event.preventDefault();
 			        $("html, body").animate({ scrollTop: $($(this).attr("href")).offset().top - 75 }, 1000);
 			    });
 				
-				$('#locales').change (function(){
-					var selectedOption = $('#locales').val();
-					if (selectedOption != ''){
-					window.location.replace ('index?lang=' +
-					selectedOption);
-					}
-				});
-				
+							
 			});
 			
 

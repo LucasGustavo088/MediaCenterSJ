@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.usjt.plataforma.model.bean.Categoria;
+import br.usjt.plataforma.model.bean.Usuario;
 import br.usjt.plataforma.service.CategoriaService;
+import br.usjt.plataforma.service.PostService;
 import br.usjt.plataforma.service.UsuarioService;
 
 @Controller
@@ -24,6 +26,9 @@ public class CategoriaController {
 
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	PostService postService;
 
 	@GetMapping
 	public ModelAndView listar(HttpSession session) {
@@ -61,6 +66,25 @@ public class CategoriaController {
 		}
 
 		return "redirect:/categorias";
+	}
+	
+	@GetMapping("/{id}")
+	public ModelAndView filtrar(@PathVariable long id, HttpSession httpSession) {
+				
+		ModelAndView mv = new ModelAndView("categoria_listar");
+		
+		Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
+
+		mv.addObject("usuario", usuario);
+		
+		mv.addObject("categoria", categoriaService.get(id));
+		
+		mv.addObject("categorias", this.categoriaService.listar());
+		
+		mv.addObject("posts", this.postService.listar());
+		
+		return mv;
+
 	}
 
 /*	@GetMapping(path = "editar/{id}")

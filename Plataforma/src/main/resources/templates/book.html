@@ -44,6 +44,15 @@
 	-moz-box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
 	box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.29);
 }
+
+.bb-custom-side a {
+	color: blue;
+}
+
+.invisivel {
+	display: none;
+}
+
 </style>
 
 </head>
@@ -130,27 +139,14 @@
 						</th:block>
 						
 
-						<div class="row" style="margin: 10px; padding: 10px; display: none">
+						<div class="row" style="margin: 10px; padding: 10px; display: ">
 
 							<div class="col-md-6 text-left">
 
-								<small>
-									<p>
-										Tags: <span th:text="${post.tags}"></span>
-									</p>
-								</small>
+								
 
 							</div>
-							<div class="col-md-6 text-right">
-
-								<th:block th:each="categoria : ${post.categorias}">
-
-									<small><span th:text="${categoria.nome}"
-										style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #212529; color: #fff; text-align: left"></span></small>
-
-								</th:block>
-
-							</div>
+							
 
 
 						</div>
@@ -158,11 +154,15 @@
 
 					</div>
 
-					<div class="bb-custom-side" style="padding-top: 10px; overflow-y: auto;">
+					<div class="bb-custom-side" style="padding-top: 30px; overflow-y: auto;">
 
 						<div th:id="'conteudo_' +${post.id}"></div>
 
-						<span style="margin-top: 40px; display: block;"></span>
+						<div style="margin: 40px 0;">
+						
+								<p>&nbsp;</p>
+						
+						</div>
 
 					</div>
 
@@ -219,17 +219,103 @@
 			} 
 		
 		
-			posts.forEach((post) => {
+			/* posts.forEach((post) => {
 				
 				let cam = '#conteudo_' + post.id;
 				
 				document.querySelector(cam).innerHTML = post.conteudo;
+								
+				addBackGroundImage(post.destaque);
+				
+			}); */
+			
+posts.forEach((post) => {
+				
+				let cam = '#conteudo_' + post.id;
+				
+				document.querySelector(cam).innerHTML = post.conteudo;
+				
+				let links = document.querySelector(cam).querySelectorAll("a");	
+				
+				let imgs = document.querySelector(cam).querySelectorAll("img");
+				
+				let iframes = document.querySelector(cam).querySelectorAll("iframe");
+				
+				console.log(iframes);
+				
+				iframes.forEach(iframe =>{
+					
+					iframe.classList.add("invisivel");
+					console.log(iframe.src);
+					
+					let a = document.createElement('a');
+					
+					a.href = iframe.src;
+					a.text = "Link - YouTube";
+					a.target="_blank";
+					
+					iframe.replaceWith(a);
+					
+				});
+				
+				imgs.forEach(img =>{
+					
+					img.classList.add("img-fluid");
+					
+				});
+								 
+				links.forEach(a => {
+					
+					if(a.href.includes(".mp4")){
+						
+						let txt = a.text;
+						
+						a.text="Link - Vídeo - " + txt;
+						
+						
+						/* let video = document.createElement('video');
+					
+						video.controls = true;
+
+						video.src = a.href;
+						video.type="video/mp4";
+						video.style.width = "100%"; 
+						video.style.padding = "10px 10px";
+						a.replaceWith(video);
+						
+						a.classList.add("video"); */
+					}
+					
+					 if(a.href.includes(".mp3")){
+						
+						let txt = a.text;
+						
+						a.text="Link - Áudio - " + txt;
+						
+						
+						/* console.log(a.text);
+						
+						let audio = document.createElement('audio');
+					
+						audio.controls = true;
+
+						audio.src = a.href;
+						audio.type="audio/mp3";
+						audio.style.width = "100%"; 
+						audio.style.padding = "10px 10px";
+						a.replaceWith(audio);
+						
+						a.classList.add("audio"); */
+					}  
+					
+				});
 				
 				/*  */
 				
 				addBackGroundImage(post.destaque);
 				
 			});
+			
 			
 		var Page = (function() {
 

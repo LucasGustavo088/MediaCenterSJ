@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import br.usjt.plataforma.model.bean.Audio;
 import br.usjt.plataforma.model.bean.Figura;
 import br.usjt.plataforma.model.bean.Texto;
+import br.usjt.plataforma.model.bean.Usuario;
 import br.usjt.plataforma.model.bean.Video;
 import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
@@ -28,9 +29,13 @@ public class MaterialController {
 	CategoriaService categoriaService;
 
 	@GetMapping()
-	public ModelAndView listar() {
+	public ModelAndView listar(HttpSession httpSession) {
 
 		ModelAndView mv = new ModelAndView("materiais");
+		
+		Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
+
+		mv.addObject("usuario", usuario);
 
 		mv.addObject("figura", new Figura());
 
