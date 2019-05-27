@@ -330,13 +330,7 @@ audio:active {
 
 				<li><a href="#">Perfil</a></li>
 				<li><a href="/logout">Logout</a></li>
-				<li><select id="locales" class="form-control"
-					style="background-color: #7386D5; color: #fff;">
-						<option value="" selected disabled hidden>Idioma</option>
-						<option value="pt" th:text="#{lang.pt}"></option>
-						<option value="en" th:text="#{lang.eng}"></option>
-						<option value="es" th:text="#{lang.es}"></option>
-				</select></li>
+				
 
 
 			</ul>
@@ -362,15 +356,15 @@ audio:active {
 						<i class="fas fa-align-justify"></i>
 					</button>
 
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="nav navbar-nav ml-auto">
-						<li class="nav-item active"><a class="nav-link"
-								href="/materiais">Material</a></li>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="nav navbar-nav ml-auto" style="font-size: 1.1em">
+							<li class="nav-item active"><a class="nav-link"
+								href="/materiais" th:text="#{material}"></a></li>
 							<li class="nav-item active"><a class="nav-link"
 								href="/posts/adicionar">Post</a></li>
-							<li class="nav-item active"><a class="nav-link" href="/posts/book">Book</a>
-							</li>
-							
+								<li class="nav-item active"><a class="nav-link"
+								href="/categorias" th:text="#{categoria}"></a></li>
+
 						</ul>
 					</div>
 
@@ -386,12 +380,13 @@ audio:active {
 			</nav>
 
 			<div class="container-fluid" style="margin-top: 90px">
-			
-			<div class="row">
+
+				<div class="row">
 
 					<div class="col-md-12">
 
-						<h3 style="padding: 8px; background-color: #212529; color: #fff; text-align: right;">Resumo Post</h3>
+						<h3
+							style="padding: 8px; background-color: #212529; color: #fff; text-align: right;" th:text="#{resumoPost}"></h3>
 
 					</div>
 
@@ -627,7 +622,13 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
-				console.log(imgs);
+				let iframes = document.querySelector(cam).querySelectorAll("iframe");
+				
+				iframes.forEach(iframe =>{
+					
+					iframe.classList.add("img-fluid");
+					
+				});
 				
 				imgs.forEach(img =>{
 					

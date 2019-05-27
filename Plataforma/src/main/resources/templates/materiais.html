@@ -384,9 +384,11 @@ img {
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto" style="font-size: 1.1em">
 							<li class="nav-item active"><a class="nav-link"
-								href="/materiais">Material</a></li>
+								href="/materiais" th:text="#{material}"></a></li>
 							<li class="nav-item active"><a class="nav-link"
 								href="/posts/adicionar">Post</a></li>
+								<li class="nav-item active"><a class="nav-link"
+								href="/categorias" th:text="#{categoria}"></a></li>
 
 						</ul>
 					</div>
@@ -416,7 +418,7 @@ img {
 
 						<h1 class="text-right" style="margin: 10px 0 20px 0">
 							<span class="badge"
-								style="background-color: #AB0F41; color: #fff">Materiais</span>
+								style="background-color: #AB0F41; color: #fff" th:text="#{material}"></span>
 						</h1>
 
 
@@ -437,7 +439,7 @@ img {
 									<button type="button" class="step-trigger" role="tab"
 										aria-controls="upload-part" id="upload-part-trigger">
 										<span class="bs-stepper-circle">1</span> <span
-											class="bs-stepper-label">Selecionar material</span>
+											class="bs-stepper-label" th:text="#{selecionarMaterial}"></span>
 									</button>
 								</div>
 								<div class="line"></div>
@@ -445,7 +447,7 @@ img {
 									<button type="button" class="step-trigger" role="tab"
 										aria-controls="descricao-part" id="descricao-part-trigger">
 										<span class="bs-stepper-circle">2</span> <span
-											class="bs-stepper-label">Adicionar descrição</span>
+											class="bs-stepper-label" th:text="#{adicionarDescricao}"></span>
 									</button>
 								</div>
 								<div class="line"></div>
@@ -454,7 +456,7 @@ img {
 										aria-controls="classificacao-part"
 										id="classificacao-part-trigger">
 										<span class="bs-stepper-circle">3</span> <span
-											class="bs-stepper-label">Realizar classificação</span>
+											class="bs-stepper-label" th:text="#{realizarClassificacao}"></span>
 									</button>
 								</div>
 
@@ -471,9 +473,7 @@ img {
 
 										<form action="/upload" class="dropzone" id="up">
 
-											<span class="badge badge-secondary" style="margin: 6px 6px;">Clique
-												ou arraste para selecionar o arquivo | imagens, pdf, mp3,
-												mp4 | < 100 mb</span>
+											<span class="badge badge-secondary" style="margin: 6px 6px;" th:text="#{descricaoUpload}"></span>
 
 											<div class="fallback">
 												<input name="file" type="file" multiple />
@@ -507,7 +507,7 @@ img {
 									<!--  -->
 
 									<div class="row" id="containerPreviewImagem"
-										style="margin-top: 10px; display: none;">
+										style="margin-top: 10px; display: none;"><!--  -->
 
 										<div class="col-md-5 text-center">
 
@@ -518,8 +518,7 @@ img {
 
 										<div class="col-md-7">
 
-											<h4 style="margin-top: 0; padding-top: 0">Descrição
-												Imagem</h4>
+											<h4 style="margin-top: 0; padding-top: 0" th:text="#{descricaoImagem}"></h4>
 
 
 											<form method="post" th:action="@{/materiais/figura}"
@@ -527,21 +526,20 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 20px; font-size: 1.2em">
-													<label for="nome"><b>Nome</b></label> <input type="text"
+													<b><label for="nome" th:text="#{nome}"></label></b> <input type="text"
 														class="form-control" id="nome" name="nome"
 														aria-describedby="nome" th:field="*{nome}">
 												</div>
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><b>Autor</b></label> <input type="text"
+													<b><label for="nome" th:text="#{autor}"></label></b> <input type="text"
 														class="form-control" id="autor" name="autor"
 														aria-describedby="autor" th:field="*{autor}">
 												</div>
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><small>Nome original do
-															arquivo</samll></label> <input type="text" class="form-control"
+													<small><label for="nome" th:text="#{nomeOriginal}"></small></label> <input type="text" class="form-control"
 														id="nomeOriginal" name="nomeOriginal"
 														aria-describedby="nomeOriginal" readonly
 														th:field="*{nomeOriginal}">
@@ -549,7 +547,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 15px; font-size: 1.2em">
-													<label for="nome"><samll>Tamanho</small></label> <input
+													<small><label for="nome" th:text="#{tamanho}"></small></label> <input
 														type="text" class="form-control" id="tamanho"
 														name="tamanho" aria-describedby="tamanho" readonly
 														th:field="*{tamanho}">
@@ -560,7 +558,7 @@ img {
 
 												<button type="button"
 													class="btn btn btn-primary float-right"
-													style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+													style="margin: 30px 0" onclick="nextStep()" th:text="#{proximo}"></button>
 
 
 											</form>
@@ -583,29 +581,27 @@ img {
 
 										<div class="col-md-7">
 
-											<h4 style="margin-top: 0; padding-top: 0">Descrição
-												Texto</h4>
+											<h4 style="margin-top: 0; padding-top: 0" th:text="#{descricaoTexto}"></h4>
 
 											<form method="post" th:action="@{/materiais/texto}"
 												th:object="${texto}" name="formTexto" id="formTexto">
 
 												<div class="form-group"
 													style="margin-top: 20px; font-size: 1.2em">
-													<label for="nome"><b>Nome</b></label> <input type="text"
+													<b><label for="nome" th:text="#{nome}"></label></b> <input type="text"
 														class="form-control" id="nome" name="nome"
 														aria-describedby="nome" th:field="*{nome}">
 												</div>
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><b>Resumo</b></label>
+													<b><label for="nome" th:text="#{resumo}"></label></b>
 													<textarea class="form-control" id="resumo" rows="3"
 														name="resumo" th:field="*{resumo}"></textarea>
 												</div>
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><small>Nome original do
-															arquivo</samll></label> <input type="text" class="form-control"
+													<small><label for="nome" th:text="#{nomeOriginal}"></small></label> <input type="text" class="form-control"
 														id="nomeOriginal" name="nomeOriginal"
 														aria-describedby="nomeOriginal" readonly
 														th:field="*{nomeOriginal}">
@@ -613,7 +609,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 15px; font-size: 1.2em">
-													<label for="nome"><samll>Tamanho</small></label> <input
+													<small><label for="nome" th:text="#{tamanho}"></small></label> <input
 														type="text" class="form-control" id="tamanho"
 														name="tamanho" aria-describedby="tamanho" readonly
 														th:field="*{tamanho}">
@@ -624,7 +620,7 @@ img {
 
 												<button type="button"
 													class="btn btn btn-primary float-right"
-													style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+													style="margin: 30px 0" onclick="nextStep()" th:text="#{proximo}"></button>
 
 											</form>
 
@@ -655,22 +651,21 @@ img {
 
 										<div class="col-md-7">
 
-											<h4 style="margin-top: 0; padding-top: 0">Descrição
-												Áudio</h4>
+											<h4 style="margin-top: 0; padding-top: 0" th:text="#{descricaoAudio}"></h4>
 
 											<form method="post" th:action="@{/materiais/audio}"
 												th:object="${audio}" name="formAudio" id="formAudio">
 
 												<div class="form-group"
 													style="margin-top: 20px; font-size: 1.2em">
-													<label for="nome"><b>Nome</b></label> <input type="text"
+													<b><label for="nome" th:text="#{nome}"></b></label> <input type="text"
 														class="form-control" id="nome" name="nome"
 														aria-describedby="nome" th:field="*{nome}">
 												</div>
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="duracao"><b>Duração</b> (Minutos)</label> <input
+													<b><label for="duracao" th:text="#{duracao}"></b> (Min.)</label> <input
 														type="text" class="form-control" id="duracao"
 														name="duracao" aria-describedby="duracao"
 														th:field="*{duracao}">
@@ -679,8 +674,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><small>Nome original do
-															arquivo</samll></label> <input type="text" class="form-control"
+													<small><label for="nome" th:text="#{nomeOriginal}"></small></label> <input type="text" class="form-control"
 														id="nomeOriginal" name="nomeOriginal"
 														aria-describedby="nomeOriginal" readonly
 														th:field="*{nomeOriginal}">
@@ -688,7 +682,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 15px; font-size: 1.2em">
-													<label for="nome"><samll>Tamanho</small></label> <input
+													<small><label for="nome" th:text="#{tamanho}"></small></label> <input
 														type="text" class="form-control" id="tamanho"
 														name="tamanho" aria-describedby="tamanho" readonly
 														th:field="*{tamanho}">
@@ -699,7 +693,7 @@ img {
 
 												<button type="button"
 													class="btn btn btn-primary float-right"
-													style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+													style="margin: 30px 0" onclick="nextStep()" th:text="#{proximo}"></button>
 
 											</form>
 
@@ -723,22 +717,21 @@ img {
 
 										<div class="col-md-7">
 
-											<h4 style="margin-top: 0; padding-top: 0">Descrição
-												Vídeo</h4>
+											<h4 style="margin-top: 0; padding-top: 0" th:text="#{descricaoVideo}"></h4>
 
 											<form method="post" th:action="@{/materiais/video}"
 												th:object="${video}" name="formVideo" id="formVideo">
 
 												<div class="form-group"
 													style="margin-top: 20px; font-size: 1.2em">
-													<label for="nome"><b>Nome</b></label> <input type="text"
+													<b><label for="nome" th:text="#{nome}"></b></label> <input type="text"
 														class="form-control" id="nome" name="nome"
 														aria-describedby="nome" th:field="*{nome}">
 												</div>
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="duracao"><b>Produção</b></label> <input
+													<b><label for="duracao" th:text="#{producao}"></b></label> <input
 														type="text" class="form-control" id="producao"
 														name="producao" aria-describedby="producao"
 														th:field="*{producao}">
@@ -747,8 +740,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 24px; font-size: 1.2em">
-													<label for="nome"><small>Nome original do
-															arquivo</samll></label> <input type="text" class="form-control"
+													<small><label for="nome" th:text="#{nomeOriginal}"></label></small> <input type="text" class="form-control"
 														id="nomeOriginal" name="nomeOriginal"
 														aria-describedby="nomeOriginal" readonly
 														th:field="*{nomeOriginal}">
@@ -756,7 +748,7 @@ img {
 
 												<div class="form-group"
 													style="margin-top: 15px; font-size: 1.2em">
-													<label for="nome"><samll>Tamanho</small></label> <input
+													<small><label for="nome" th:text="#{tamanho}"></small></label> <input
 														type="text" class="form-control" id="tamanho"
 														name="tamanho" aria-describedby="tamanho" readonly
 														th:field="*{tamanho}">
@@ -767,7 +759,7 @@ img {
 
 												<button type="button"
 													class="btn btn btn-primary float-right"
-													style="margin: 30px 0" onclick="nextStep()">Próximo</button>
+													style="margin: 30px 0" onclick="nextStep()" th:text="#{proximo}"></button>
 
 											</form>
 
@@ -825,7 +817,7 @@ img {
 
 											<div class="col-md-7" id="cam_classificacao" style="display:none">
 
-												<h4 style="margin-top: 0; padding-top: 0">Classificação</h4>
+												<h4 style="margin-top: 0; padding-top: 0" th:text="#{classificacao}"></h4>
 
 												<form>
 
@@ -840,7 +832,7 @@ img {
 
 													<div class="form-group"
 														style="font-size: 1.1em; margin-top: 24px; margin-bottom: 4px">
-														<label for="nome"><b>Categorias</b></label>
+														<b><label for="nome" th:text="#{categoria}"></label></b>
 													</div>
 
 													<div class="clearfix"></div>
@@ -868,7 +860,7 @@ img {
 
 													<button type="button"
 														class="btn btn btn-primary float-right"
-														style="margin: 30px 0" onclick="enviar()">Salvar</button>
+														style="margin: 30px 0" onclick="enviar()" th:text="#{salvar}"></button>
 
 												</form>
 
@@ -899,7 +891,7 @@ img {
 										<div class="card-header text-right"
 											style="padding: 4px 4px; margin-bottom: 8px">
 											<a th:href="@{${'http://localhost:3000/' + material.url }}"
-												class="badge badge-info" target="_blank">Exibir</a>
+												class="badge badge-info" target="_blank" th:text="#{exibir}"></a>
 										</div>
 
 										<a href="#" data-toggle="modal"
@@ -932,7 +924,7 @@ img {
 										<div class="card-header text-right"
 											style="padding: 4px 4px; margin-bottom: 8px">
 											<a th:href="@{${'http://localhost:3000/' + material.url }}"
-												class="badge badge-info" target="_blank">Exibir</a>
+												class="badge badge-info" target="_blank" th:text="#{exibir}"></a>
 										</div>
 
 
@@ -965,7 +957,7 @@ img {
 										<div class="card-header text-right"
 											style="padding: 4px 4px; margin-bottom: 8px">
 											<a th:href="@{${'http://localhost:3000/' + material.url }}"
-												class="badge badge-info" target="_blank">Exibir</a>
+												class="badge badge-info" target="_blank" th:text="#{exibir}"></a>
 										</div>
 
 
@@ -998,7 +990,7 @@ img {
 										<div class="card-header text-right"
 											style="padding: 4px 4px; margin-bottom: 8px">
 											<a th:href="@{${'http://localhost:3000/' + material.url }}"
-												class="badge badge-info" target="_blank">Exibir</a>
+												class="badge badge-info" target="_blank" th:text="#{exibir}"></a>
 										</div>
 
 
@@ -1430,7 +1422,7 @@ img {
 					$('#tags').tagsInput({
 						
 						  interactive: true,
-						  placeholder: 'Adicionar tag',
+						  placeholder: '',
 						  width: 'auto',
 						  height: 'auto',
 						  hide: true,

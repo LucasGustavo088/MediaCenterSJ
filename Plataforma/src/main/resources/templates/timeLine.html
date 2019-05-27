@@ -630,6 +630,15 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
+				let iframes = document.querySelector(cam).querySelectorAll("iframe");
+				
+				iframes.forEach(iframe =>{
+					
+					iframe.classList.add("img-fluid");
+					
+				});
+				
+							
 				
 				
 				imgs.forEach(img =>{
@@ -804,25 +813,7 @@ audio:active {
 								console.log(xhr.status);
 					            console.log(xhr.responseText);
 					            
-					            /*
-					            var resposta = xhr.responseText;
-					            var lista = JSON.parse(resposta);
-					            
-					            
-					            lista.forEach(function (material) {
-					            	
-					            	var dataString = new Date(material.dataRegistro);
-					            	
-					            	var data = dataString.getDate() + '/' + (dataString.getMonth() + 1) + '/' +  dataString.getFullYear() + ' ' + dataString.getHours() + ':' + dataString.getMinutes(); 
-					            
-					            	var materialDiv = document.createElement("div");				            					            	
-					            	
-					            	materialDiv.innerHTML =  '<div class=\"card p-3 m-3 material\" style=\"border: 1px solid #17a2b8\"><img class=\"card-img-top text-center\" src=\"'+ material.destaque +'" border=\"0\" \/><small><p class=\"card-title\" style=\"margin: 10px 0\">'+ material.titulo +'</p></small><p class=\"card-text text-muted\"><small>'+ data +'</small><\/p><\/div>'
-					            	
-					            	materiais_div.appendChild(materialDiv);
-					            
-					            }); */
-					           				            
+					         					           				            
 					            
 							}
 							
@@ -850,6 +841,7 @@ audio:active {
 				
 			});
 			
+						
 
 		/*]]>*/
 	</script>

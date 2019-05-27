@@ -31,9 +31,13 @@ public class CategoriaController {
 	PostService postService;
 
 	@GetMapping
-	public ModelAndView listar(HttpSession session) {
-
+	public ModelAndView listar(HttpSession httpSession) {
+			
 		ModelAndView mv = new ModelAndView("categorias");
+		
+		Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
+
+		mv.addObject("usuario", usuario);
 
 		mv.addObject("categorias", this.categoriaService.listar());
 

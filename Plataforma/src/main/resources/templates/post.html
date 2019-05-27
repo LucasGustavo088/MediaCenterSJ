@@ -388,12 +388,14 @@ a.article, a.article:hover {
 						<i class="fas fa-align-justify"></i>
 					</button>
 
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto" style="font-size: 1.1em">
 							<li class="nav-item active"><a class="nav-link"
-								href="/materiais">Material</a></li>
+								href="/materiais" th:text="#{material}"></a></li>
 							<li class="nav-item active"><a class="nav-link"
 								href="/posts/adicionar">Post</a></li>
+								<li class="nav-item active"><a class="nav-link"
+								href="/categorias" th:text="#{categoria}"></a></li>
 
 						</ul>
 					</div>
@@ -475,12 +477,12 @@ a.article, a.article:hover {
 											<p class="card-text text-muted" style="font-size: 1em; margin-top: 6px">
 												<a href="#" data-toggle="modal"
 													th:data-target="'#cam_' + ${material.id}"
-													class="badge badge-info" target="_blank">Imagem</a> <small
+													class="badge badge-info" target="_blank" th:text="#{imagem}"></a> <small
 													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 
 												<span><button
 														class="btn btn-warning btn-sm float-right"
-														th:attr="onclick=|definirDestaque('${'http://localhost:3000/' + material.url}')|">Destaque</button>
+														th:attr="onclick=|definirDestaque('${'http://localhost:3000/' + material.url}')|" th:text="#{destaque}"></button>
 												</span>
 											</p>
 
@@ -503,7 +505,7 @@ a.article, a.article:hover {
 											<p class="card-text text-muted" style="font-size: 1em">
 												<a href="#" data-toggle="modal"
 													th:data-target="'#cam_' + ${material.id}"
-													class="badge badge-info" target="_blank">Texto</a> <small
+													class="badge badge-info" target="_blank" th:text="#{texto}"></a> <small
 													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 
 												<small th:text="${material.tamanho}"></small>
@@ -528,7 +530,7 @@ a.article, a.article:hover {
 											<p class="card-text text-muted" style="font-size: 1em">
 												<a href="#" data-toggle="modal"
 													th:data-target="'#cam_' + ${material.id}"
-													class="badge badge-info" target="_blank">Áudio</a> <small
+													class="badge badge-info" target="_blank" th:text="#{audio}"></a> <small
 													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 												| <small th:text="${material.tamanho}"></small>
 											</p>
@@ -550,7 +552,7 @@ a.article, a.article:hover {
 											<p class="card-text text-muted" style="font-size: 1em">
 												<a href="#" data-toggle="modal"
 													th:data-target="'#cam_' + ${material.id}"
-													class="badge badge-info" target="_blank">Vídeo</a> <small
+													class="badge badge-info" target="_blank" th:text="#{video}"></a> <small
 													th:text="${#temporals.format(material.dataRegistro, 'dd/MM/yyyy HH:mm')}"></small>
 												| <small th:text="${material.tamanho}"></small>
 											</p>
@@ -572,7 +574,7 @@ a.article, a.article:hover {
 
 									<div class="form-group"
 										style="font-size: 1.2em;">
-										<label for="nome"><b>Imagem de destaque</b></label> 
+										<b><label for="nome" th:text="#{imagemDestaque}"></label> </b>
 									</div>
 
 									<div id="cam_destaque"
@@ -583,7 +585,7 @@ a.article, a.article:hover {
 
 									<div class="form-group"
 										style="font-size: 1.2em; margin-top: 24px">
-										<label for="nome"><b>Título</b></label> <input type="text"
+										<b><label for="nome" th:text="#{titulo}"></label></b> <input type="text"
 											class="form-control" id="titulo" name="titulo"
 											aria-describedby="titulo" th:field="*{titulo}">
 									</div>
@@ -602,7 +604,7 @@ a.article, a.article:hover {
 
 									<div class="form-group"
 										style="font-size: 1.2em; margin-top: 24px; margin-bottom: 4px">
-										<label for="nome"><b>Categorias</b></label> 
+										<b><label for="nome" th:text="#{categoria}"></label> </b>
 									</div>
 
 									<div class="clearfix"></div>
@@ -637,7 +639,7 @@ a.article, a.article:hover {
 										class="form-control" th:field="*{conteudo}">
 
 									<button type="submit" class="btn btn btn-primary float-right"
-										style="margin: 30px 0">Salvar</button>
+										style="margin: 30px 0" th:text="#{salvar}"></button>
 
 								</form>
 

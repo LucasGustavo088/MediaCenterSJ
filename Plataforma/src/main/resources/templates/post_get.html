@@ -615,7 +615,13 @@ audio:active {
 				
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
-				console.log(imgs);
+				let iframes = document.querySelector(cam).querySelectorAll("iframe");
+				
+				iframes.forEach(iframe =>{
+					
+					iframe.classList.add("img-fluid");
+					
+				});
 				
 				imgs.forEach(img =>{
 					

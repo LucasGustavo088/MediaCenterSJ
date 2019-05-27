@@ -335,33 +335,7 @@ audio:active {
 				</div>
 			</div>
 
-			<ul class="list-unstyled components">
-				<p>Dummy Heading</p>
-				<!-- <li class="active"><a href="#homeSubmenu"
-					data-toggle="collapse" aria-expanded="false">Home</a>
-					<ul class="collapse list-unstyled" id="homeSubmenu">
-						<li><a href="#">Home 1</a></li>
-						<li><a href="#">Home 2</a></li>
-						<li><a href="#">Home 3</a></li>
-					</ul></li>
-				<li><a href="#">About</a> <a href="#pageSubmenu"
-					data-toggle="collapse" aria-expanded="false">Pages</a>
-					<ul class="collapse list-unstyled" id="pageSubmenu">
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li>
-						<li><a href="#">Page 3</a></li>
-					</ul></li> -->
-				<li><a href="#">Perfil</a></li>
-				<li><a href="#">Logout</a></li>
-			</ul>
 
-			<!-- <ul class="list-unstyled CTAs">
-				<li><a
-					href="https://bootstrapious.com/tutorial/files/sidebar.zip"
-					class="download">Download source</a></li>
-				<li><a href="https://bootstrapious.com/p/bootstrap-sidebar"
-					class="article">Back to article</a></li>
-			</ul> -->
 		</nav>
 
 		<!-- Page Content  -->
@@ -378,23 +352,23 @@ audio:active {
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-						
-						<li class="nav-item active"><a class="nav-link" href="#"
+
+							<li class="nav-item active"><a class="nav-link" href="#"
 								th:text="#{cadastro}"></a></li>
 
-							<li class="nav-item active"><a class="nav-link"
-								href="#" data-toggle="modal" data-target="#login">Login</a></li>
+							<li class="nav-item active"><a class="nav-link" href="#"
+								data-toggle="modal" data-target="#login">Login</a></li>
 
-						
-							<li class="nav-item "><select id="locales" class="form-control" style="padding: 4px">
-									 <option value="" selected disabled hidden>Idioma</option>
-									 <option value="pt" th:text="#{lang.pt}"></option>
+
+							<li class="nav-item "><select id="locales"
+								class="form-control" style="padding: 4px">
+									<option value="" selected disabled hidden>Idioma</option>
+									<option value="pt" th:text="#{lang.pt}"></option>
 									<option value="en" th:text="#{lang.eng}"></option>
 									<option value="es" th:text="#{lang.es}"></option>
-							</select>
-							</li> 
+							</select></li>
 
-							
+
 
 						</ul>
 					</div>
@@ -405,19 +379,42 @@ audio:active {
 
 			</nav>
 
-			<div class="container-fluid" style="margin-top: 90px">
-
-
+			<div class="container-fluid" style="margin-top: 110px">
 
 				<div class="row">
 
 
 
-					<div class="col-md-3" th:each="post,count : ${posts}">
+					<div class="col-md-12" style="margin-bottom: 30px;">
+						<th:block th:each="categoria : ${categorias}">
 
-						<a th:href="${'#post_' + post.id}" class="scroll">
+							<small><span th:text="${categoria.nome}"
+											style="padding: 8px 6px;margin: 6px 6px; background-color: #17a2b8; color: #fff; text-align: left; font-size: 1.5em"></span></small>
 
-							<div th:if="${count.index < 4}" class="destaque">
+							<th:block th:each="post : ${categoria.posts}">
+
+								<small><span th:text="${post.titulo}"
+									style="margin: 6px 4px; background-color: #212529; color: #fff; text-align: left; font-size: 1.2em"></span></small>
+
+							</th:block>
+
+						</th:block>
+					
+					</div>
+
+				</div>
+
+
+
+				<div class="row" style="margin-top: 25px">
+
+
+
+					<div class="col-md-3" th:each="post,count : ${posts}"
+						style="margin-bottom: 30px;">
+
+					
+							<div class="destaque">
 
 								<h5
 									style="background-color: #17a2b8; opacity: 0.8; padding: 10px; color: #fff"
@@ -425,7 +422,6 @@ audio:active {
 
 							</div>
 
-						</a>
 
 					</div>
 
@@ -433,7 +429,7 @@ audio:active {
 				</div>
 
 
-				<div class="row" style="margin-top: 60px">
+				<div class="row" style="margin-top: 60px; display: none;">
 
 					<div class="col-md-8">
 
@@ -576,8 +572,9 @@ audio:active {
 
 									</div>
 									<div class="form-group">
-										<label for="senha" th:text="#{senha}"></label> <input type="password"
-											class="form-control" id="senha" th:field="*{senha}">
+										<label for="senha" th:text="#{senha}"></label> <input
+											type="password" class="form-control" id="senha"
+											th:field="*{senha}">
 									</div>
 							</div>
 							<div class="modal-footer">
@@ -633,11 +630,11 @@ audio:active {
 			
 			function addBackGroundImage(destaque){
 				
-				if(countDestaque < 4){
 				
-					destaques[countDestaque].style.cssText = "padding-top: 12px; height: 500px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
 				
-				}
+					destaques[countDestaque].style.cssText = "padding-top: 12px; height: 400px ;background: url("+ destaque +") top center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;";
+				
+			
 				
 				countDestaque++;
 			}
@@ -780,36 +777,6 @@ audio:active {
 		
 			$(document).ready(function() {				
 				
-				$("#sidebar").mCustomScrollbar({
-					theme : "minimal"
-				}); 
-
-				$('#dismiss, .overlay').on('click', function() {
-					$('#sidebar').removeClass('active');
-					$('.overlay').removeClass('active');
-				});
-
-				$('#sidebarCollapse').on('click', function() {
-					$('#sidebar').addClass('active');
-					$('.overlay').addClass('active');
-					$('.collapse.in').toggleClass('in');
-					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
-				});
-				
-				$(".my-rating").starRating({
-					useFullStars: true,
-				    starSize: 25,
-				    strokeColor: '#AB0F41',
-				    hoverColor: '#AB0F41',
-				    callback: function(currentRating, $el){
-				        // make a server call here
-				    }
-				});
-				
-				$("a.scroll").click(function( event ) {
-			        event.preventDefault();
-			        $("html, body").animate({ scrollTop: $($(this).attr("href")).offset().top - 75 }, 1000);
-			    });
 				
 				$('#locales').change (function(){
 					var selectedOption = $('#locales').val();

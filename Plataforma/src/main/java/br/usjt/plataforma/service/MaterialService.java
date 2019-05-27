@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.usjt.plataforma.model.bean.Material;
+import br.usjt.plataforma.repository.FiguraRepository;
 import br.usjt.plataforma.repository.MaterialRepository;
 
 @Service
 public class MaterialService {
 
 	private final MaterialRepository repository;
+	
 
 	@Autowired
 	public MaterialService(MaterialRepository materialRepository) {
@@ -40,5 +42,9 @@ public class MaterialService {
 
 	}
 	
+	public void count() {
+		
+		System.out.println(this.repository.count());
+	}	
 
 }

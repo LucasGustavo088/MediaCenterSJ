@@ -15,4 +15,6 @@ public interface MaterialRepository extends CrudRepository<Material, Long> {
 	@Query("SELECT m FROM Material m WHERE m.nome LIKE %:palavra% ORDER BY data_registro DESC")
 	public List<Material> filtrarPorNome(@Param("palavra") String palavra);
 	
+	public long count();
+	
 }

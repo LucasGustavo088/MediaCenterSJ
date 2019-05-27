@@ -33,6 +33,10 @@
 <link rel="stylesheet" th:href="@{/css/bookblock.css}" />
 <link rel="stylesheet" th:href="@{/css/default.css}" />
 
+<script type='text/javascript'
+	src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
+
+
 <style type="text/css">
 
 /*
@@ -344,20 +348,18 @@ audio:active {
 					</ul></li> -->
 				<li><a href="#">Perfil</a></li>
 				<li><a href="/logout">Logout</a></li>
-				<li>
-				
-				<select id="locales" class="form-control" style="background-color: #7386D5; color: #fff;">
-									 <option value="" selected disabled hidden>Idioma</option>
-									 <option value="pt" th:text="#{lang.pt}"></option>
-									<option value="en" th:text="#{lang.eng}"></option>
-									<option value="es" th:text="#{lang.es}"></option>
-							</select>
-				</li> 
-				
-				
+				<li><select id="locales" class="form-control"
+					style="background-color: #7386D5; color: #fff;">
+						<option value="" selected disabled hidden>Idioma</option>
+						<option value="pt" th:text="#{lang.pt}"></option>
+						<option value="en" th:text="#{lang.eng}"></option>
+						<option value="es" th:text="#{lang.es}"></option>
+				</select></li>
+
+
 			</ul>
 
-			
+
 		</nav>
 
 		<!-- Page Content  -->
@@ -380,11 +382,13 @@ audio:active {
 
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="/materiais">Material</a>
-							</li>
-							<li class="nav-item active"><a class="nav-link" href="/posts/adicionar">Post</a>
-							</li>
-						
+							<li class="nav-item active"><a class="nav-link"
+								href="/materiais" th:text="#{material}"></a></li>
+							<li class="nav-item active"><a class="nav-link"
+								href="/posts/adicionar">Post</a></li>
+								<li class="nav-item active"><a class="nav-link"
+								href="/categorias" th:text="#{categoria}"></a></li>
+
 						</ul>
 					</div>
 
@@ -398,15 +402,53 @@ audio:active {
 
 				</div>
 			</nav>
-			
-			
+
+
 
 			<div class="container-fluid" style="margin-top: 90px">
 
 				<div class="row">
+				
+				<div class="col-md-3">
 
+						
 
+					</div>
+
+					<div class="col-md-6">
 					
+					<b><p style="margin-bottom: 5px; text-align: center" th:text="#{graficoUm}"></p></b>
+
+						<canvas id="canvasPie" height="200"></canvas>
+
+					</div>
+					
+					<div class="col-md-3">
+
+						
+
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-12" style="margin-top: 50px;">
+					
+					
+					<b><p style="margin-bottom: 5px; text-align: center" th:text="#{graficoDois}"></p></b>
+
+						<canvas id="canvasBar" height="70"></canvas>
+
+					</div>
+
+				</div>
+
+
+				<div class="row" style="display: none">
+
+
+
 
 
 					<div class="col-md-3" th:each="post,count : ${posts}">
@@ -431,9 +473,14 @@ audio:active {
 				</div>
 
 
-				<div class="row" style="margin-top: 60px">
+				<div class="row" style="margin-top: 60px; display:none">
 
 					<div class="col-md-8">
+
+						
+
+
+
 
 						<div th:each="post,count : ${posts}">
 
@@ -451,7 +498,23 @@ audio:active {
 
 								<div class="tituloPost">
 
-									<div class="my-rating"></div>
+									<!--  -->
+
+									<th:block th:if="${not #lists.isEmpty(post.avaliacoes)}">
+
+										<div class="rating" th:data-rating="${post.mediaAvaliacoes()}"></div>
+
+									</th:block>
+
+									<!--  -->
+
+									<th:block th:if="${#lists.isEmpty(post.avaliacoes)}">
+
+										<div class="rating" th:id="${post.id}"></div>
+
+									</th:block>
+
+									<!--  -->
 
 									<h3 th:text="${post.titulo}"
 										style="margin-bottom: 0px; padding-bottom: 0px"></h3>
@@ -571,7 +634,7 @@ audio:active {
 
 	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 
-		<script
+	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
 		crossorigin="anonymous"></script>
@@ -584,7 +647,8 @@ audio:active {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-	<script type="text/javascript" th:src="@{/js/starrr.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/chartjs-plugin-colorschemes.min.js}"></script>
 
 
 
@@ -766,15 +830,7 @@ audio:active {
 					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
 				});
 				
-				$(".my-rating").starRating({
-					useFullStars: true,
-				    starSize: 25,
-				    strokeColor: '#AB0F41',
-				    hoverColor: '#AB0F41',
-				    callback: function(currentRating, $el){
-				        // make a server call here
-				    }
-				});
+			
 				
 				$("a.scroll").click(function( event ) {
 			        event.preventDefault();
@@ -792,6 +848,147 @@ audio:active {
 				
 				
 			});
+			
+			/*  */
+			
+		let randomCor = () => {
+    	let r = Math.floor(Math.random() * 255);
+    	let g = Math.floor(Math.random() * 255);
+    	let b = Math.floor(Math.random() * 255);
+    	
+	    return "rgb(" + r + "," + g + "," + b + ")";
+	}
+    	
+    let nomeCategorias = [[${categorias}]].map((e) => e.nome);
+    
+    let countPostCategorias = [[${categorias}]].map((e) => e.posts.length);
+    
+    let avaliacoes = [[${avaliacoes}]];
+    
+    let notas = avaliacoes.map((a) => a.nota);
+    
+    let titulosPostNotas = avaliacoes.map((a) => a.post.titulo);
+    
+    console.log(avaliacoes);
+    
+   
+    var ctxPie = document.getElementById('canvasPie');
+    
+    var ctxBar = document.getElementById('canvasBar');
+    
+    var ctxPieMaterial = document.getElementById('canvasPieMaterial');
+    
+    
+	var PieChart = new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: nomeCategorias,
+            datasets: [{
+            	data: 
+            		countPostCategorias
+				,
+				backgroundColor: [
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+				]
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: ''
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            }
+        }
+
+    });
+	
+		
+	var BarChart = new Chart(ctxBar, {
+        type: 'horizontalBar',
+        data: {
+            labels: titulosPostNotas,
+            datasets: [{
+            	data: 
+            		notas
+				 ,
+				backgroundColor: [
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+					randomCor(),
+				] 
+            }
+            ]
+        },
+        maintainAspectRatio: false,
+        options: {
+        
+        	legend: {
+                display: false
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        display:false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 12,
+                        min: 0
+                    }
+                }],
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display:true
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                       
+                        min: 0
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text: ''
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            }
+            
+        }
+
+    });
 			
 
 		/*]]>*/
