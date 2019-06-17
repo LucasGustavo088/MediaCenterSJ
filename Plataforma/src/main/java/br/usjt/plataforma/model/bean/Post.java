@@ -35,8 +35,6 @@ public class Post implements Serializable {
 	@Column(columnDefinition = "TEXT")
 	private String conteudo;
 
-	private String tags;
-
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "post_x_categoria", joinColumns = @JoinColumn(name = "id_post", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id"))
 	@JsonBackReference
@@ -49,6 +47,11 @@ public class Post implements Serializable {
 	@OneToMany(mappedBy = "post")
 	@JsonBackReference
 	private List<Avaliacao> avaliacoes = new ArrayList<>();
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "post_x_tag", joinColumns = @JoinColumn(name = "id_post", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
+	@JsonBackReference
+	private List<Tag> tags = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -90,11 +93,11 @@ public class Post implements Serializable {
 		this.categorias = categorias;
 	}
 
-	public String getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(String tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
@@ -113,18 +116,18 @@ public class Post implements Serializable {
 	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
-	
+
 	public double mediaAvaliacoes() {
-		
+
 		double total = 0;
-		
-		for(Avaliacao a: this.avaliacoes) {
-			
+
+		for (Avaliacao a : this.avaliacoes) {
+
 			total += a.getNota();
 		}
-		
+
 		return total / this.avaliacoes.size();
-		
+
 	}
 
 }

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import br.usjt.plataforma.model.bean.Post;
 import br.usjt.plataforma.model.bean.Usuario;
 import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
 import br.usjt.plataforma.service.PostService;
+import br.usjt.plataforma.service.TagService;
 
 @Controller
 @RequestMapping("posts")
@@ -31,6 +31,9 @@ public class PostController {
 
 	@Autowired
 	CategoriaService categoriaService;
+	
+	@Autowired
+	TagService tagService;
 
 	@GetMapping("adicionar")
 	public ModelAndView adicionar(HttpSession httpSession) {
@@ -44,6 +47,8 @@ public class PostController {
 		mv.addObject("materiais", this.materialService.listar());
 
 		mv.addObject("categorias", this.categoriaService.listar());
+		
+		mv.addObject("tags", this.tagService.listar());
 
 		mv.addObject("post", new Post());
 

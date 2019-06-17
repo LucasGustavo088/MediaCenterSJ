@@ -13,6 +13,7 @@ import br.usjt.plataforma.service.AvaliacaoService;
 import br.usjt.plataforma.service.CategoriaService;
 import br.usjt.plataforma.service.MaterialService;
 import br.usjt.plataforma.service.PostService;
+import br.usjt.plataforma.service.TagSugeridaService;
 
 @Controller
 @RequestMapping("perfil")
@@ -29,6 +30,7 @@ public class PerfilController {
 	
 	@Autowired
 	MaterialService materialService;
+	
 
 	@GetMapping()
 	public ModelAndView perfil(HttpSession httpSession) {
@@ -47,13 +49,12 @@ public class PerfilController {
 			
 			this.materialService.count();
 						
-			mv.addObject("avaliacoes", this.avaliacaoService.listar());
-			
+			mv.addObject("avaliacoes", this.avaliacaoService.listar());			
 						
 			mv.setViewName("dashBoard");
 						
 		} else if (usuario.getPapel().equals("Usuario")) {
-
+			
 			mv.setViewName("timeLine");
 
 		} else {

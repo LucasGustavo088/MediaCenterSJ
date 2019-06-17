@@ -363,6 +363,9 @@ audio:active {
 
 							<li class="nav-item active"><a class="nav-link"
 								href="/categorias" th:text="#{categoria}"></a></li>
+								
+								<li class="nav-item active"><a class="nav-link"
+								href="/tags">Tag</a></li>
 
 						</ul>
 					</div>
@@ -397,12 +400,17 @@ audio:active {
 							<button type="submit" class="btn btn-primary mb-2" th:text="#{salvar}"></button>
 							
 						</form>
+						
+						<table>
+						
 
 						<th:block th:each="categoria : ${categorias}">
-
+						<tr>
+							<td>
 							<span th:text="${categoria.nome}"
 									style="padding: 8px; margin: 6px 6px; background-color: #212529; color: #fff; text-align: left"></span>
-
+							</td>
+							<td>
 							<ul style="margin: 30px 0; margin-bottom: 40px">
 							<th:block th:each="post : ${categoria.posts}">
 
@@ -417,9 +425,11 @@ audio:active {
 							</th:block>
 							
 							</ul>
-
+							</td>
+</tr>
 						</th:block>
-
+						
+</table>
 
 					</div>
 

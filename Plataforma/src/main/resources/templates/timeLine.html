@@ -311,6 +311,21 @@ audio {
 audio:active {
 	outline: none;
 }
+
+#tagSugeridas li {
+	float: left;
+	list-style-type: none;
+}
+
+.fLi {
+	padding: 6px;
+	margin: 6px 8px 6px 0px;
+	background-color: #FFA500;
+	color: #fff;
+	font-size: 0.9em;
+	display: inline-block;
+}
+
 </style>
 
 </head>
@@ -337,6 +352,8 @@ audio:active {
 						<option value="en" th:text="#{lang.eng}"></option>
 						<option value="es" th:text="#{lang.es}"></option>
 				</select></li>
+
+
 
 
 			</ul>
@@ -431,7 +448,7 @@ audio:active {
 									<th:block th:if="${not #lists.isEmpty(post.avaliacoes)}">
 
 										<div class="rating" th:data-rating="${post.mediaAvaliacoes()}"></div>
-										
+
 									</th:block>
 
 									<!--  -->
@@ -468,11 +485,18 @@ audio:active {
 
 								<div class="col-md-6 text-left">
 
-									<small>
-										<p>
-											Tags: <span th:text="${post.tags}"></span>
-										</p>
-									</small>
+									<th:block th:each="tag : ${post.tags}">
+
+										<small><span th:text="${tag.nome}"
+											style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #17a2b8; color: #fff; text-align: left"></span></small>
+
+									</th:block>
+
+										<span th:id="${'p_' + post.id}"></span>
+										
+										<ul th:id="${'tagSugeridas_' + post.id}" style="margin: 0; padding: 0"></ul>
+
+
 
 								</div>
 								<div class="col-md-6 text-right">
@@ -485,6 +509,34 @@ audio:active {
 									</th:block>
 
 								</div>
+
+
+							</div>
+
+							<div class="row" style="margin-top: 20px">
+
+								<div class="col-md-12 text-left">
+
+
+									<!-- AAA -->
+
+									<form class="form-inline">
+
+										<div class="form-group">
+											<input type="text" class="form-control"
+												th:placeholder="#{novaTag}" style="width: 200px; height: 31px"
+												th:id="${'ts_' + post.id}">
+										</div>
+										<button type="button" class="btn btn-primary btn-sm"
+											th:text="#{salvar}" th:onclick="|adicionarTag('${post.id}')|"
+											style="margin-left: 10px"></button>
+
+									</form>
+
+									<!--  -->
+
+								</div>
+
 
 
 							</div>
@@ -511,6 +563,17 @@ audio:active {
 									style="padding: 6px; margin: 6px 2px 6px 0px; background-color: #212529; color: #fff; display: inline-block;"></span></small></a>
 
 						</th:block>
+
+						<!-- AAA -->
+
+						<div style="background-color: #ccc; margin: 25px 0;">
+
+							<ul id="tagSugeridas" style="margin: 0; padding: 0"></ul>
+
+
+						</div>
+						
+						<div class="clearfix"></div>
 
 
 						<div class="input-group input-group-lg" style="margin: 30px 0px;">
@@ -599,6 +662,32 @@ audio:active {
 			
 			var posts = [[${posts}]];
 		
+			var tagsSugeridas = [[${usuario.tagSugeridas}]];
+			
+			console.log(tagsSugeridas);
+			
+			/*  */
+			
+			var tagSugeridas_lista = document.querySelector("#tagSugeridas");
+			
+			tagsSugeridas.forEach(function (tag) {
+	            	
+	            	var li = document.createElement("li");
+	            	var txt = document.createTextNode(tag.nome);
+	            	
+	            	li.appendChild(txt);
+	            	
+	            	li.classList.add("fLi");
+	            	
+	            	tagSugeridas_lista.appendChild(li);
+	            	
+	            		            
+	            });
+			
+			/*  */
+			
+			
+		
 			let destaques = document.querySelectorAll(".destaque");
 			
 			//let links = document.querySelectorAll("a");
@@ -631,6 +720,8 @@ audio:active {
 				let imgs = document.querySelector(cam).querySelectorAll("img");
 				
 				let iframes = document.querySelector(cam).querySelectorAll("iframe");
+				
+				
 				
 				iframes.forEach(iframe =>{
 					
@@ -689,6 +780,54 @@ audio:active {
 				
 			});
 			
+			
+			function adicionarTag(idPost){
+				
+				let id = idPost;
+				
+				let tag = document.querySelector("#ts_"+idPost).value;
+				
+				
+				console.log(id);
+				
+				console.log(tag);
+				
+				
+				var xhr = new XMLHttpRequest();
+				
+				xhr.open("GET", "http://localhost:8080/api/tag-sugerida/adicionar/" + id + "/" + tag);
+
+				xhr.addEventListener("load", function () {
+					
+								
+					if (xhr.status == 202) {
+						
+						var tagSugeridas_post = document.querySelector("#tagSugeridas_" + id);
+								            	
+		            	var li = document.createElement("li");
+		            	var txt = document.createTextNode(tag);
+		            	
+		            	li.appendChild(txt);
+		            	
+		            	li.classList.add("fLi");
+		            	
+		            	tagSugeridas_lista.appendChild(li);
+		            	
+		            	//tagSugeridas_post.appendChild(li);
+		            	
+		            	
+		            	document.querySelector("#ts_"+idPost).value = "";
+		            	
+		            	
+			           				            
+			            
+					}
+					
+				});
+				
+				xhr.send();	
+				
+			}
 
 			/*  */
 			
@@ -799,9 +938,7 @@ audio:active {
 				    hoverColor: '#AB0F41',
 				    callback: function(currentRating, $el){
 				    	
-				    	/* console.log('rated ' + currentRating);
-				        console.log('DOM element ', $el[0].id); */				        
-				        
+				    	 
 				        var xhr = new XMLHttpRequest();
 						
 						xhr.open("GET", "http://localhost:8080/api/posts/avaliar/"+ $el[0].id + "/" + currentRating);

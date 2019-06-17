@@ -396,6 +396,8 @@ a.article, a.article:hover {
 								href="/posts/adicionar">Post</a></li>
 								<li class="nav-item active"><a class="nav-link"
 								href="/categorias" th:text="#{categoria}"></a></li>
+								<li class="nav-item active"><a class="nav-link"
+								href="/tags">Tag</a></li>
 
 						</ul>
 					</div>
@@ -588,6 +590,7 @@ a.article, a.article:hover {
 										<b><label for="nome" th:text="#{titulo}"></label></b> <input type="text"
 											class="form-control" id="titulo" name="titulo"
 											aria-describedby="titulo" th:field="*{titulo}">
+											<input type="hidden" id="destaque" name="destaque" th:field="*{destaque}">
 									</div>
 
 
@@ -596,10 +599,27 @@ a.article, a.article:hover {
 										<label for="nome"><b>Tags</b></label> 
 									</div>
 
-									<input id="tags" name="tags" type="text" class="form-control"
-										th:field="*{tags}"> <input id="destaque"
-										name="destaque" type="hidden" class="form-control"
-										th:field="*{destaque}">
+										<div class="clearfix"></div>
+
+									<div style="border: 1px solid #ddd; margin: 0; float: left;"
+										class="rounded">
+
+										<div style="float: left; margin: 5px 12px 4px 0; padding: 7px"
+											th:each="tag : ${tags}">
+											<label
+												class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+												th:for="'t_' + ${tag.id}"> <input
+												type="checkbox" th:value="${tag.id}"
+												th:id="'t_' +${tag.id}" name="tags[]"
+												class="mdl-checkbox__input" th:field="*{tags}">
+												<span class="mdl-checkbox__label"
+												th:text="${tag.nome}"></span>
+											</label>
+										</div>
+
+									</div>
+									
+									<div class="clearfix"></div>
 
 
 									<div class="form-group"
@@ -1147,6 +1167,8 @@ a.article, a.article:hover {
 							}
 
 						});
+		
+/* 555 */
 
 		function definirDestaque(src) {
 
@@ -1164,11 +1186,18 @@ a.article, a.article:hover {
 
 			$('#editor').froalaEditor({
 				placeholderText : 'Insira o conteúdo ;D ...',
-				height : 500,
+				height : 600,
 
-			}
-
-			);
+			});
+			
+			
+			
+			/* var listaTag = []
+			
+			tags.forEach((tag) => {
+						
+				listaTag.push(tag.nome);
+			});
 
 			$('#tags').tagsInput({
 
@@ -1178,8 +1207,11 @@ a.article, a.article:hover {
 				height : 'auto',
 				hide : true,
 				delimiter : ', ',
-				removeWithBackspace : true
-			});
+				removeWithBackspace : true,
+				'autocomplete': {
+				    source: listaTag
+				  }
+			}); */
 
 			$("#form").submit(function(event) {
 

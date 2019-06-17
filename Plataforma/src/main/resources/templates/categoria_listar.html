@@ -431,11 +431,12 @@ audio:active {
 
 								<div class="col-md-6 text-left">
 
-									<small>
-										<p>
-											Tags: <span th:text="${post.tags}"></span>
-										</p>
-									</small>
+									<th:block th:each="tag : ${post.tags}">
+
+										<small><span th:text="${tag.nome}"
+											style="padding: 4px; margin: 8px 4px 8px 0px; background-color: #17a2b8; color: #fff; text-align: left"></span></small>
+
+									</th:block>
 
 								</div>
 								<div class="col-md-6 text-right">

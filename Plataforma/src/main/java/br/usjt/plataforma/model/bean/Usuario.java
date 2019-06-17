@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +37,19 @@ public class Usuario {
 	private String email;
 
 	private String papel;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	@JsonBackReference
 	private List<Avaliacao> avaliacoes = new ArrayList<>();
+
+	/*
+	 * @OneToMany(mappedBy = "usuario") private List<TagSugerida> tagSugerida = new
+	 * ArrayList<>();
+	 */
+
+	@OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER)
+	@JsonBackReference
+	private List<TagSugerida> tagSugeridas = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -89,12 +99,18 @@ public class Usuario {
 		this.papel = papel;
 	}
 
+	public List<TagSugerida> getTagSugeridas() {
+		return tagSugeridas;
+	}
+
+	public void setTagSugerida(List<TagSugerida> tagSugeridas) {
+		this.tagSugeridas = tagSugeridas;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", fone=" + fone + ", email=" + email
 				+ ", papel=" + papel + "]";
 	}
-	
-	
 
 }
